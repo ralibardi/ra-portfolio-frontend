@@ -32,7 +32,7 @@ const iconMap: Record<string, IconDefinition> = {
   faSpotify,
 };
 
-export function getSocialLinks(): ISocialLink[] {
+export function GetSocialLinks(): ISocialLink[] {
   return socialLinks
     .filter((link) => !link.isHidden)
     .map((link) => ({

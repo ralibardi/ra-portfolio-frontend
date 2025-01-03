@@ -23,7 +23,7 @@ type Config = {
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
 };
 
-export function register(config?: Config) {
+export function Register(config?: Config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     const publicUrl = new URL(
       process.env.PUBLIC_URL || '',
@@ -34,16 +34,16 @@ export function register(config?: Config) {
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
       if (isLocalhost) {
-        checkValidServiceWorker(swUrl, config);
+        CheckValidServiceWorker(swUrl, config);
         navigator.serviceWorker.ready.catch(console.error);
       } else {
-        registerValidSW(swUrl, config);
+        RegisterValidSW(swUrl, config);
       }
     });
   }
 }
 
-function registerValidSW(swUrl: string, config?: Config) {
+function RegisterValidSW(swUrl: string, config?: Config) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
@@ -67,7 +67,7 @@ function registerValidSW(swUrl: string, config?: Config) {
     });
 }
 
-function checkValidServiceWorker(swUrl: string, config?: Config) {
+function CheckValidServiceWorker(swUrl: string, config?: Config) {
   fetch(swUrl, { headers: { 'Service-Worker': 'script' } })
     .then((response) => {
       const contentType = response.headers.get('content-type');
@@ -80,13 +80,13 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
           .then(() => window.location.reload())
           .catch(console.error);
       } else {
-        registerValidSW(swUrl, config);
+        RegisterValidSW(swUrl, config);
       }
     })
     .catch(console.error);
 }
 
-export function unregister() {
+export function Unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready
       .then((registration) => registration.unregister())

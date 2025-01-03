@@ -1,6 +1,6 @@
 import React, { FunctionComponent, lazy, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSocialLinks } from '../../utils/getSocialLinks';
+import { GetSocialLinks } from '../../utils/getSocialLinks';
 import styles from '../../assets/footer.module.scss';
 import { FOOTER } from '@app/i18n/keys';
 
@@ -8,7 +8,7 @@ const FooterSocials = lazy(() => import('../footer-socials/footer-socials'));
 
 const Footer: FunctionComponent = () => {
   const { t } = useTranslation();
-  const socialLinks = useMemo(() => getSocialLinks(), []);
+  const socialLinks = useMemo(() => GetSocialLinks(), []);
 
   return (
     <footer className={styles.container} data-testid="footer">

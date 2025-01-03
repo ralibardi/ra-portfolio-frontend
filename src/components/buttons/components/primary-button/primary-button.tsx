@@ -4,7 +4,7 @@ import { IPrimaryButtonProps } from '../../types/primary-button-props';
 
 import styles from '../../assets/primary-button.module.scss';
 
-const PrimaryButton = memo(function primaryButton({
+const PrimaryButton = memo(function PrimaryButton({
   onClick,
   label,
   isLoading,
