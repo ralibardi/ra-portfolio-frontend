@@ -3,15 +3,15 @@ import fs from 'fs/promises';
 import handlebars from 'handlebars';
 import path from 'path';
 
-export async function generateManifest() {
+export async function GenerateManifest() {
   try {
     // Read _colours.scss
     const scssContent = await fs.readFile('src/assets/_colours.scss', 'utf8');
 
     // Extract colour values
     const colours = {
-      primaryColour: extractColour(scssContent, 'primary-1', '#ffffff'),
-      whiteColour: extractColour(scssContent, 'white', '#000000'),
+      primaryColour: ExtractColour(scssContent, 'primary-1', '#ffffff'),
+      whiteColour: ExtractColour(scssContent, 'white', '#000000'),
     };
 
     // Read and compile manifest template
@@ -28,7 +28,7 @@ export async function generateManifest() {
   }
 }
 
-function extractColour(
+function ExtractColour(
   content: string,
   varName: string,
   defaultColour: string,

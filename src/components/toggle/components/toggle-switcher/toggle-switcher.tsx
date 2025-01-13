@@ -20,7 +20,7 @@ const ToggleSwitcher: FunctionComponent<IToggleSwitcherProps> = ({
         [styles.dark]: isChecked,
         [styles.light]: !isChecked,
       }),
-    [checked],
+    [isChecked],
   );
 
   return (

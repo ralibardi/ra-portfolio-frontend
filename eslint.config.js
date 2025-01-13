@@ -78,7 +78,7 @@ export default [
         },
         {
           selector: 'function',
-          format: ['camelCase'],
+          format: ['PascalCase'],
         },
         {
           selector: 'interface',

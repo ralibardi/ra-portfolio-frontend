@@ -4,7 +4,7 @@ import { ISecondaryButtonProps } from '../../types/secondary-button-props';
 
 import styles from '../../assets/secondary-button.module.scss';
 
-const SecondaryButton = memo(function secondaryButton({
+const SecondaryButton = memo(function SecondaryButton({
   onClick,
   label,
   isLoading = false,

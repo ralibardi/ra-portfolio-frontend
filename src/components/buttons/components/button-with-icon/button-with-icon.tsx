@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from '../../assets/button-with-icon.module.scss';
 
-const ButtonWithIcon = memo(function buttonWithIcon({
+const ButtonWithIcon = memo(function ButtonWithIcon({
   icon,
   onClick,
   label,

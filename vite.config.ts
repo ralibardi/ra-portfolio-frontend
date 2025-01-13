@@ -1,7 +1,7 @@
 import { ConfigEnv, UserConfig, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { generateManifest } from './manifestGenerator';
+import { GenerateManifest } from './manifestGenerator';
 import path from 'path';
 import sass from 'sass';
 
@@ -23,7 +23,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       {
         name: 'manifest-generator',
         enforce: 'post',
-        writeBundle: generateManifest,
+        writeBundle: GenerateManifest,
       },
     ],
     css: {

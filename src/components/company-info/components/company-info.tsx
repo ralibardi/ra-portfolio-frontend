@@ -11,7 +11,7 @@ interface ICompanyInfoProps {
   isLabelHidden?: boolean;
 }
 
-const CompanyInfo = memo(function companyInfo({
+const CompanyInfo = memo(function CompanyInfo({
   isLabelHidden = false,
 }: ICompanyInfoProps) {
   const { t } = useTranslation();
