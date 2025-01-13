@@ -1,17 +1,13 @@
 param subscriptionId string
-param resourceGroupName string
 param name string
 param location string
 param hostingPlanName string
-param serverFarmResourceGroup string
 param alwaysOn bool
 param ftpsState string
 param sku string
 param skuCode string
 param workerSize string
-param workerSizeId string
 param numberOfWorkers string
-param currentStack string
 param nodeVersion string
 
 param dnszones_ronny_dev_name string = 'ronny.dev'
@@ -48,6 +44,32 @@ resource actionGroups_Application_Insights_Smart_Detection_name_resource 'micros
         useCommonAlertSchema: true
       }
     ]
+  }
+}
+
+resource hostingPlan 'Microsoft.Web/serverfarms@2023-12-01' = {
+  name: hostingPlanName
+  location: location
+  sku: {
+    name: skuCode
+    tier: sku
+    size: workerSize
+    family: skuCode
+    capacity: int(numberOfWorkers)
+  }
+}
+
+resource webApp 'Microsoft.Web/sites@2023-12-01' = {
+  name: '${name}-app'
+  location: location
+  properties: {
+    serverFarmId: hostingPlan.id
+    siteConfig: {
+      alwaysOn: alwaysOn
+      ftpsState: ftpsState
+      nodeVersion: nodeVersion
+      linuxFxVersion: 'NODE|${nodeVersion}'
+    }
   }
 }
 
@@ -112,12 +134,9 @@ resource name_staticSites_resource 'Microsoft.Web/staticSites@2023-12-01' = {
   }
 }
 
-// ... [The rest of the resources remain unchanged]
-
 resource name_staticSites_default 'Microsoft.Web/staticSites/basicAuth@2023-12-01' = {
   parent: name_staticSites_resource
   name: 'default'
-  location: location
   properties: {
     applicableEnvironmentsMode: 'SpecifiedEnvironments'
   }
@@ -126,13 +145,11 @@ resource name_staticSites_default 'Microsoft.Web/staticSites/basicAuth@2023-12-0
 resource name_staticSites_alibardi_dev 'Microsoft.Web/staticSites/customDomains@2023-12-01' = {
   parent: name_staticSites_resource
   name: 'alibardi.dev'
-  location: location
   properties: {}
 }
 
 resource name_staticSites_ronny_dev 'Microsoft.Web/staticSites/customDomains@2023-12-01' = {
   parent: name_staticSites_resource
   name: 'ronny.dev'
-  location: location
   properties: {}
 }
