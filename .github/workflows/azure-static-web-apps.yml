@@ -26,18 +26,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
 
-      - run: npm ci
+      - name: Install Packages
+        run: pnpm install
 
       - name: Build and Test
         run: |
-          npm run build
-          npm run lint
-          npm run test:coverage
+          pnpm run build
+          pnpm run lint
+          pnpm run test:coverage
         env:
           NODE_ENV: 'production'
 
