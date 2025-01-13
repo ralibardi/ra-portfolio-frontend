@@ -1,13 +1,14 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
   @include flexbox(row, center, center);
   @include size(100vw, 100vh);
   background-color: var(--background-colour);
-  @include font-style(map-get($font-sizes, md), map-get($font-weights, regular));
-  @include transition(background-color map-get($transition, medium));
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
+  @include transition(background-color map.get($transition, medium));
 
   &:hover {
-    animation: pulse map-get($transition, slow) ease-in-out infinite;
+    animation: pulse map.get($transition, slow) ease-in-out infinite;
   }
 }

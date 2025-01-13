@@ -1,15 +1,16 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
-  width: map-get($percentage, 100);
+  width: map.get($percentage, 100);
   @include flexbox(column, center);
   margin-top: auto;
-  padding: map-get($spacing, lg);
+  padding: map.get($spacing, lg);
   background-color: var(--foreground-colour);
 }
 
 .copyright {
   color: var(--text-colour);
-  padding-top: map-get($spacing, xs);
-  @include font-style(map-get($font-sizes, sm));
+  padding-top: map.get($spacing, xs);
+  @include font-style(map.get($font-sizes, sm));
 }

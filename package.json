@@ -19,7 +19,8 @@
     "test:watch": "jest --watch",
     "update:husky": "pnpm update husky lint-staged eslint prettier",
     "clean": "rimraf dist",
-    "clean:all": "rimraf dist node_modules package-lock.json"
+    "clean:all": "rimraf dist node_modules package-lock.json",
+    "sass:migrate": "find . -name '*.scss' -not -path '*node_modules*' -exec sass-migrator module --migrate-deps {} \\;"
   },
   "dependencies": {
     "history": "5.3.0",

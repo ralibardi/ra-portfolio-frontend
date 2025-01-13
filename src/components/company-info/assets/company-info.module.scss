@@ -1,3 +1,4 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
@@ -9,20 +10,20 @@
 .wrapper {
   @include flexbox(row, flex-start, center);
   color: var(--background-colour);
-  font-weight: map-get($font-weights, bold);
+  font-weight: map.get($font-weights, bold);
   text-decoration: none;
-  font-size: map-get($font-sizes, md);
-  padding: 0 map-get($spacing, xs);
-  gap: map-get($spacing, sm);
+  font-size: map.get($font-sizes, md);
+  padding: 0 map.get($spacing, xs);
+  gap: map.get($spacing, sm);
 }
 
 .imageSmall {
-  height: map-get($spacing, xl);
-  width: map-get($spacing, xl);
+  height: map.get($spacing, xl);
+  width: map.get($spacing, xl);
   overflow: hidden;
   object-fit: cover;
-  @include border-radius(map-get($percentage, 50));
-  border: map-get($border, sm) solid var(--background-colour);
+  @include border-radius(map.get($percentage, 50));
+  border: map.get($border, sm) solid var(--background-colour);
 }
 
 .label {

@@ -1,15 +1,16 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .link {
     @include flexbox(row, center, center);
-    @include size(auto, map-get($spacing, xl));
-    padding: map-get($spacing, '2xs') map-get($spacing, sm);
+    @include size(auto, map.get($spacing, xl));
+    padding: map.get($spacing, '2xs') map.get($spacing, sm);
     text-decoration: none;
     color: var(--text-colour);
 
     &:hover,
     &.active {
-        @include border-radius(map-get($spacing, lg));
+        @include border-radius(map.get($spacing, lg));
         width: auto;
     }
 
@@ -27,14 +28,14 @@
     color: var(--text-colour);
 
     .active & {
-        @include font-style(map-get($font-sizes, md), map-get($font-weights, medium), var(--accent-colour));
+        @include font-style(map.get($font-sizes, md), map.get($font-weights, medium), var(--accent-colour));
     }
 }
 
 .label {
     @include flexbox(row, center, center);
-    @include font-style(map-get($font-sizes, md), map-get($font-weights, medium), var(--text-colour));
-    margin-left: map-get($spacing, xs);
+    @include font-style(map.get($font-sizes, md), map.get($font-weights, medium), var(--text-colour));
+    margin-left: map.get($spacing, xs);
     display: none;
 
     .active & {

@@ -1,47 +1,48 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
   @include flexbox(column, center, center);
-  @include size(map-get($percentage, 100), map-get($percentage, 100));
+  @include size(map.get($percentage, 100), map.get($percentage, 100));
   background-color: var(--background-colour);
-  padding: map-get($spacing, xl);
+  padding: map.get($spacing, xl);
   overflow-y: auto;
 
-  @include transition(background-color map-get($transition, fast) ease);
+  @include transition(background-color map.get($transition, fast) ease);
 
-  animation: fadeIn map-get($transition, medium) ease-in-out;
+  animation: fadeIn map.get($transition, medium) ease-in-out;
 }
 
 .content {
   @include flexbox(column, flex-start, center);
-  max-width: map-get($spacing, '4xl');
-  width: map-get($percentage, 100);
-  gap: map-get($spacing, lg);
+  max-width: map.get($spacing, '4xl');
+  width: map.get($percentage, 100);
+  gap: map.get($spacing, lg);
 }
 
 .title {
-  @include font-style(map-get($font-sizes, lg), map-get($font-weights, bold));
-  margin-bottom: map-get($spacing, md);
+  @include font-style(map.get($font-sizes, lg), map.get($font-weights, bold));
+  margin-bottom: map.get($spacing, md);
 }
 
 .description {
-  @include font-style(map-get($font-sizes, md), map-get($font-weights, regular));
-  line-height: map-get($font-heights, normal);
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
+  line-height: map.get($font-heights, normal);
   text-align: center;
 }
 
 .skillsContainer {
   @include flexbox(row, center, center);
   flex-wrap: wrap;
-  gap: map-get($spacing, md);
+  gap: map.get($spacing, md);
 }
 
 .skillItem {
   @include flexbox(column, center, center);
-  @include border-radius(map-get($border, lg));
-  padding: map-get($spacing, sm);
+  @include border-radius(map.get($border, lg));
+  padding: map.get($spacing, sm);
   background-color: var(--light-grey);
-  transition: transform map-get($transition, fast) ease;
+  transition: transform map.get($transition, fast) ease;
 
   &:hover {
     transform: scale(1.05);
@@ -49,10 +50,10 @@
 }
 
 .skillIcon {
-  @include size(map-get($spacing, xl));
-  margin-bottom: map-get($spacing, xs);
+  @include size(map.get($spacing, xl));
+  margin-bottom: map.get($spacing, xs);
 }
 
 .skillName {
-  @include font-style(map-get($font-sizes, sm), map-get($font-weights, medium));
+  @include font-style(map.get($font-sizes, sm), map.get($font-weights, medium));
 }
