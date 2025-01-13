@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: ${{ secrets.NODE_VERSION }}
   CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
   SONAR_ORGANISATION: ${{ secrets.SONAR_ORGANISATION }}
   SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
@@ -24,8 +23,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          node-version: ${{ secrets.NODE_VERSION }}
+          cache: 'pnpm'
 
       - run: npm ci
 
