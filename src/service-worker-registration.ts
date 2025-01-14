@@ -86,12 +86,13 @@ function CheckValidServiceWorker(swUrl: string, config?: Config) {
     .catch(console.error);
 }
 
-export function Unregister() {
+export async function Unregister(): Promise<void> {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready
-      .then((registration) => registration.unregister())
-      .catch((error) => {
-        console.error(error.message);
-      });
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      await registration.unregister();
+    } catch (error) {
+      console.error(error instanceof Error ? error.message : 'Failed to unregister service worker');
+    }
   }
 }
