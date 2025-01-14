@@ -45,9 +45,10 @@ jobs:
         env:
           NODE_ENV: 'test'
 
-      - name: Build and Test
+      - name: Build
         run: |
-          pnpm run test:coverage
+          pnpm run build
+          pnpm run lint
         env:
           NODE_ENV: 'production'
 
