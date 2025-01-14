@@ -94,7 +94,6 @@ jobs:
           app_location: "/"
           output_location: "dist"
           app_artifact_location: "dist"
-          routes_location: "routes.json"
           skip_api_build: true
           deployment_environment: production
 
