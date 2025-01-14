@@ -64,7 +64,7 @@ jobs:
           path: ./coverage
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@master
         env:
           GITHUB_TOKEN: ${{ env.TOKEN_GITHUB }}
           SONAR_TOKEN: ${{ env.TOKEN_SONAR }}
@@ -75,7 +75,7 @@ jobs:
             -Dsonar.projectName=${{ env.SONAR_PROJECT_NAME }}
 
       - name: SonarCloud Quality Gate Check
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ env.TOKEN_SONAR }}
         with:
