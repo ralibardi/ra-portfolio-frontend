@@ -26,16 +26,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-
       - name: Install Node ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
+          
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
 
       - name: Install Packages
         run: pnpm install
@@ -93,6 +93,10 @@ jobs:
           skip_app_build: true
           app_location: "/"
           output_location: "dist"
+          app_artifact_location: "dist"
+          routes_location: "routes.json"
+          skip_api_build: true
+          deployment_environment: production
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
