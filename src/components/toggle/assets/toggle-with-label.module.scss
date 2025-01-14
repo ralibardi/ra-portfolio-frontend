@@ -1,3 +1,4 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
@@ -5,16 +6,16 @@
 }
 
 .label {
-  margin-right: map-get($spacing, sm);
-  @include font-style(map-get($font-sizes, md), map-get($font-weights, medium), var(--text-colour));
+  margin-right: map.get($spacing, sm);
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, medium), var(--text-colour));
 }
 
 .toggle {
   @include flexbox(row, flex-start, center);
-  @include border-radius(map-get($spacing, '4xl'));
-  @include size(map-get($spacing, '2xl'), map-get($spacing, lg));
+  @include border-radius(map.get($spacing, '4xl'));
+  @include size(map.get($spacing, '2xl'), map.get($spacing, lg));
   background-color: var(--light-grey);
-  padding: map-get($spacing, '2xs');
+  padding: map.get($spacing, '2xs');
   cursor: pointer;
   user-select: none;
 
@@ -25,7 +26,7 @@
 }
 
 .switch {
-  @include border-radius(map-get($percentage, 100));
-  @include size(map-get($spacing, md));
+  @include border-radius(map.get($percentage, 100));
+  @include size(map.get($spacing, md));
   background-color: var(--background-colour);
 }

@@ -1,4 +1,4 @@
-@use '@assets/global' as *;
+@use "sass:map";@use '@assets/global' as *;
 
 .container {
   height: 100%;
@@ -6,10 +6,10 @@
 }
 
 .spinner {
-  border: map-get($spacing, sm) var(--accent-colour) double;
+  border: map.get($spacing, sm) var(--accent-colour) double;
   border-left-style: solid;
-  animation: spin map-get($transition, medium) infinite linear;
-  @include border-radius(map-get($percentage, 50));
+  animation: spin map.get($transition, medium) infinite linear;
+  @include border-radius(map.get($percentage, 50));
 }
 
 .auto {
@@ -17,13 +17,13 @@
 }
 
 .small {
-  @include size(map-get($spacing, '2xl'), map-get($spacing, '2xl'));
+  @include size(map.get($spacing, '2xl'), map.get($spacing, '2xl'));
 }
 
 .medium {
-  @include size(map-get($spacing, '3xl'), map-get($spacing, '3xl'));
+  @include size(map.get($spacing, '3xl'), map.get($spacing, '3xl'));
 }
 
 .large {
-  @include size(map-get($spacing, '4xl'), map-get($spacing, '4xl'));
+  @include size(map.get($spacing, '4xl'), map.get($spacing, '4xl'));
 }

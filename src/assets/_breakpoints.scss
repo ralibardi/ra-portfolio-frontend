@@ -1,3 +1,4 @@
+@use "sass:map";
 $breakpoints: (
   'mobile-landscape': (min: 480px, max: 767px),
   'tablet': (min: 768px, max: 991px),
@@ -6,10 +7,10 @@ $breakpoints: (
 );
 
 @mixin breakpoint($size) {
-  @if map-has-key($breakpoints, $size) {
-    $breakpoint: map-get($breakpoints, $size);
-    $min: map-get($breakpoint, min);
-    $max: map-get($breakpoint, max);
+  @if map.has-key($breakpoints, $size) {
+    $breakpoint: map.get($breakpoints, $size);
+    $min: map.get($breakpoint, min);
+    $max: map.get($breakpoint, max);
 
     @if $max {
       @media (min-width: #{$min}) and (max-width: #{$max}) {

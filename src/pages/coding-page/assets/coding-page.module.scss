@@ -1,9 +1,10 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
   @include flexbox(row);
-  @include size(map-get($percentage, 100), map-get($percentage, 100));
+  @include size(map.get($percentage, 100), map.get($percentage, 100));
   background-color: var(--background-colour);
-  @include transition(background-color map-get($transition, fast) ease);
-  animation: fadeIn map-get($transition, medium) ease-in-out;
+  @include transition(background-color map.get($transition, fast) ease);
+  animation: fadeIn map.get($transition, medium) ease-in-out;
 }

@@ -1,12 +1,13 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
   @include flexbox(row, space-between, center);
-  @include border-radius(map-get($spacing, lg));
-  gap: map-get($spacing, xs);
+  @include border-radius(map.get($spacing, lg));
+  gap: map.get($spacing, xs);
   background-color: var(--light-grey);
 }
 
 .padding {
-  padding: map-get($spacing, '3xs') map-get($spacing, lg);
+  padding: map.get($spacing, '3xs') map.get($spacing, lg);
 }

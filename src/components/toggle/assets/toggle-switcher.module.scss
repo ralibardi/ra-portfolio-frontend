@@ -1,20 +1,21 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
-  margin-left: map-get($spacing, md);
+  margin-left: map.get($spacing, md);
   position: relative;
-  padding: map-get($spacing, '2xs') map-get($spacing, xs);
+  padding: map.get($spacing, '2xs') map.get($spacing, xs);
   cursor: pointer;
   aspect-ratio: 1/1;
-  @include size(calc(map-get($spacing, xl) + map-get($spacing, xs)));
+  @include size(calc(map.get($spacing, xl) + map.get($spacing, xs)));
   @include box-shadow(
     0,
     0,
-    map-get($spacing, sm),
-    map-get($spacing, '3xs'),
+    map.get($spacing, sm),
+    map.get($spacing, '3xs'),
     var(--text-colour)
   );
-  @include border-radius(map-get($spacing, xl));
+  @include border-radius(map.get($spacing, xl));
   @include flexbox(row, center, center);
 }
 
@@ -33,18 +34,18 @@
     aspect-ratio: 1/1;
     @include transform(1, -2deg);
     @include box-shadow(
-      map-get($spacing, xs),
-      -#{map-get($spacing, xs)},
+      map.get($spacing, xs),
+      -#{map.get($spacing, xs)},
       0,
       0,
       $white,
       true
     );
-    @include size(calc(map-get($spacing, md) + map-get($spacing, '2xs')));
-    @include border-radius(map-get($percentage, 50));
+    @include size(calc(map.get($spacing, md) + map.get($spacing, '2xs')));
+    @include border-radius(map.get($percentage, 50));
     @include transition(
-      (box-shadow map-get($transition, medium) ease map-get($transition, 0)),
-      (transform map-get($transition, medium) ease map-get($transition, 0))
+      (box-shadow map.get($transition, medium) ease map.get($transition, 0)),
+      (transform map.get($transition, medium) ease map.get($transition, 0))
     );
 
     &::before,
@@ -58,39 +59,39 @@
     &::before {
       left: 0;
       top: 0;
-      @include transition(background map-get($transition, fast) ease);
+      @include transition(background map.get($transition, fast) ease);
       @include border-radius(inherit);
     }
 
     &::after {
-      margin: -#{map-get($spacing, '3xs')} 0 0 -#{map-get($spacing, '3xs')};
+      margin: -#{map.get($spacing, '3xs')} 0 0 -#{map.get($spacing, '3xs')};
       aspect-ratio: 1/1;
 
-      top: map-get($percentage, 50);
-      left: map-get($percentage, 50);
+      top: map.get($percentage, 50);
+      left: map.get($percentage, 50);
 
       box-shadow:
-        0 -#{map-get($spacing, sm)} 0 $black,
-        0 map-get($spacing, sm) 0 $black,
-        map-get($spacing, sm) 0 0 $black,
-        -#{map-get($spacing, sm)} 0 0 $black,
-        map-get($spacing, xs) map-get($spacing, xs) 0 $black,
-        -#{map-get($spacing, xs)} map-get($spacing, xs) 0 $black,
-        map-get($spacing, xs) -#{map-get($spacing, xs)} 0 $black,
-        -#{map-get($spacing, xs)} -#{map-get($spacing, xs)} 0 $black;
+        0 -#{map.get($spacing, sm)} 0 $black,
+        0 map.get($spacing, sm) 0 $black,
+        map.get($spacing, sm) 0 0 $black,
+        -#{map.get($spacing, sm)} 0 0 $black,
+        map.get($spacing, xs) map.get($spacing, xs) 0 $black,
+        -#{map.get($spacing, xs)} map.get($spacing, xs) 0 $black,
+        map.get($spacing, xs) -#{map.get($spacing, xs)} 0 $black,
+        -#{map.get($spacing, xs)} -#{map.get($spacing, xs)} 0 $black;
 
       @include transform(0);
-      @include size(map-get($spacing, '2xs'));
-      @include border-radius(map-get($percentage, 50));
-      @include transition(all map-get($transition, fast) ease);
+      @include size(map.get($spacing, '2xs'));
+      @include border-radius(map.get($percentage, 50));
+      @include transition(all map.get($transition, fast) ease);
     }
   }
 
   &:checked + div {
     @include transform(0.5, 0deg);
     @include box-shadow(
-      map-get($spacing, xl),
-      -#{map-get($spacing, xl)},
+      map.get($spacing, xl),
+      -#{map.get($spacing, xl)},
       0,
       0,
       $black,
@@ -100,14 +101,14 @@
     &::before {
       background: $black;
       @include transition(
-        background map-get($transition, fast) ease map-get($transition, 0)
+        background map.get($transition, fast) ease map.get($transition, 0)
       );
     }
 
     &::after {
       @include transform(1.5);
       @include transition(
-        transform map-get($transition, medium) ease map-get($transition, 0)
+        transform map.get($transition, medium) ease map.get($transition, 0)
       );
     }
   }

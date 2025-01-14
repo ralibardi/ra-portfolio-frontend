@@ -1,14 +1,15 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
     position: fixed;
     top: 0;
-    width: map-get($percentage, 100);
+    width: map.get($percentage, 100);
     @include flexbox(column, space-between, center);
     overflow: hidden;
     background: linear-gradient(var(--foreground-colour), var(--background-colour));
-    backdrop-filter: blur(map-get($spacing, lg));
-    z-index: map-get($z-index, top);
+    backdrop-filter: blur(map.get($spacing, lg));
+    z-index: map.get($z-index, top);
 
     @media (min-width: 480px) {
         @include flexbox(row, space-between, center);
@@ -27,7 +28,7 @@
 .companyInfo,
 .topbar,
 .themeToggle {
-    padding: map-get($spacing, lg);
+    padding: map.get($spacing, lg);
 }
 
 .topbar {

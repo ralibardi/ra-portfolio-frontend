@@ -1,16 +1,17 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
   text-decoration: none;
   @include flexbox(row, flex-start, center);
-  @include size($height: map-get($spacing, lg));
+  @include size($height: map.get($spacing, lg));
 }
 
 .icon {
-  margin-right: map-get($spacing, md);
+  margin-right: map.get($spacing, md);
   color: var(--accent-colour);
-  @include size(map-get($spacing, lg), map-get($spacing, lg));
-  @include transition((color map-get($transition, fast) ease), (box-shadow map-get($transition, fast) ease));
+  @include size(map.get($spacing, lg), map.get($spacing, lg));
+  @include transition((color map.get($transition, fast) ease), (box-shadow map.get($transition, fast) ease));
 
   &:hover {
     color: var(--secondary-colour);
@@ -19,6 +20,6 @@
 }
 
 .label {
-  margin-right: map-get($spacing, md);
-  @include font-style(map-get($font-sizes, md), map-get($font-weights, medium), var(--text-colour));
+  margin-right: map.get($spacing, md);
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, medium), var(--text-colour));
 }

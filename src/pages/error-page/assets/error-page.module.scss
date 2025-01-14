@@ -1,26 +1,27 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .container {
   @include flexbox(column, center, center);
-  @include size(map-get($percentage, 100), map-get($percentage, 100));
+  @include size(map.get($percentage, 100), map.get($percentage, 100));
   background-color: var(--background-colour);
   color: var(--text-colour);
-  padding: map-get($spacing, lg);
-  @include transition(background-color map-get($transition, fast) ease);
-  animation: fadeIn map-get($transition, medium) ease-in-out;
+  padding: map.get($spacing, lg);
+  @include transition(background-color map.get($transition, fast) ease);
+  animation: fadeIn map.get($transition, medium) ease-in-out;
 }
 
 .header {
   @include flexbox(row, center, center);
-  margin-bottom: map-get($spacing, md);
+  margin-bottom: map.get($spacing, md);
 }
 
 .header__title {
-  @include font-style(map-get($font-sizes, lg), map-get($font-weights, bold));
+  @include font-style(map.get($font-sizes, lg), map.get($font-weights, bold));
 }
 
 .description {
-  @include font-style(map-get($font-sizes, md), map-get($font-weights, regular));
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
   text-align: center;
-  line-height: map-get($font-heights, normal);
+  line-height: map.get($font-heights, normal);
 }

@@ -38,3 +38,4 @@ coverage
 # Linters
 .eslintcache
 *storybook.log
+.fake

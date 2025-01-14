@@ -1,7 +1,8 @@
+@use "sass:map";
 @use 'global' as *;
 
 :root {
-  @include font-style(map-get($font-sizes, md), map-get($font-weights, regular));
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -9,9 +10,9 @@
 
 html,
 body {
-  @include size(auto, map-get($percentage, 100));
-  margin: map-get($spacing, 0);
-  padding: map-get($spacing, 0);
+  @include size(auto, map.get($percentage, 100));
+  margin: map.get($spacing, 0);
+  padding: map.get($spacing, 0);
 }
 
 body {
@@ -33,10 +34,10 @@ main {
   display: none;
   position: fixed;
   text-align: center;
-  @include border-radius(map-get($border, xs));
-  border: map-get($border, xs) solid var(--accent-colour);
-  inset: auto map-get($spacing, xs) map-get($spacing, xs);
+  @include border-radius(map.get($border, xs));
+  border: map.get($border, xs) solid var(--accent-colour);
+  inset: auto map.get($spacing, xs) map.get($spacing, xs);
   background: $white;
-  padding: map-get($spacing, xs);
-  z-index: map-get($z-index, top);
+  padding: map.get($spacing, xs);
+  z-index: map.get($z-index, top);
 }

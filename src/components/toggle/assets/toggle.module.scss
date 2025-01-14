@@ -1,14 +1,15 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .toggle {
     background-color: var(--light-grey);
-    padding: map-get($spacing, '2xs');
+    padding: map.get($spacing, '2xs');
     cursor: pointer;
     user-select: none;
     @include flexbox(row, flex-start, center);
-    @include border-radius(map-get($spacing, '4xl'));
-    @include size(map-get($spacing, '2xl'), map-get($spacing, lg));
-    @include transition(background-color map-get($transition, fast) ease);
+    @include border-radius(map.get($spacing, '4xl'));
+    @include size(map.get($spacing, '2xl'), map.get($spacing, lg));
+    @include transition(background-color map.get($transition, fast) ease);
 
     &[data-ison="true"] {
         background-color: var(--accent-colour);
@@ -18,11 +19,11 @@
 
 .switch {
     background-color: var(--background-colour);
-    @include border-radius(map-get($percentage, 100));
-    @include size(map-get($spacing, md));
-    @include transition(transform map-get($transition, fast) ease);
+    @include border-radius(map.get($percentage, 100));
+    @include size(map.get($spacing, md));
+    @include transition(transform map.get($transition, fast) ease);
 
     .toggle[data-ison="true"] & {
-        transform: translateX(map-get($spacing, lg));
+        transform: translateX(map.get($spacing, lg));
     }
 }

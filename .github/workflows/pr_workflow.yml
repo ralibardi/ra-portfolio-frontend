@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: ${{ secrets.NODE_VERSION }}
   CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
   SONAR_ORGANISATION: ${{ secrets.SONAR_ORGANISATION }}
   SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
@@ -22,18 +21,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: 'pnpm'
 
-      - run: npm ci
+      - name: Install Packages
+        run: pnpm install
 
-      - name: Build, Lint, and Test
+      - name: Build and Test
         run: |
-          npm run build:dev
-          npm run lint
-          npm run test:coverage
+          pnpm run build
+          pnpm run lint
+          pnpm run test:coverage
 
       - uses: chromaui/action@latest
         with:

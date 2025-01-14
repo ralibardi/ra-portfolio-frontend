@@ -1,30 +1,31 @@
+@use "sass:map";
 @use '@assets/global' as *;
 
 .button {
-  $button-height: calc(map-get($spacing, xl) + map-get($spacing, '3xs'));
-  @include size(map-get($spacing, '3xl'), $button-height);
+  $button-height: calc(map.get($spacing, xl) + map.get($spacing, '3xs'));
+  @include size(map.get($spacing, '3xl'), $button-height);
   line-height: $button-height;
-  margin: map-get($spacing, md);
-  padding: map-get($spacing, xs) map-get($spacing, md);
+  margin: map.get($spacing, md);
+  padding: map.get($spacing, xs) map.get($spacing, md);
   background-color: var(--background-colour);
-  border: map-get($border, xs) solid var(--grey);
+  border: map.get($border, xs) solid var(--grey);
   cursor: pointer;
   @include transition(border-color);
-  @include border-radius(map-get($border, '3xl'));
+  @include border-radius(map.get($border, '3xl'));
 
   &:hover {
     border-color: var(--accent-colour);
-    @include box-shadow(0, 0, map-get($spacing, lg), map-get($spacing, 0), var(--accent-colour));
+    @include box-shadow(0, 0, map.get($spacing, lg), map.get($spacing, 0), var(--accent-colour));
   }
 }
 
 .label {
-  @include font-style(map-get($font-sizes, md), map-get($font-weights, semi-bold), var(--accent-colour));
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, semi-bold), var(--accent-colour));
   font-family: $font-family;
-  line-height: map-get($font-heights, normal);
+  line-height: map.get($font-heights, normal);
 }
 
 .content {
   @include flexbox(row, center, center);
-  height: map-get($percentage, 100);
+  height: map.get($percentage, 100);
 }
