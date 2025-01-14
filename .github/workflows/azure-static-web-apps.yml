@@ -96,6 +96,7 @@ jobs:
           app_artifact_location: "dist"
           skip_api_build: true
           deployment_environment: production
+          app_excluded_patterns: "node_modules/**"
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
