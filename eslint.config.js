@@ -12,6 +12,9 @@ const __dirname = dirname(__filename);
 
 export default [
   {
+    ignores: ['coverage/**/*']
+  },
+  {
     files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
     languageOptions: {
       globals: {
