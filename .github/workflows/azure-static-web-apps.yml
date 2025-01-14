@@ -91,12 +91,10 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           skip_app_build: true
-          app_location: "/"
-          output_location: "dist"
-          app_artifact_location: "dist"
+          app_location: "dist"
+          app_artifact_location: "."
           skip_api_build: true
           deployment_environment: production
-          app_excluded_patterns: "node_modules/**"
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
