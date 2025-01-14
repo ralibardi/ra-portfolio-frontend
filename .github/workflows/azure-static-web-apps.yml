@@ -94,6 +94,8 @@ jobs:
           api_location: ""
           output_location: "dist"
           node_version: ${{ env.NODE_VERSION }}
+          app_build_command: "pnpm run build"
+          package_manager: pnpm
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
