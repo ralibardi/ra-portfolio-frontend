@@ -23,7 +23,6 @@ const config: Config = {
     '!**/types/**',
     '!**/index.ts',
     '!service-worker.ts',
-    '!service-worker-registration.ts',
   ],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
