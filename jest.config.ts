@@ -20,9 +20,10 @@ const config: Config = {
     '!**/tests/**',
     '!**/config/**',
     '!manifestGenerator.ts',
-    '!**/app/i18n/**',
     '!**/types/**',
     '!**/index.ts',
+    '!service-worker.ts',
+    '!service-worker-registration.ts',
   ],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
