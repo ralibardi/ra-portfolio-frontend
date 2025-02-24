@@ -37,4 +37,51 @@ describe('ErrorPage', () => {
 
     expect(paragraphElement).toBeInTheDocument();
   });
+
+  // Additional tests to increase coverage
+
+  it('does not render error details when no error prop is provided', () => {
+    customRender(<ErrorPage />);
+    expect(screen.queryByTestId('error-details')).not.toBeInTheDocument();
+  });
+
+  it('renders error details with correct content when error prop is provided', async () => {
+    const error = new Error('Test error');
+    error.name = 'TestError';
+    error.stack = 'Test stack trace';
+    customRender(<ErrorPage error={error} />);
+
+    const { detailsElement, summaryElement, stackElement } = await act(() => {
+      const detailsElement = screen.getByTestId('error-details');
+      const summaryElement = screen.getByTestId('error-details-message');
+      const stackElement = screen.getByTestId('error-details-stack');
+      return { detailsElement, summaryElement, stackElement };
+    });
+
+    expect(detailsElement).toBeInTheDocument();
+    expect(summaryElement).toHaveTextContent(`${error.name} - ${error.message}`);
+    expect(stackElement).toHaveTextContent('Test stack trace');
+  });
+
+  it('calls window.history.back when the back button is clicked', async () => {
+    const backSpy = jest.spyOn(window.history, 'back').mockImplementation(() => {});
+    customRender(<ErrorPage />);
+    const { backButton } = await act(() => {
+      const backButton = screen.getByRole('button');
+      return { backButton };
+    });
+    act(() => {
+      backButton.click();
+    });
+    expect(backSpy).toHaveBeenCalled();
+    backSpy.mockRestore();
+  });
+
+  it('matches snapshot when error is provided', () => {
+    const error = new Error('Snapshot error');
+    error.name = 'SnapshotError';
+    error.stack = 'Snapshot stack trace';
+    const { container } = customRender(<ErrorPage error={error} />);
+    expect(container).toMatchSnapshot();
+  });
 });

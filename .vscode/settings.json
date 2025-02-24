@@ -33,5 +33,6 @@
   "files": {
     "autoSave": "onFocusChange",
     "eol": "\n"
-  }
+  },
+  "FSharp.suggestGitignore": false
 }

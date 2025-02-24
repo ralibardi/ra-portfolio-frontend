@@ -3,11 +3,11 @@ import type { Config } from 'jest';
 const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  collectCoverage: false,
+  collectCoverage: true,
   coverageDirectory: 'coverage',
   setupFilesAfterEnv: ['./setupTests.ts'],
   testMatch: ['**/*.test.{js,jsx,ts,tsx}'],
-  transform: {
+    transform: {
     '\\.[jt]sx?$': 'babel-jest',
     '\\.scss$': 'jest-transform-css',
     '\\.(svg|png|jpg|jpeg)$': 'jest-transform-stub',
@@ -16,6 +16,9 @@ const config: Config = {
     'src/**/*.{js,ts,jsx,tsx}',
     '!**/node_modules/**',
     '!**/*.stories.{js,ts,jsx,tsx}',
+    '!**/*.test.{js,ts,jsx,tsx}',
+    '!**/tests/**',
+    '!**/config/**',
     '!manifestGenerator.ts',
     '!**/app/i18n/**',
     '!**/types/**',
@@ -39,7 +42,20 @@ const config: Config = {
     '^@type(.*)$': '<rootDir>/src/type/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
   },
+  transformIgnorePatterns: [
+    '/node_modules/(?!(react-ios-pwa-prompt)/)'
+  ],
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  coverageThreshold: {
+    global: {
+      branches: 65,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
+  },
+  maxWorkers: '50%',
+  testTimeout: 10000,
 };
 
 export default config;

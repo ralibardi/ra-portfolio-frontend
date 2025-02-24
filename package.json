@@ -109,9 +109,14 @@
     "workbox-routing": "7.3.0",
     "workbox-strategies": "7.3.0"
   },
+  "peerDependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "@types/react": "17.0.0"
+  },
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=9.15.3"
+    "pnpm": ">=9.15.2"
   },
   "browserslist": {
     "production": [

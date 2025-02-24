@@ -1,31 +1,55 @@
 import React from 'react';
 import CompanyInfo from './company-info';
 import { customRender, screen } from '@utils/test-utilities';
+import { COMPANY_NAME } from '@app/i18n/keys';
+
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+  }),
+}));
 
 describe('CompanyInfo', () => {
   const renderCompanyInfo = (props = {}) =>
     customRender(<CompanyInfo {...props} />);
 
-  test('should render logo', () => {
+  test('renders company info component', () => {
     renderCompanyInfo();
-    expect(screen.getByTestId('company-info-logo')).toBeInTheDocument();
+    expect(screen.getByTestId('company-info')).toBeInTheDocument();
   });
 
-  test('should render label by default', () => {
+  test('renders logo with correct attributes', () => {
     renderCompanyInfo();
-    expect(screen.getByTestId('company-info-label')).toBeInTheDocument();
+    const logo = screen.getByTestId('company-info-logo');
+    expect(logo).toBeInTheDocument();
+    expect(logo).toHaveAttribute('alt', 'Logo');
+    expect(logo).toHaveClass('imageSmall');
   });
 
-  test('should not render label when isLabelHidden is true', () => {
+  test('renders company name label by default', () => {
+    renderCompanyInfo();
+    const label = screen.getByTestId('company-info-label');
+    expect(label).toBeInTheDocument();
+    expect(label).toHaveTextContent(COMPANY_NAME);
+  });
+
+  test('hides label when isLabelHidden is true', () => {
     renderCompanyInfo({ isLabelHidden: true });
     expect(screen.queryByTestId('company-info-label')).not.toBeInTheDocument();
   });
 
-  test('should render link to home page', () => {
+  test('renders link with correct attributes', () => {
     renderCompanyInfo();
-    expect(screen.getByTestId('company-info-link')).toHaveAttribute(
-      'href',
-      '/',
-    );
+    const link = screen.getByTestId('company-info-link');
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/');
+    expect(link).toHaveClass('wrapper');
+  });
+
+  test('renders all elements in correct container', () => {
+    renderCompanyInfo();
+    const container = screen.getByTestId('company-info');
+    expect(container).toHaveClass('container');
+    expect(container).toContainElement(screen.getByTestId('company-info-link'));
   });
 });
