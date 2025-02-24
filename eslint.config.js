@@ -42,7 +42,7 @@ export default [
       storybook,
     },
     rules: {
-      'prettier/prettier': ['error', { endOfLine: 'crlf' }],
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
       'no-unused-vars': 'off',
       'no-undef': 'off',
       'react-hooks/rules-of-hooks': 'error',
@@ -57,7 +57,6 @@ export default [
       '@typescript-eslint/no-unsafe-argument': 'error',
       '@typescript-eslint/no-unsafe-assignment': 'error',
       '@typescript-eslint/require-await': 'error',
-      '@/no-extra-semi': 'warn',
       '@typescript-eslint/naming-convention': [
         'error',
         {
