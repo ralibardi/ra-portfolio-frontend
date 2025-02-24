@@ -12,7 +12,7 @@ const __dirname = dirname(__filename);
 
 export default [
   {
-    ignores: ['coverage/**/*']
+    ignores: ['coverage/**/*'],
   },
   {
     files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
@@ -102,7 +102,7 @@ export default [
         },
       ],
     },
-    ignores: ['dist/**', '.storybook/**', 'eslint.config.js'],
+    ignores: ['dist/**', '.storybook/**', 'eslint.config.js', 'coverage/**/*'],
     settings: {
       react: {
         version: 'detect',

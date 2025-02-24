@@ -1,5 +1,22 @@
 import { Register, Unregister } from './service-worker-registration';
 
+interface IServiceWorkerMock {
+  state: string;
+  onstatechange: ((event: Event) => void) | null;
+}
+
+interface IServiceWorkerRegistrationMock {
+  installing: IServiceWorkerMock | null;
+  onupdatefound: (() => void) | null;
+  unregister?: () => Promise<boolean>;
+}
+
+interface INavigatorServiceWorkerMock {
+  register: (url: string) => Promise<IServiceWorkerRegistrationMock>;
+  controller?: object;
+  ready: Promise<IServiceWorkerRegistrationMock>;
+}
+
 describe('Service Worker Registration', () => {
   const originalEnv = { ...process.env };
   const originalLocation = window.location;
@@ -11,10 +28,18 @@ describe('Service Worker Registration', () => {
     Object.defineProperty(window, 'location', {
       configurable: true,
       writable: true,
-      value: { hostname: 'example.com', href: 'http://example.com', origin: 'http://example.com' },
+      value: {
+        hostname: 'example.com',
+        href: 'http://example.com',
+        origin: 'http://example.com',
+      },
     });
     // Clear any previous mocks on navigator.serviceWorker and fetch.
-    (navigator as any).serviceWorker = undefined;
+    (
+      navigator as unknown as {
+        serviceWorker: INavigatorServiceWorkerMock | undefined;
+      }
+    ).serviceWorker = undefined;
     // Mock fetch globally
     global.fetch = jest.fn(() =>
       Promise.resolve({
@@ -39,7 +64,15 @@ describe('Service Worker Registration', () => {
       const onUpdate = jest.fn();
       const registerSpy = jest.fn();
       // Even if serviceWorker exists, the ENV check should prevent registration.
-      (navigator as any).serviceWorker = { register: registerSpy };
+      (
+        navigator as unknown as { serviceWorker: INavigatorServiceWorkerMock }
+      ).serviceWorker = {
+        register: registerSpy,
+        ready: Promise.resolve({
+          installing: null,
+          onupdatefound: null,
+        } as IServiceWorkerRegistrationMock),
+      };
 
       Register({ onSuccess, onUpdate });
       window.dispatchEvent(new Event('load'));
@@ -55,25 +88,35 @@ describe('Service Worker Registration', () => {
       Object.defineProperty(window, 'location', {
         configurable: true,
         writable: true,
-        value: { hostname: 'example.com', href: 'http://example.com', origin: 'http://example.com' },
+        value: {
+          hostname: 'example.com',
+          href: 'http://example.com',
+          origin: 'http://example.com',
+        },
       });
 
       const onSuccess = jest.fn();
       const onUpdate = jest.fn();
 
       // Create a fake worker and registration object.
-      const fakeWorker: any = { state: '', onstatechange: null };
-      const fakeRegistration: any = {
+      const fakeWorker: IServiceWorkerMock = { state: '', onstatechange: null };
+      const fakeRegistration: IServiceWorkerRegistrationMock = {
         installing: null,
         onupdatefound: null,
       };
 
-      const registerMock = jest.fn().mockImplementation((swUrl: string) => {
+      const registerMock = jest.fn().mockImplementation((_: string) => {
         return Promise.resolve(fakeRegistration);
       });
-      (navigator as any).serviceWorker = { 
+      (
+        navigator as unknown as { serviceWorker: INavigatorServiceWorkerMock }
+      ).serviceWorker = {
         register: registerMock,
-        ready: Promise.resolve(fakeRegistration)
+        ready: Promise.resolve({
+          installing: null,
+          onupdatefound: null,
+          unregister: jest.fn(),
+        } as IServiceWorkerRegistrationMock),
       };
 
       Register({ onSuccess, onUpdate });
@@ -91,7 +134,7 @@ describe('Service Worker Registration', () => {
       // Now simulate the worker state change to "installed".
       fakeWorker.state = 'installed';
       if (typeof fakeWorker.onstatechange === 'function') {
-        fakeWorker.onstatechange();
+        fakeWorker.onstatechange(new Event('statechange'));
       }
 
       // Wait for all state change promises to resolve
@@ -109,20 +152,26 @@ describe('Service Worker Registration', () => {
       const onSuccess = jest.fn();
       const onUpdate = jest.fn();
 
-      const fakeWorker: any = { state: '', onstatechange: null };
-      const fakeRegistration: any = {
+      const fakeWorker: IServiceWorkerMock = { state: '', onstatechange: null };
+      const fakeRegistration: IServiceWorkerRegistrationMock = {
         installing: null,
         onupdatefound: null,
       };
 
-      const registerMock = jest.fn().mockImplementation((swUrl: string) => {
+      const registerMock = jest.fn().mockImplementation((_: string) => {
         return Promise.resolve(fakeRegistration);
       });
       // Simulate that a controller exists.
-      (navigator as any).serviceWorker = {
+      (
+        navigator as unknown as { serviceWorker: INavigatorServiceWorkerMock }
+      ).serviceWorker = {
         register: registerMock,
         controller: {},
-        ready: Promise.resolve(fakeRegistration)
+        ready: Promise.resolve({
+          installing: null,
+          onupdatefound: null,
+          unregister: jest.fn(),
+        } as IServiceWorkerRegistrationMock),
       };
 
       Register({ onSuccess, onUpdate });
@@ -138,7 +187,7 @@ describe('Service Worker Registration', () => {
 
       fakeWorker.state = 'installed';
       if (typeof fakeWorker.onstatechange === 'function') {
-        fakeWorker.onstatechange();
+        fakeWorker.onstatechange(new Event('statechange'));
       }
 
       // Wait for all state change promises to resolve
@@ -156,24 +205,34 @@ describe('Service Worker Registration', () => {
       Object.defineProperty(window, 'location', {
         configurable: true,
         writable: true,
-        value: { hostname: 'localhost', href: 'http://localhost', origin: 'http://localhost' },
+        value: {
+          hostname: 'localhost',
+          href: 'http://localhost',
+          origin: 'http://localhost',
+        },
       });
 
       const onSuccess = jest.fn();
       const onUpdate = jest.fn();
 
-      const fakeWorker: any = { state: '', onstatechange: null };
-      const fakeRegistration: any = {
+      const fakeWorker: IServiceWorkerMock = { state: '', onstatechange: null };
+      const fakeRegistration: IServiceWorkerRegistrationMock = {
         installing: null,
         onupdatefound: null,
       };
 
-      const registerMock = jest.fn().mockImplementation((swUrl: string) => {
+      const registerMock = jest.fn().mockImplementation((_: string) => {
         return Promise.resolve(fakeRegistration);
       });
-      (navigator as any).serviceWorker = { 
+      (
+        navigator as unknown as { serviceWorker: INavigatorServiceWorkerMock }
+      ).serviceWorker = {
         register: registerMock,
-        ready: Promise.resolve(fakeRegistration)
+        ready: Promise.resolve({
+          installing: null,
+          onupdatefound: null,
+          unregister: jest.fn(),
+        } as IServiceWorkerRegistrationMock),
       };
 
       Register({ onSuccess, onUpdate });
@@ -194,7 +253,7 @@ describe('Service Worker Registration', () => {
 
       fakeWorker.state = 'installed';
       if (typeof fakeWorker.onstatechange === 'function') {
-        fakeWorker.onstatechange();
+        fakeWorker.onstatechange(new Event('statechange'));
       }
 
       // Wait for all promises to resolve
@@ -212,12 +271,18 @@ describe('Service Worker Registration', () => {
 
       const errorMsg = 'Registration failed';
       const registerMock = jest.fn().mockRejectedValue(new Error(errorMsg));
-      (navigator as any).serviceWorker = { 
+      (
+        navigator as unknown as { serviceWorker: INavigatorServiceWorkerMock }
+      ).serviceWorker = {
         register: registerMock,
-        ready: Promise.resolve({ unregister: jest.fn() })
+        ready: Promise.resolve({
+          unregister: jest.fn().mockRejectedValue(new Error(errorMsg)),
+        } as unknown as IServiceWorkerRegistrationMock),
       };
 
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleErrorSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       Register();
       window.dispatchEvent(new Event('load'));
@@ -226,7 +291,10 @@ describe('Service Worker Registration', () => {
       await new Promise(process.nextTick);
 
       expect(registerMock).toHaveBeenCalledWith('public/service-worker.js');
-      expect(consoleErrorSpy).toHaveBeenCalledWith('Error during service worker registration:', expect.any(Error));
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Error during service worker registration:',
+        expect.any(Error),
+      );
 
       consoleErrorSpy.mockRestore();
     });
@@ -234,9 +302,16 @@ describe('Service Worker Registration', () => {
 
   describe('Unregister', () => {
     it('should unregister the service worker if registration exists', async () => {
-      const unregisterMock = jest.fn().mockResolvedValue(undefined);
-      (navigator as any).serviceWorker = {
-        ready: Promise.resolve({ unregister: unregisterMock }),
+      const unregisterMock = jest.fn().mockResolvedValue(true);
+      (
+        navigator as unknown as { serviceWorker: INavigatorServiceWorkerMock }
+      ).serviceWorker = {
+        ready: Promise.resolve({
+          installing: null,
+          onupdatefound: null,
+          unregister: unregisterMock,
+        } as unknown as IServiceWorkerRegistrationMock),
+        register: jest.fn(),
       };
 
       await Unregister();
@@ -245,17 +320,22 @@ describe('Service Worker Registration', () => {
 
     it('should log an error when unregister fails', async () => {
       const error = new Error('Unregister failed');
-      (navigator as any).serviceWorker = {
+      (
+        navigator as unknown as { serviceWorker: INavigatorServiceWorkerMock }
+      ).serviceWorker = {
         ready: Promise.reject(error),
+        register: jest.fn(),
       };
 
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleErrorSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
       await Unregister();
-      
+
       // Wait for all promises to resolve
       await Promise.resolve();
       await Promise.resolve();
-      
+
       expect(consoleErrorSpy).toHaveBeenCalledWith(error.message);
 
       consoleErrorSpy.mockRestore();

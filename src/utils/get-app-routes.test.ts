@@ -30,7 +30,7 @@ describe('getAppRoutes', () => {
   });
 
   it('should have correct properties for the home route', () => {
-    const homeRoute = getAppRoutes.find(route => route.path === homePagePath);
+    const homeRoute = getAppRoutes.find((route) => route.path === homePagePath);
     expect(homeRoute).toBeDefined();
     expect(homeRoute?.index).toBe(true);
     expect(homeRoute?.labelKey).toBe(PAGES.HOME.NAME);
@@ -41,7 +41,9 @@ describe('getAppRoutes', () => {
   });
 
   it('should have correct properties for the coding route', () => {
-    const codingRoute = getAppRoutes.find(route => route.path === codingPagePath);
+    const codingRoute = getAppRoutes.find(
+      (route) => route.path === codingPagePath,
+    );
     expect(codingRoute).toBeDefined();
     expect(codingRoute?.index).toBe(true);
     expect(codingRoute?.labelKey).toBe(PAGES.CODING.NAME);
@@ -52,7 +54,7 @@ describe('getAppRoutes', () => {
 
   it('should have correct properties for the photography route', () => {
     const photographyRoute = getAppRoutes.find(
-      route => route.path === photographyPagePath
+      (route) => route.path === photographyPagePath,
     );
     expect(photographyRoute).toBeDefined();
     expect(photographyRoute?.index).toBe(true);
@@ -63,7 +65,9 @@ describe('getAppRoutes', () => {
   });
 
   it('should have correct properties for the gaming route', () => {
-    const gamingRoute = getAppRoutes.find(route => route.path === gamingPagePath);
+    const gamingRoute = getAppRoutes.find(
+      (route) => route.path === gamingPagePath,
+    );
     expect(gamingRoute).toBeDefined();
     expect(gamingRoute?.index).toBe(true);
     expect(gamingRoute?.labelKey).toBe(PAGES.GAMING.NAME);
@@ -73,7 +77,9 @@ describe('getAppRoutes', () => {
   });
 
   it('should have correct properties for the about route', () => {
-    const aboutRoute = getAppRoutes.find(route => route.path === aboutPagePath);
+    const aboutRoute = getAppRoutes.find(
+      (route) => route.path === aboutPagePath,
+    );
     expect(aboutRoute).toBeDefined();
     expect(aboutRoute?.index).toBe(true);
     expect(aboutRoute?.labelKey).toBe(PAGES.ABOUT.NAME);
@@ -84,7 +90,7 @@ describe('getAppRoutes', () => {
 
   it('should have correct properties for the contact route', () => {
     const contactRoute = getAppRoutes.find(
-      route => route.path === contactPagePath
+      (route) => route.path === contactPagePath,
     );
     expect(contactRoute).toBeDefined();
     expect(contactRoute?.index).toBe(true);
@@ -95,7 +101,7 @@ describe('getAppRoutes', () => {
   });
 
   it('should have correct properties for the cv route', () => {
-    const cvRoute = getAppRoutes.find(route => route.path === cvPagePath);
+    const cvRoute = getAppRoutes.find((route) => route.path === cvPagePath);
     expect(cvRoute).toBeDefined();
     expect(cvRoute?.index).toBe(true);
     expect(cvRoute?.labelKey).toBe(PAGES.CV.NAME);
@@ -105,7 +111,9 @@ describe('getAppRoutes', () => {
   });
 
   it('should have correct properties for the health route', () => {
-    const healthRoute = getAppRoutes.find(route => route.path === healthPagePath);
+    const healthRoute = getAppRoutes.find(
+      (route) => route.path === healthPagePath,
+    );
     expect(healthRoute).toBeDefined();
     expect(healthRoute?.index).toBe(true);
     expect(healthRoute?.labelKey).toBe(PAGES.HEALTH.NAME);
@@ -115,7 +123,9 @@ describe('getAppRoutes', () => {
   });
 
   it('should have correct properties for the error route', () => {
-    const errorRoute = getAppRoutes.find(route => route.path === errorPagePath);
+    const errorRoute = getAppRoutes.find(
+      (route) => route.path === errorPagePath,
+    );
     expect(errorRoute).toBeDefined();
     expect(errorRoute?.index).toBe(true);
     expect(errorRoute?.labelKey).toBe(PAGES.ERROR.NAME);

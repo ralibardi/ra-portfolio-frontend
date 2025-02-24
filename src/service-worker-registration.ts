@@ -35,7 +35,10 @@ export function Register(config?: Config) {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
       if (isLocalhost) {
         CheckValidServiceWorker(swUrl, config);
-        if (navigator.serviceWorker.ready && typeof navigator.serviceWorker.ready.catch === 'function') {
+        if (
+          'ready' in navigator.serviceWorker &&
+          typeof navigator.serviceWorker.ready.catch === 'function'
+        ) {
           navigator.serviceWorker.ready.catch(console.error);
         }
       } else {

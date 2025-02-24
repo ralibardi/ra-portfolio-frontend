@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 // Mock PWAPrompt component
 jest.mock('react-ios-pwa-prompt', () => ({
   __esModule: true,
-  default: () => null
+  default: () => null,
 }));
 
 describe('Main Entry (src/main.tsx)', () => {
@@ -25,10 +25,15 @@ describe('Main Entry (src/main.tsx)', () => {
     });
 
     // Wait for the App component (with data-testid="app-container") to appear
-    await waitFor(() => {
-      const appContainer = document.querySelector('[data-testid="app-container"]');
-      expect(appContainer).toBeInTheDocument();
-    }, { timeout: 3000 }); // Increase timeout to allow for React.Suspense
+    await waitFor(
+      () => {
+        const appContainer = document.querySelector(
+          '[data-testid="app-container"]',
+        );
+        expect(appContainer).toBeInTheDocument();
+      },
+      { timeout: 3000 },
+    ); // Increase timeout to allow for React.Suspense
   });
 
   it('populates the #root element with rendered content', async () => {
@@ -37,9 +42,12 @@ describe('Main Entry (src/main.tsx)', () => {
     });
 
     // Wait for the root element to be populated
-    await waitFor(() => {
-      const rootElement = document.getElementById('root');
-      expect(rootElement).not.toBeNull();
-    }, { timeout: 3000 }); // Increase timeout to allow for React.Suspense
+    await waitFor(
+      () => {
+        const rootElement = document.getElementById('root');
+        expect(rootElement).not.toBeNull();
+      },
+      { timeout: 3000 },
+    ); // Increase timeout to allow for React.Suspense
   });
 });

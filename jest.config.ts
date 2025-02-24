@@ -7,7 +7,7 @@ const config: Config = {
   coverageDirectory: 'coverage',
   setupFilesAfterEnv: ['./setupTests.ts'],
   testMatch: ['**/*.test.{js,jsx,ts,tsx}'],
-    transform: {
+  transform: {
     '\\.[jt]sx?$': 'babel-jest',
     '\\.scss$': 'jest-transform-css',
     '\\.(svg|png|jpg|jpeg)$': 'jest-transform-stub',
@@ -42,9 +42,7 @@ const config: Config = {
     '^@type(.*)$': '<rootDir>/src/type/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
   },
-  transformIgnorePatterns: [
-    '/node_modules/(?!(react-ios-pwa-prompt)/)'
-  ],
+  transformIgnorePatterns: ['/node_modules/(?!(react-ios-pwa-prompt)/)'],
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   coverageThreshold: {
     global: {
