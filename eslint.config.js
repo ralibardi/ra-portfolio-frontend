@@ -56,10 +56,8 @@ export default [
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
       '@typescript-eslint/no-unsafe-argument': 'error',
       '@typescript-eslint/no-unsafe-assignment': 'error',
-      'require-await': 'off',
       '@typescript-eslint/require-await': 'error',
-      'no-extra-semi': 'off',
-      '@/no-extra-semi': 'error',
+      '@/no-extra-semi': 'warn',
       '@typescript-eslint/naming-convention': [
         'error',
         {
