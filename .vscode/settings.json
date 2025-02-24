@@ -8,7 +8,7 @@
     "patterns": {
       "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, .env",
       "manifestGenerator.*": "manifest.hbs",
-      "vite.config.ts": "eslint.*, .gitignore, .prettierrc.*, .babelrc, .editorconfig, commitlint.*, sonar-project.*, web.*,.npmrc,chromatic.*",
+      "vite.config.ts": "eslint.*, .gitignore, .prettierrc, .babelrc, .editorconfig, commitlint.*, sonar-project.*, web.*,.npmrc,chromatic.*",
       "index.html": "README.md",
       "jest.config.ts": "setupTests.ts",
       "*.{js,ts,jsx,tsx}": "${capture}.{js.map,min.js,d.ts,js,ts,jsx,tsx,stories.*,test.*,scss}"
