@@ -13,18 +13,19 @@ jest.mock('react', () => {
   const originalReact = jest.requireActual('react');
   return {
     ...originalReact,
-    Suspense: ({ children }: { children: React.ReactNode }) => children,
+    Suspense: ({ children }: { children: React.ReactNode }): React.ReactNode =>
+      children,
   };
 });
 
 describe('HomePage', () => {
-  it('renders without crashing', async () => {
+  it('renders without crashing', () => {
     render(<HomePage />);
     const container = screen.getByTestId('container');
     expect(container).toBeInTheDocument();
   });
 
-  it('displays the construction message', async () => {
+  it('displays the construction message', () => {
     render(<HomePage />);
     const heading = screen.getByRole('heading', {
       name: /under construction/i,
@@ -35,13 +36,13 @@ describe('HomePage', () => {
     expect(message).toBeInTheDocument();
   });
 
-  it('applies correct styles to container', async () => {
+  it('applies correct styles to container', () => {
     render(<HomePage />);
     const container = screen.getByTestId('container');
     expect(container).toHaveClass('container');
   });
 
-  it('applies correct styles to construction message', async () => {
+  it('applies correct styles to construction message', () => {
     render(<HomePage />);
     const message = screen.getByText(/thank you for your patience/i);
     const messageContainer = message.closest('div');
