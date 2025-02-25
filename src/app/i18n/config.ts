@@ -17,6 +17,15 @@ i18n
       order: ['navigator', 'htmlTag', 'path', 'subdomain'],
       caches: ['localStorage', 'cookie'],
     },
+    backend: {
+      loadPath:
+        process.env.NODE_ENV === 'production'
+          ? `${window.location.origin}/locales/{{lng}}/{{ns}}.json`
+          : '/locales/{{lng}}/{{ns}}.json',
+      requestOptions: {
+        cache: 'no-store',
+      },
+    },
     load: 'languageOnly',
   })
   .catch(console.error);

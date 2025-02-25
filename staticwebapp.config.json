@@ -1,0 +1,24 @@
+{
+  "routes": [
+    {
+      "route": "/locales/*",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "expires": "0"
+      }
+    },
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/locales/*"]
+  },
+  "mimeTypes": {
+    ".json": "application/json"
+  }
+}
