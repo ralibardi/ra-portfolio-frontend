@@ -8,7 +8,7 @@ i18n
   .use(HttpApi)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en',
+    fallbackLng: 'en-GB',
     debug: process.env.NODE_ENV === 'development',
     interpolation: {
       escapeValue: false,

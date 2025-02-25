@@ -1,7 +1,7 @@
 ﻿import '@testing-library/jest-dom';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import englishTranslation from './public/locales/en/translation.json';
+import englishTranslation from './public/locales/en-GB/translation.json';
 
 // Force NODE_ENV to be 'test' during tests
 process.env.NODE_ENV = 'test';
