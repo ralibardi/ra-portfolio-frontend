@@ -7,6 +7,13 @@ import styles from '../assets/home-page.module.scss';
 const HomePage: FunctionComponent = () => {
   return (
     <div className={styles.container}>
+      <div className={styles.constructionMessage}>
+        <h1>Under Construction</h1>
+        <p>
+          Thank you for your patience. The website is currently under
+          development and will be available soon.
+        </p>
+      </div>
       <Suspense fallback={<Loading />}>
         <Loading />
       </Suspense>
