@@ -17,6 +17,7 @@ i18n
       order: ['navigator', 'htmlTag', 'path', 'subdomain'],
       caches: ['localStorage', 'cookie'],
     },
+    load: 'languageOnly',
   })
   .catch(console.error);
 
