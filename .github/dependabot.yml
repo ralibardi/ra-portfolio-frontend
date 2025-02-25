@@ -1,0 +1,43 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: 'npm'
+    # Look for `package.json` and `lock` files in the `root` directory
+    directory: '/'
+    # Check for updates once a week (on Monday)
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+    # Specify labels for npm pull requests
+    labels:
+      - 'npm'
+      - 'dependencies'
+    # Set a limit on the number of open PRs Dependabot can have
+    open-pull-requests-limit: 10
+    # Set the version update strategy
+    versioning-strategy: auto
+    # Allow up-to-date dependencies to be maintained
+    allow:
+      # Allow updates for development dependencies
+      - dependency-type: 'development'
+      # Allow updates for production dependencies
+      - dependency-type: 'production'
+    # Ignore certain dependencies (optional)
+    # ignore:
+    #   - dependency-name: "react"
+    #   - dependency-name: "react-dom"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: 'github-actions'
+    # Look for GitHub Actions workflow files in the `.github/workflows` directory
+    directory: '/'
+    # Check for updates once a week
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+    # Specify labels for GitHub Actions pull requests
+    labels:
+      - 'github-actions'
+      - 'dependencies'
+    # Set a limit on the number of open PRs Dependabot can have
+    open-pull-requests-limit: 5
