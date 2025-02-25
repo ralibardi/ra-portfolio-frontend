@@ -22,7 +22,9 @@ const config: Config = {
     '!manifestGenerator.ts',
     '!**/types/**',
     '!**/index.ts',
-    '!service-worker.ts',
+    '!src/service-worker.ts',
+    '!src/service-worker-registration.ts',
+    '!src/main.tsx',
   ],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
