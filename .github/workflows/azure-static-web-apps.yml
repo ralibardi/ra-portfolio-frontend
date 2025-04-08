@@ -19,8 +19,6 @@ on:
         required: true
       CHROMATIC_PROJECT_TOKEN:
         required: true
-      TOKEN_GITHUB:
-        required: true
       TOKEN_SONAR:
         required: true
       SONAR_ORGANISATION:
