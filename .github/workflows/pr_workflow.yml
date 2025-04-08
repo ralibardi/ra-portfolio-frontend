@@ -11,13 +11,13 @@ on:
       pnpm-version:
         required: false
         type: string
-        default: '9.15.3' # Or your desired default
+        default: '9.15.3'
     secrets:
       NODE_VERSION:
         required: true
       CHROMATIC_PROJECT_TOKEN:
         required: true
-      TOKEN_GITHUB: # Needed for SonarCloud PR decoration
+      TOKEN_GITHUB:
         required: true
       TOKEN_SONAR:
         required: true
@@ -36,7 +36,7 @@ env:
   SONAR_ORGANISATION: ${{ secrets.SONAR_ORGANISATION }}
   SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
   SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }}
- 
+
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
@@ -107,4 +107,4 @@ jobs:
             -Dsonar.projectName=${{ env.SONAR_PROJECT_NAME }}
             -Dsonar.qualitygate.wait=true
             -Dsonar.coverage.exclusions=src/setupTests.ts,src/reportWebVitals.ts,src/index.tsx
-            -Dsonar.typescript.lcov.reportPaths=./coverage/lcov.info # Point to the LCOV report
+            -Dsonar.typescript.lcov.reportPaths=./coverage/lcov.info
