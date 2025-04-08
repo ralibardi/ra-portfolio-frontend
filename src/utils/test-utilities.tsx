@@ -38,7 +38,7 @@ const customRenderHook = <TProps extends IAllProvidersProps, TResult>(
   options?: RenderHookOptions<TProps>,
 ): RenderHookResult<TResult, TProps> =>
   renderHook(callback, {
-    wrapper: AllProviders as ComponentType<TProps>,
+    wrapper: (props) => <AllProviders {...props} />,
     ...options,
   });
 
