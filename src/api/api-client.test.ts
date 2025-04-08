@@ -73,7 +73,7 @@ describe('ApiClient', () => {
 
   it('should make a GET request with authorization header if token exists', async () => {
     // Setup token in localStorage under the correct key 'auth_token'
-    localStorageMock.getItem.mockImplementation((key) => {
+    localStorageMock.getItem.mockImplementation((key: string) => {
       if (key === 'auth_token') return 'test-token';
       return null;
     });

@@ -60,6 +60,9 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: 0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@19.0.0)
+      '@jest/globals':
+        specifier: 29.7.0
+        version: 29.7.0
       '@prettier/plugin-pug':
         specifier: 3.2.0
         version: 3.2.0(prettier@3.4.2)
