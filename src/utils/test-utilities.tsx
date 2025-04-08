@@ -16,7 +16,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { ThemeProvider } from '@contexts/theme-context';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 
 interface IAllProvidersProps {
   children: ReactNode;

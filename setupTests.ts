@@ -1,7 +1,13 @@
-﻿import '@testing-library/jest-dom';
+import '@testing-library/jest-dom';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import englishTranslation from './public/locales/en-GB/translation.json';
+
+import { TextEncoder, TextDecoder } from 'util';
+
+// Polyfill TextEncoder and TextDecoder for Jest environment
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 
 // Force NODE_ENV to be 'test' during tests
 process.env.NODE_ENV = 'test';

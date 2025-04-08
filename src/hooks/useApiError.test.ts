@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { useApiError } from './useApiError';
 import { ApiError } from '@api/api-client';
 
