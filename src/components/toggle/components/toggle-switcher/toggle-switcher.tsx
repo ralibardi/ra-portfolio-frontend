@@ -29,6 +29,7 @@ const ToggleSwitcher: FunctionComponent<IToggleSwitcherProps> = ({
       data-testid="toggle-label"
       htmlFor="toggle-input"
       id="toggle-switcher"
+      aria-label="Dark mode toggle"
     >
       <input
         type="checkbox"
@@ -36,6 +37,7 @@ const ToggleSwitcher: FunctionComponent<IToggleSwitcherProps> = ({
         data-testid="toggle-input"
         checked={isChecked}
         onChange={onChange}
+        aria-label="Dark mode switcher"
       />
       <div />
     </label>

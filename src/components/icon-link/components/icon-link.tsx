@@ -4,7 +4,7 @@ import { IIconLinkProps } from '../types/icon-link-props';
 import styles from '../assets/icon-link.module.scss';
 
 const IconLink = memo(({ icon, linkUrl, title }: IIconLinkProps) => {
-  const ariaLabel = title || icon?.iconName || 'Link';
+  const ariaLabel = title ?? icon?.iconName ?? 'Link';
 
   return (
     <a
