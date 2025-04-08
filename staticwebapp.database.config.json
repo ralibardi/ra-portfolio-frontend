@@ -1,0 +1,10 @@
+{
+  "type": "cosmos",
+  "database": "portfolio",
+  "container": "Projects",
+  "connection": {
+    "kind": "cosmosDB",
+    "resource": "ra-portfolio-db-prod",
+    "resourceGroup": "RA-Portfolio"
+  }
+}
