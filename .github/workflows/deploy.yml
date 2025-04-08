@@ -2,9 +2,12 @@ name: Build Frontend Artifacts
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    types: [closed]
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
   workflow_call:
     inputs:
       node-version:
