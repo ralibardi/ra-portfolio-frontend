@@ -1,4 +1,4 @@
-name: Azure Static Web Apps CI/CD
+name: Build Frontend Artifacts
 
 on:
   push:
@@ -8,51 +8,163 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      pnpm-version:
+        required: false
+        type: string
+        default: '9.15.3'
+    secrets:
+      NODE_VERSION:
+        required: true
+      CHROMATIC_PROJECT_TOKEN:
+        required: true
+      TOKEN_SONAR:
+        required: true
+      SONAR_ORGANISATION:
+        required: true
+      SONAR_PROJECT_KEY:
+        required: true
+      SONAR_PROJECT_NAME:
+        required: true
+
+env:
+  NODE_VERSION: ${{ secrets.NODE_VERSION }}
+  CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+  TOKEN_SONAR: ${{ secrets.TOKEN_SONAR }}
+  SONAR_ORGANISATION: ${{ secrets.SONAR_ORGANISATION }}
+  SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+  SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }}
+  PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
+  API_URL: ${{ secrets.API_URL }}
+  AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
 
 jobs:
-  build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+  build_and_test:
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
-    permissions:
-       id-token: write
-       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          submodules: true
-          lfs: false
-      - name: Install OIDC Client from Core Package
-        run: npm install @actions/core@1.6.0 @actions/http-client
-      - name: Get Id Token
-        uses: actions/github-script@v6
-        id: idtoken
-        with:
-           script: |
-               const coredemo = require('@actions/core')
-               return await coredemo.getIDToken()
-           result-encoding: string
-      - name: Build And Deploy
-        id: builddeploy
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_KIND_OCEAN_010BE9B03 }}
-          action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "build" # Built app content directory - optional
-          github_id_token: ${{ steps.idtoken.outputs.result }}
-          ###### End of Repository/Build Configurations ######
+          fetch-depth: 0
 
-  close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ inputs.pnpm-version }}
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install Packages
+        run: pnpm install
+
+      - name: Build
+        run: |
+          pnpm run build
+          pnpm run lint
+        env:
+          NODE_ENV: 'production'
+
+      - name: Test
+        run: pnpm run test:coverage
+        env:
+          NODE_ENV: 'development'
+
+      - name: Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ env.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: ./coverage
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: ./dist
+
+  sonarcloud:
+    needs: build_and_test
     runs-on: ubuntu-latest
-    name: Close Pull Request Job
     steps:
-      - name: Close Pull Request
-        id: closepullrequest
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download Coverage
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage
+          path: ./coverage
+
+      - name: SonarCloud Scan & Quality Gate
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          GITHUB_TOKEN: ${{ env.TOKEN_GITHUB }}
+          SONAR_TOKEN: ${{ env.TOKEN_SONAR }}
+        with:
+          args: >
+            -Dsonar.organization=${{ env.SONAR_ORGANISATION }}
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
+            -Dsonar.projectName=${{ env.SONAR_PROJECT_NAME }}
+            -Dsonar.qualitygate.wait=true
+            -Dsonar.coverage.exclusions=src/setupTests.ts,src/reportWebVitals.ts,src/index.tsx
+            -Dsonar.typescript.lcov.reportPaths=./coverage/lcov.info
+
+  deploy:
+    needs: sonarcloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: ./dist
+
+      - name: Deploy to Azure
         uses: Azure/static-web-apps-deploy@v1
         with:
-          action: "close"
+          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: 'upload'
+          skip_app_build: true
+          app_location: 'dist'
+          app_artifact_location: '.'
+          skip_api_build: true
+          deployment_environment: production
+
+      - name: Verify Deployment
+        run: |
+          echo "Checking deployment status..."
+          sleep 30
+          curl -s -o /dev/null -w "%{http_code}" ${{ env.PUBLIC_URL }} | grep -q "200" || exit 1
+        env:
+          PUBLIC_URL: ${{ env.PUBLIC_URL }}
+
+  close_pull_request:
+    needs: deploy
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    env:
+      AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+    steps:
+      - uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: 'close'
+          app_location: '/'
+          api_location: ''
