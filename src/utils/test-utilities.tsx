@@ -1,10 +1,4 @@
-import React, {
-  act,
-  FunctionComponent,
-  ReactNode,
-  ReactElement,
-  ComponentType,
-} from 'react';
+import React, { act, FunctionComponent, ReactNode, ReactElement } from 'react';
 import { MemoryRouter as Router } from 'react-router-dom';
 import {
   render,

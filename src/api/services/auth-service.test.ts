@@ -8,9 +8,9 @@ import {
 } from '@jest/globals';
 import {
   authService,
-  LoginRequest,
-  LoginResponse,
-  RefreshTokenRequest,
+  ILoginRequest,
+  ILoginResponse,
+  IRefreshTokenRequest,
 } from './auth-service';
 import { apiClient } from '../api-client';
 import { getEndpoint } from '../endpoints';
@@ -31,7 +31,7 @@ jest.mock('../endpoints', () => ({
 }));
 
 describe('AuthService', () => {
-  const mockLoginResponse: LoginResponse = {
+  const mockLoginResponse: ILoginResponse = {
     token: 'test-token',
     refreshToken: 'test-refresh-token',
     expiresIn: 3600,
@@ -48,7 +48,7 @@ describe('AuthService', () => {
   describe('login', () => {
     it('should call apiClient.post with correct parameters', async () => {
       // Arrange
-      const credentials: LoginRequest = {
+      const credentials: ILoginRequest = {
         email: 'test@example.com',
         password: 'password123',
       };
@@ -70,7 +70,7 @@ describe('AuthService', () => {
 
     it('should propagate errors from the API', async () => {
       // Arrange
-      const credentials: LoginRequest = {
+      const credentials: ILoginRequest = {
         email: 'test@example.com',
         password: 'password123',
       };
@@ -89,7 +89,7 @@ describe('AuthService', () => {
   describe('refreshToken', () => {
     it('should call apiClient.post with correct parameters', async () => {
       // Arrange
-      const request: RefreshTokenRequest = {
+      const request: IRefreshTokenRequest = {
         refreshToken: 'test-refresh-token',
       };
       (

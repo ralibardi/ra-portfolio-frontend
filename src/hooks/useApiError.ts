@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import { ApiError } from '@api/api-client';
+import { IApiError } from '@api/api-client';
 
 export const useApiError = () => {
-  const handleApiError = useCallback((error: ApiError) => {
+  const handleApiError = useCallback((error: IApiError) => {
     // Handle different error codes
     switch (error.code) {
       case '401':

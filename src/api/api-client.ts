@@ -3,12 +3,18 @@ import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   InternalAxiosRequestConfig,
+  AxiosResponse,
 } from 'axios';
 
-export interface ApiError {
+export interface IApiError {
   message: string;
   code: string;
   details?: unknown;
+}
+
+interface IErrorResponse {
+  message?: string;
+  [key: string]: unknown;
 }
 
 class ApiClient {
@@ -17,7 +23,7 @@ class ApiClient {
 
   private constructor() {
     this.axiosInstance = axios.create({
-      baseURL: import.meta.env.VITE_API_BASE_URL,
+      baseURL: import.meta.env.VITE_API_BASE_URL as string,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -43,24 +49,35 @@ class ApiClient {
         }
         return config;
       },
-      (error: any) => Promise.reject(this.handleError(error)),
+      (error: unknown) =>
+        Promise.reject(
+          this.handleError(
+            axios.isAxiosError(error) ? error : new AxiosError('Unknown error'),
+          ),
+        ),
     );
 
     // Response interceptor
     this.axiosInstance.interceptors.response.use(
-      (response: any) => response,
-      (error: any) => Promise.reject(this.handleError(error)),
+      (response: AxiosResponse) => response,
+      (error: unknown) =>
+        Promise.reject(
+          this.handleError(
+            axios.isAxiosError(error) ? error : new AxiosError('Unknown error'),
+          ),
+        ),
     );
   }
 
-  private handleError(error: AxiosError): ApiError {
+  private handleError(error: AxiosError): IApiError {
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
+      const responseData = (error.response.data || {}) as IErrorResponse;
       return {
-        message: (error.response.data as any)?.message || 'An error occurred',
+        message: responseData?.message || 'An error occurred',
         code: String(error.response.status),
-        details: error.response.data,
+        details: responseData,
       };
     } else if (error.request) {
       // The request was made but no response was received

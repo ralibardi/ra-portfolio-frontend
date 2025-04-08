@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { useApiError } from './useApiError';
-import { ApiError } from '@api/api-client';
+import { IApiError } from '@api/api-client';
 
 describe('useApiError', () => {
   // Save original window.location
@@ -11,7 +11,7 @@ describe('useApiError', () => {
     jest.spyOn(console, 'error').mockImplementation(() => {});
 
     // Mock window.location
-    delete (window as any).location;
+    delete (window as Partial<Window>).location;
     window.location = { ...originalLocation, href: '' };
   });
 
@@ -35,7 +35,7 @@ describe('useApiError', () => {
   it('should redirect to login page when error code is 401', () => {
     // Arrange
     const { result } = renderHook(() => useApiError());
-    const error: ApiError = { code: '401', message: 'Unauthorized' };
+    const error: IApiError = { code: '401', message: 'Unauthorized' };
 
     // Act
     result.current.handleApiError(error);
@@ -47,7 +47,7 @@ describe('useApiError', () => {
   it('should handle 403 forbidden errors', () => {
     // Arrange
     const { result } = renderHook(() => useApiError());
-    const error: ApiError = { code: '403', message: 'Forbidden' };
+    const error: IApiError = { code: '403', message: 'Forbidden' };
 
     // Act
     result.current.handleApiError(error);
@@ -60,7 +60,7 @@ describe('useApiError', () => {
   it('should handle 404 not found errors', () => {
     // Arrange
     const { result } = renderHook(() => useApiError());
-    const error: ApiError = { code: '404', message: 'Not Found' };
+    const error: IApiError = { code: '404', message: 'Not Found' };
 
     // Act
     result.current.handleApiError(error);
@@ -73,7 +73,7 @@ describe('useApiError', () => {
   it('should handle 422 validation errors', () => {
     // Arrange
     const { result } = renderHook(() => useApiError());
-    const error: ApiError = { code: '422', message: 'Validation Error' };
+    const error: IApiError = { code: '422', message: 'Validation Error' };
 
     // Act
     result.current.handleApiError(error);
@@ -86,7 +86,10 @@ describe('useApiError', () => {
   it('should handle network errors', () => {
     // Arrange
     const { result } = renderHook(() => useApiError());
-    const error: ApiError = { code: 'NETWORK_ERROR', message: 'Network Error' };
+    const error: IApiError = {
+      code: 'NETWORK_ERROR',
+      message: 'Network Error',
+    };
 
     // Act
     result.current.handleApiError(error);
@@ -99,7 +102,7 @@ describe('useApiError', () => {
   it('should log to console for other error codes', () => {
     // Arrange
     const { result } = renderHook(() => useApiError());
-    const error: ApiError = { code: '500', message: 'Server Error' };
+    const error: IApiError = { code: '500', message: 'Server Error' };
 
     // Act
     result.current.handleApiError(error);

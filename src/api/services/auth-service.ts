@@ -1,33 +1,33 @@
 import { apiClient } from '../api-client';
 import { getEndpoint } from '../endpoints';
 
-export interface LoginRequest {
+export interface ILoginRequest {
   email: string;
   password: string;
 }
 
-export interface LoginResponse {
+export interface ILoginResponse {
   token: string;
   refreshToken: string;
   expiresIn: number;
 }
 
-export interface RefreshTokenRequest {
+export interface IRefreshTokenRequest {
   refreshToken: string;
 }
 
 class AuthService {
-  async login(credentials: LoginRequest): Promise<LoginResponse> {
-    return apiClient.post<LoginResponse>(
+  async login(credentials: ILoginRequest): Promise<ILoginResponse> {
+    return apiClient.post<ILoginResponse>(
       getEndpoint('AUTH', 'LOGIN'),
-      credentials
+      credentials,
     );
   }
 
-  async refreshToken(request: RefreshTokenRequest): Promise<LoginResponse> {
-    return apiClient.post<LoginResponse>(
+  async refreshToken(request: IRefreshTokenRequest): Promise<ILoginResponse> {
+    return apiClient.post<ILoginResponse>(
       getEndpoint('AUTH', 'REFRESH_TOKEN'),
-      request
+      request,
     );
   }
 
