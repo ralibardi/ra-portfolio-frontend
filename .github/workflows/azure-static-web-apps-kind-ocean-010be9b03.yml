@@ -33,8 +33,6 @@ on:
         required: true
       AZURE_STATIC_WEB_APPS_API_TOKEN:
         required: true
-      GITHUB_TOKEN:
-        required: true
 
 env:
   NODE_VERSION: ${{ secrets.NODE_VERSION }}
