@@ -13,6 +13,7 @@
       "@app/*": ["app/*"],
       "@routes/*": ["app/routes/*"],
       "@assets/*": ["assets/*"],
+      "@api/*": ["api/*"],
       "@contexts/*": ["contexts/*"],
       "@components/*": ["components/*"],
       "@config/*": ["config/*"],

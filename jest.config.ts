@@ -1,5 +1,8 @@
 import type { Config } from 'jest';
 
+// Mock environment variables for tests
+process.env.VITE_API_BASE_URL = 'http://localhost:3000/mock';
+
 const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
@@ -8,7 +11,19 @@ const config: Config = {
   setupFilesAfterEnv: ['./setupTests.ts'],
   testMatch: ['**/*.test.{js,jsx,ts,tsx}'],
   transform: {
-    '\\.[jt]sx?$': 'babel-jest',
+    '\\.[jt]sx?$': [
+      'babel-jest',
+      {
+        presets: [
+          ['@babel/preset-env', { targets: { node: 'current' } }],
+          '@babel/preset-typescript',
+        ],
+        plugins: [
+          // Transform import.meta.env to process.env
+          ['babel-plugin-transform-vite-meta-env'],
+        ],
+      },
+    ],
     '\\.scss$': 'jest-transform-css',
     '\\.(svg|png|jpg|jpeg)$': 'jest-transform-stub',
   },
@@ -33,6 +48,7 @@ const config: Config = {
     '^@app/(.*)$': '<rootDir>/src/app/$1',
     '^@routes/(.*)$': '<rootDir>/src/app/routes/$1',
     '^@assets/(.*)$': '<rootDir>/src/assets/$1',
+    '^@api/(.*)$': '<rootDir>/src/api/$1',
     '^@contexts/(.*)$': '<rootDir>/src/contexts/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@config/(.*)$': '<rootDir>/src/config/$1',

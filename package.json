@@ -65,7 +65,9 @@
     "@typescript-eslint/eslint-plugin": "8.19.1",
     "@typescript-eslint/parser": "8.19.1",
     "@vitejs/plugin-react": "4.3.4",
+    "axios": "1.8.4",
     "babel-jest": "29.7.0",
+    "babel-plugin-transform-vite-meta-env": "1.0.3",
     "chromatic": "11.22.2",
     "classnames": "2.5.1",
     "eslint": "9.18.0",
@@ -110,9 +112,9 @@
     "workbox-strategies": "7.3.0"
   },
   "peerDependencies": {
+    "@types/react": "17.0.0",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "@types/react": "17.0.0"
+    "react-dom": "^17.0.0"
   },
   "engines": {
     "node": ">=18.0.0",
