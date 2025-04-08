@@ -54,7 +54,7 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: ${{ inputs.pnpm-version }}
-          
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
@@ -135,6 +135,7 @@ jobs:
           deployment_environment: production
 
   close_pull_request:
+    needs: deploy
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
