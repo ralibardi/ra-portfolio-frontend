@@ -1,6 +1,5 @@
-import React, { FunctionComponent, lazy, Suspense } from 'react';
-
-const Loading = lazy(() => import('@components/loading'));
+import React, { FunctionComponent, Suspense } from 'react';
+import Loading from '@components/loading';
 
 import styles from '../assets/home-page.module.scss';
 
