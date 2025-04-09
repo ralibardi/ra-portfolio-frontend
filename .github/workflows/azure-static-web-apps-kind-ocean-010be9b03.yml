@@ -102,11 +102,18 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up SonarCloud
-        uses: SonarSource/sonarcloud-github-action@v1
+        uses: SonarSource/sonarcloud-github-action@v2
         with:
-          organization: ${{ env.SONAR_ORGANISATION }}
-          projectKey: ${{ env.SONAR_PROJECT_KEY }}
-          projectName: ${{ env.SONAR_PROJECT_NAME }}
+          projectBaseDir: .
+          args: >
+            -Dsonar.organization=${{ env.SONAR_ORGANISATION }}
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
+            -Dsonar.projectName=${{ env.SONAR_PROJECT_NAME }}
+            -Dsonar.sources=src
+            -Dsonar.tests=src
+            -Dsonar.test.inclusions=**/*.test.tsx,**/*.test.ts
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.coverage.exclusions=**/*.test.tsx,**/*.test.ts
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -127,7 +134,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 7.x
+          version: latest
 
       - name: Get pnpm store directory
         shell: bash
