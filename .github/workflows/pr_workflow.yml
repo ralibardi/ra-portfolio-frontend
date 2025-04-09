@@ -106,16 +106,7 @@ jobs:
         with:
           projectBaseDir: .
           args: >
-            -Dsonar.organization=${{ env.SONAR_ORGANISATION }}
-            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
-            -Dsonar.projectName=${{ env.SONAR_PROJECT_NAME }}
-            -Dsonar.sources=src
-            -Dsonar.tests=src
-            -Dsonar.test.inclusions=**/*.test.tsx,**/*.test.ts
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-            -Dsonar.coverage.exclusions=**/*.test.tsx,**/*.test.ts
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.login=${{ env.SONAR_TOKEN }}
+            -Dproject.settings=sonar-project.properties
 
       - name: Install SonarScanner
         run: |
