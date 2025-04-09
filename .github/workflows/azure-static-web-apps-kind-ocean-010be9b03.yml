@@ -90,7 +90,7 @@ jobs:
         run: pnpm run test
 
       - name: Upload code coverage to Codecov
-        uses: codecov/codecov-action@latest
+        uses: codecov/codecov-action@v3
         with:
           files: ./coverage/**/*.json
 
