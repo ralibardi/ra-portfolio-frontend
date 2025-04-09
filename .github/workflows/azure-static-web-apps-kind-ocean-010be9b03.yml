@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@latest
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@latest
         with:
           version: latest
 
@@ -36,7 +36,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@latest
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -50,7 +50,7 @@ jobs:
         run: pnpm run build
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@latest
         with:
           name: build-artifacts
           path: dist/
@@ -60,10 +60,10 @@ jobs:
     needs: setup
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@latest
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@latest
         with:
           version: latest
 
@@ -73,7 +73,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@latest
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -90,7 +90,7 @@ jobs:
         run: pnpm run test
 
       - name: Upload code coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@latest
         with:
           files: ./coverage/**/*.json
 
@@ -99,10 +99,10 @@ jobs:
     needs: lint_and_test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@latest
 
       - name: Set up SonarCloud
-        uses: SonarSource/sonarcloud-github-action@v2
+        uses: SonarSource/sonarcloud-github-action@latest
         with:
           projectBaseDir: .
           args: >
@@ -124,7 +124,7 @@ jobs:
           echo "$PWD/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@latest
         with:
           name: build-artifacts
           path: dist/
@@ -137,10 +137,10 @@ jobs:
     needs: lint_and_test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@latest
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@latest
         with:
           version: latest
 
@@ -150,7 +150,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@latest
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -161,9 +161,9 @@ jobs:
         run: pnpm install
 
       - name: Run Chromatic visual tests
-        env:
-          CHROMATIC_PROJECT_TOKEN: ${{ env.CHROMATIC_PROJECT_TOKEN }}
-        run: pnpm run chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -171,13 +171,13 @@ jobs:
     if: ${{ success() }}
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@latest
         with:
           name: build-artifacts
           path: dist/
 
       - name: Deploy to Azure Static Web Apps
-        uses: Azure/static-web-apps-deploy@v0.3
+        uses: Azure/static-web-apps-deploy@latest
         with:
           app_location: "/"
           api_location: "api"
