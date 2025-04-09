@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@latest
+        uses: actions/checkout@v2
 
       - name: Set up pnpm
         uses: pnpm/action-setup@latest
@@ -60,7 +60,7 @@ jobs:
     needs: setup
     steps:
       - name: Checkout code
-        uses: actions/checkout@latest
+        uses: actions/checkout@v2
 
       - name: Set up pnpm
         uses: pnpm/action-setup@latest
@@ -99,7 +99,7 @@ jobs:
     needs: lint_and_test
     steps:
       - name: Checkout code
-        uses: actions/checkout@latest
+        uses: actions/checkout@v2
 
       - name: Set up SonarCloud
         uses: SonarSource/sonarcloud-github-action@latest
@@ -137,7 +137,7 @@ jobs:
     needs: lint_and_test
     steps:
       - name: Checkout code
-        uses: actions/checkout@latest
+        uses: actions/checkout@v2
 
       - name: Set up pnpm
         uses: pnpm/action-setup@latest
