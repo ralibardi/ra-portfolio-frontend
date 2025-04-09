@@ -5,169 +5,131 @@ on:
     branches: [main]
   pull_request:
     types: [closed]
-  workflow_call:
-    inputs:
-      node-version:
-        required: true
-        type: string
-      pnpm-version:
-        required: false
-        type: string
-        default: '9.15.3'
-    secrets:
-      NODE_VERSION:
-        required: true
-      CHROMATIC_PROJECT_TOKEN:
-        required: true
-      TOKEN_SONAR:
-        required: true
-      SONAR_ORGANISATION:
-        required: true
-      SONAR_PROJECT_KEY:
-        required: true
-      SONAR_PROJECT_NAME:
-        required: true
-      PUBLIC_URL:
-        required: true
-      API_URL:
-        required: true
-      AZURE_STATIC_WEB_APPS_API_TOKEN:
-        required: true
+  workflow_run:
+    workflows: ["Deploy Infrastructure"]
+    types:
+      - completed
+    repository: "ralibardi/ra-portfolio-infra"
 
 env:
-  NODE_VERSION: ${{ secrets.NODE_VERSION }}
+  PNPM_VERSION: ${{ secrets.PNPM_VERSION }}
   CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-  TOKEN_SONAR: ${{ secrets.TOKEN_SONAR }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   SONAR_ORGANISATION: ${{ secrets.SONAR_ORGANISATION }}
   SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
   SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }}
   PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
   API_URL: ${{ secrets.API_URL }}
-  # We don't put the Azure token in the main env block anymore
 
 jobs:
-  build_and_test:
+# Build Job
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
         with:
-          version: ${{ inputs.pnpm-version }}
+          version: ${{PNPM_VERSION}}
 
-      - name: Install Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-
-      - name: Install Packages
+      - name: Install dependencies
         run: pnpm install
 
-      - name: Build
-        run: |
-          pnpm run build
-          pnpm run lint
-        env:
-          NODE_ENV: 'production'
+      - name: Build React app with Vite
+        run: pnpm run build
 
-      - name: Test
-        run: pnpm run test:coverage
-        env:
-          NODE_ENV: 'development'
+  # Lint and Test Job
+  lint_and_test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Chromatic
-        uses: chromaui/action@latest
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
         with:
-          projectToken: ${{ env.CHROMATIC_PROJECT_TOKEN }}
+          version: ${{PNPM_VERSION}}
 
-      - name: Upload Coverage
-        uses: actions/upload-artifact@v4
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run lint checks (ESLint)
+        run: pnpm run lint
+
+      - name: Run unit tests
+        run: pnpm run test
+
+      - name: Upload code coverage to Codecov
+        uses: codecov/codecov-action@v3
         with:
-          name: coverage
-          path: ./coverage
+          files: ./coverage/**/*.json
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: ./dist
-
+  # SonarCloud Analysis
   sonarcloud:
-    needs: build_and_test
     runs-on: ubuntu-latest
+    needs: lint_and_test
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Download Coverage
-        uses: actions/download-artifact@v4
+      - name: Set up SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v1
         with:
-          name: coverage
-          path: ./coverage
+          organization: ${{SONAR_ORGANISATION}}
+          projectKey: ${{SONAR_PROJECT_KEY}}
+          projectName: ${{SONAR_PROJECT_NAME}}
 
-      - name: SonarCloud Scan & Quality Gate
-        uses: SonarSource/sonarcloud-github-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Corrected usage
-          SONAR_TOKEN: ${{ env.TOKEN_SONAR }}
-        with:
-          args: >
-            -Dsonar.organization=${{ env.SONAR_ORGANISATION }}
-            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
-            -Dsonar.projectName=${{ env.SONAR_PROJECT_NAME }}
-            -Dsonar.qualitygate.wait=true
-            -Dsonar.coverage.exclusions=src/setupTests.ts,src/reportWebVitals.ts,src/index.tsx
-            -Dsonar.typescript.lcov.reportPaths=./coverage/lcov.info
-
-  deploy:
-    needs: sonarcloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: ./dist
-
-      - name: Deploy to Azure
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }} # Access secret directly
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: 'upload'
-          skip_app_build: true
-          app_location: 'dist'
-          app_artifact_location: '.'
-          skip_api_build: true
-          deployment_environment: Production
-
-      - name: Verify Deployment
+      - name: Run SonarCloud analysis
         run: |
-          echo "Checking deployment status..."
-          sleep 30
-          curl -s -o /dev/null -w "%{http_code}" ${{ env.PUBLIC_URL }} | grep -q "200" || exit 1
-        env:
-          PUBLIC_URL: ${{ env.PUBLIC_URL }}
+          pnpm install
+          pnpm run build
+          sonar-scanner
 
-  close_pull_request:
-    needs: deploy
-    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+  # Chromatic Visual Testing
+  chromatic:
     runs-on: ubuntu-latest
-    env:
-      AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }} # Needs access to the token too
+    needs: lint_and_test
     steps:
-      - uses: Azure/static-web-apps-deploy@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
         with:
-          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          action: 'close'
-          app_location: '/'
-          api_location: ''
+          version: 7.x
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Chromatic visual tests
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{CHROMATIC_PROJECT_TOKEN}}
+        run: pnpm run chromatic
+
+  # Deploy Job
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [sonarcloud, chromatic]
+    if: ${{ success() }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.x
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v0.3
+        with:
+          app_location: "/"
+          api_location: "api"
+          output_location: "dist"
+          azure_static_web_apps_api_token: ${{AZURE_STATIC_WEB_APPS_API_TOKEN}}
