@@ -50,7 +50,7 @@ jobs:
         run: pnpm run build
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
           path: dist/
@@ -109,7 +109,7 @@ jobs:
           projectName: ${{ env.SONAR_PROJECT_NAME }}
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifacts
           path: dist/
@@ -156,7 +156,7 @@ jobs:
     if: ${{ success() }}
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifacts
           path: dist/
