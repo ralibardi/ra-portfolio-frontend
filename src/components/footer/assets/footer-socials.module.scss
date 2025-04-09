@@ -2,24 +2,11 @@
 @use '@assets/global' as *;
 
 .container {
-  @include flexbox(row, center, center);
   gap: map.get($spacing, md);
   padding: map.get($spacing, sm);
-  background-color: var(--background-colour);
-  @include border-radius(map.get($border, md));
-  @include transition(background-color);
-
-  &:hover {
-    background-color: var(--light-grey);
-  }
+  @include flexbox(row, center, center);
 }
 
 .socialIcon {
   @include size(map.get($spacing, xl), map.get($spacing, xl));
-  color: var(--accent-colour);
-  @include transition(transform);
-
-  &:hover {
-    @include transform(1.1);
-  }
 }

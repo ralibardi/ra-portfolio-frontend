@@ -12,11 +12,6 @@
   color: var(--accent-colour);
   @include size(map.get($spacing, lg), map.get($spacing, lg));
   @include transition((color map.get($transition, fast) ease), (box-shadow map.get($transition, fast) ease));
-
-  &:hover {
-    color: var(--secondary-colour);
-    @include box-shadow();
-  }
 }
 
 .label {
