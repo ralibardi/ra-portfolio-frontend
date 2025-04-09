@@ -3,114 +3,143 @@ name: Pull Request Workflow
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  workflow_call:
-    inputs:
-      node-version:
-        required: true
-        type: string
-      pnpm-version:
-        required: false
-        type: string
-        default: '9.15.3'
-    secrets:
-      NODE_VERSION:
-        required: true
-      CHROMATIC_PROJECT_TOKEN:
-        required: true
-      TOKEN_GITHUB:
-        required: true
-      TOKEN_SONAR:
-        required: true
-      SONAR_ORGANISATION:
-        required: true
-      SONAR_PROJECT_KEY:
-        required: true
-      SONAR_PROJECT_NAME:
-        required: true
+
 
 env:
-  NODE_VERSION: ${{ secrets.NODE_VERSION }}
-  CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-  TOKEN_SONAR: ${{ secrets.TOKEN_SONAR }}
+  AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
   SONAR_ORGANISATION: ${{ secrets.SONAR_ORGANISATION }}
   SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
   SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
-  build_and_test:
+  setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
         with:
-          version: ${{ inputs.pnpm-version }}
+          version: latest
 
-      - name: Install Node
-        uses: actions/setup-node@v4
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v2
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
-      - name: Install Packages
+      - name: Install dependencies
         run: pnpm install
 
-      - name: Build
+      - name: Build React app with Vite
+        run: pnpm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: dist/
+
+  lint_and_test:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Get pnpm store directory
+        shell: bash
         run: |
-          pnpm run build
-          pnpm run lint
-        env:
-          NODE_ENV: 'development'
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - name: Test
-        run: pnpm run test:coverage
-        env:
-          NODE_ENV: 'development'
-
-      - name: Chromatic
-        uses: chromaui/action@latest
+      - name: Setup pnpm cache
+        uses: actions/cache@v2
         with:
-          projectToken: ${{ env.CHROMATIC_PROJECT_TOKEN }}
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
-      - name: Upload Coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: ./coverage
+      - name: Install dependencies
+        run: pnpm install
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Run lint checks (ESLint)
+        run: pnpm run lint
+
+      - name: Run unit tests
+        run: pnpm run test
+
+      - name: Upload code coverage to Codecov
+        uses: codecov/codecov-action@v3
         with:
-          name: dist
-          path: ./dist
+          files: ./coverage/**/*.json
 
   sonarcloud:
-    needs: build_and_test
     runs-on: ubuntu-latest
+    needs: lint_and_test
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Download Coverage
-        uses: actions/download-artifact@v4
+      - name: Set up SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v1
         with:
-          name: coverage
-          path: ./coverage
+          organization: ${{ env.SONAR_ORGANISATION }}
+          projectKey: ${{ env.SONAR_PROJECT_KEY }}
+          projectName: ${{ env.SONAR_PROJECT_NAME }}
 
-      - name: SonarCloud Scan & Quality Gate
-        uses: SonarSource/sonarcloud-github-action@v2
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifacts
+          path: dist/
+
+      - name: Run SonarCloud analysis
+        run: sonar-scanner
+
+  chromatic:
+    runs-on: ubuntu-latest
+    needs: lint_and_test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.x
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Chromatic visual tests
         env:
-          GITHUB_TOKEN: ${{ env.TOKEN_GITHUB }}
-          SONAR_TOKEN: ${{ env.TOKEN_SONAR }}
-        with:
-          args: >
-            -Dsonar.organization=${{ env.SONAR_ORGANISATION }}
-            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
-            -Dsonar.projectName=${{ env.SONAR_PROJECT_NAME }}
-            -Dsonar.qualitygate.wait=true
-            -Dsonar.coverage.exclusions=src/setupTests.ts,src/reportWebVitals.ts,src/index.tsx
-            -Dsonar.typescript.lcov.reportPaths=./coverage/lcov.info
+          CHROMATIC_PROJECT_TOKEN: ${{ env.CHROMATIC_PROJECT_TOKEN }}
+        run: pnpm run chromatic
