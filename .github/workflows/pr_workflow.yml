@@ -89,6 +89,26 @@ jobs:
         with:
           files: ./coverage/**/*.json
 
+  sonarcloud:
+    runs-on: ubuntu-latest
+    needs: lint_and_test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: dist/
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+
   chromatic:
     runs-on: ubuntu-latest
     needs: lint_and_test
