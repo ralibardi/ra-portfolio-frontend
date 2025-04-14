@@ -43,7 +43,7 @@
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@fortawesome/react-fontawesome": "0.2.2",
     "@jest/globals": "29.7.0",
-    "@prettier/plugin-pug": "3.2.0",
+    "@prettier/plugin-pug": "3.3.0",
     "@storybook/addon-essentials": "8.4.7",
     "@storybook/addon-interactions": "8.4.7",
     "@storybook/addon-links": "8.4.7",
