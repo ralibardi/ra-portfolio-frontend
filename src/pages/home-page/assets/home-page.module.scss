@@ -2,51 +2,30 @@
 @use '@assets/global' as *;
 
 .container {
-  @include flexbox(column, center, center);
-  @include size(map.get($percentage, 100), 100vh);
   background-color: var(--background-colour);
-  @include font-style(
-    map.get($font-sizes, md),
-    map.get($font-weights, regular)
-  );
-  @include transition(background-color map.get($transition, medium));
-
-  @media (prefers-color-scheme: dark) {
-    @include theme(dark);
-  }
-
-  @media (prefers-color-scheme: light) {
-    @include theme(light);
-  }
-
-  &:hover {
-    animation: pulse map.get($transition, medium) ease-in-out;
-  }
+  animation: fadeIn map.get($transition, medium) ease-in-out;
+  @include flexbox(row, center, center);
+  @include size(map.get($percentage, 100), map.get($percentage, 100));
+  @include transition(background-color map.get($transition, fast) ease);
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
 }
 
 .constructionMessage {
-  @include flexbox(column, center, center);
   text-align: center;
-  margin-bottom: 2rem;
-  padding: 2rem;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  margin-bottom: map.get($spacing, xl);
+  padding: map.get($spacing, xl);
+  @include border-radius(map.get($border, sm));
+  @include flexbox(column, center, center);
+}
 
-  h1 {
-    @include font-style(map.get($font-sizes, xl), map.get($font-weights, bold));
-    margin-bottom: 1rem;
-    color: var(--primary-colour);
-  }
+.constructionMessageTitle {
+  margin-bottom: map.get($spacing, md);
+  color: var(--primary-colour);
+  @include font-style(map.get($font-sizes, lg), map.get($font-weights, bold));
+}
 
-  p {
-    @include font-style(
-      map.get($font-sizes, md),
-      map.get($font-weights, regular)
-    );
-    color: var(--text-colour);
-    line-height: 1.5;
-  }
+.constructionMessageText {
+  color: var(--text-colour);
+  line-height: map.get($font-heights, normal);
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
 }

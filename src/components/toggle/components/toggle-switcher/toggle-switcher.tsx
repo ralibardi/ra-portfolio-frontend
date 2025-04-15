@@ -38,8 +38,9 @@ const ToggleSwitcher: FunctionComponent<IToggleSwitcherProps> = ({
         checked={isChecked}
         onChange={onChange}
         aria-label="Dark mode switcher"
+        tabIndex={-1}
       />
-      <div />
+      <div className={styles.toggle} />
     </label>
   );
 };

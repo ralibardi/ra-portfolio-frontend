@@ -3,7 +3,8 @@
 
 .container {
   @include flexbox(column, center, center);
-  @include size(map.get($percentage, 100), map.get($percentage, 100));
+  min-height: 100vh;
+  width: 100vw;
   background-color: var(--background-colour);
   @include transition(background-color map.get($transition, fast) ease);
 }

@@ -6,8 +6,7 @@
 @use 'fonts' as *;
 
 $themes: (
-    light: (
-        --accent-colour: map.get($primary, 1),
+    light: (--accent-colour: map.get($primary, 1),
         --secondary-colour: map.get($secondary, 2),
         --light-grey: map.get($grey, 1),
         --grey: map.get($grey, 2),
@@ -16,8 +15,7 @@ $themes: (
         --background-colour: $white,
         --foreground-colour: map.get($grey, 3),
     ),
-    dark: (
-        --accent-colour: map.get($primary, 3),
+    dark: (--accent-colour: map.get($primary, 3),
         --secondary-colour: map.get($secondary, 2),
         --light-grey: map.get($grey, 4),
         --grey: map.get($grey, 5),
@@ -29,11 +27,15 @@ $themes: (
 );
 
 @mixin theme($mode: light) {
-    @if map.has-key($themes, $mode) {
-        @each $name, $value in map.get($themes, $mode) {
+    $theme: map.get($themes, $mode);
+
+    @if $theme {
+        @each $name, $value in $theme {
             #{$name}: #{$value};
         }
-    } @else {
+    }
+
+    @else {
         @warn "Unsupported theme mode: #{$mode}";
     }
 }
@@ -48,38 +50,85 @@ $themes: (
     height: $height;
 }
 
-@mixin flexbox($direction: row, $justify: flex-start, $align: stretch) {
+@mixin flexbox($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
     display: flex;
-    flex-flow: $direction;
+    flex-flow: $direction $wrap;
     justify-content: $justify;
     align-items: $align;
 }
 
 @mixin box-shadow($x: map.get($spacing, 0), $y: map.get($spacing, '3xs'), $blur: map.get($spacing, '2xs'), $spread: map.get($spacing, '2xs'), $color: $black, $inset: false) {
-    box-shadow: if($inset, inset, null) $x $y $blur if($spread, $spread, null) $color;
+    $shadow: $x $y $blur;
+
+    @if $spread !=null {
+        $shadow: $shadow $spread;
+    }
+
+    box-shadow: if($inset, inset, null) $shadow $color;
 }
 
 @mixin transition($properties...) {
-    $result: ();
-    @each $prop in $properties {
-        $temp: null;
-        @if meta.type-of($prop) == 'list' {
-            $temp: list.nth($prop, 1);
-            $temp: $temp if(list.length($prop) > 1, ' ' + list.nth($prop, 2), '');
-            $temp: $temp if(list.length($prop) > 2, ' ' + list.nth($prop, 3), '');
-            $temp: $temp if(list.length($prop) > 3, ' ' + list.nth($prop, 4), '');
-        } @else {
-            $temp: $prop;
-        }
-        $result: list.append($result, $temp, comma);
+    $transitions: (
+    );
+
+@each $prop in $properties {
+    @if meta.type-of($prop)=='list' {
+        $transitions: list.append($transitions, list.join($prop, ' '), comma);
     }
-    transition: $result;
+
+    @else {
+        $transitions: list.append($transitions, $prop, comma);
+    }
+}
+
+transition: $transitions;
 }
 
 @mixin border-radius($radius: map.get($border, md)) {
     border-radius: $radius;
 }
 
-@mixin transform($scale: 1, $rotate: 0deg) {
-    transform: scale($scale) rotate($rotate);
+@mixin transform($scale: 1, $rotate: 0deg, $translate: null) {
+    $transforms: (
+    );
+
+@if $scale !=1 {
+    $transforms: list.append($transforms, scale($scale));
+}
+
+@if $rotate !=0deg {
+    $transforms: list.append($transforms, rotate($rotate));
+}
+
+@if $translate {
+    $transforms: list.append($transforms, translate($translate));
+}
+
+transform: if(list.length($transforms) > 0, list.join($transforms, ' '), none);
+}
+
+// New utility mixins
+@mixin absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin responsive($breakpoint) {
+    @if map.has-key($breakpoints, $breakpoint) {
+        @media screen and (min-width: map.get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }
+
+    @else {
+        @warn "Unknown breakpoint: #{$breakpoint}";
+    }
 }

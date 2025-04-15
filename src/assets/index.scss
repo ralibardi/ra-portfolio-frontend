@@ -2,10 +2,8 @@
 @use 'global' as *;
 
 :root {
-  @include font-style(
-    map.get($font-sizes, md),
-    map.get($font-weights, regular)
-  );
+  @include font-style(map.get($font-sizes, md),
+    map.get($font-weights, regular));
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -34,9 +32,11 @@ body {
 
 #root {
   width: 100%;
+  min-height: 100vh;
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 main {

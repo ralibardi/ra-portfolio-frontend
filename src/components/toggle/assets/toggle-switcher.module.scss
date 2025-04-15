@@ -8,13 +8,6 @@
   cursor: pointer;
   aspect-ratio: 1/1;
   @include size(calc(map.get($spacing, xl) + map.get($spacing, xs)));
-  @include box-shadow(
-    0,
-    0,
-    map.get($spacing, sm),
-    map.get($spacing, '3xs'),
-    var(--text-colour)
-  );
   @include border-radius(map.get($spacing, xl));
   @include flexbox(row, center, center);
 }
@@ -22,6 +15,7 @@
 .light {
   background-color: $black;
 }
+
 .dark {
   background-color: $white;
 }
@@ -29,24 +23,20 @@
 .container input {
   display: none;
 
-  & + div {
+  &+.toggle {
     position: relative;
     aspect-ratio: 1/1;
     @include transform(1, -2deg);
-    @include box-shadow(
-      map.get($spacing, xs),
+    @include box-shadow(map.get($spacing, xs),
       -#{map.get($spacing, xs)},
       0,
       0,
       $white,
-      true
-    );
+      true);
     @include size(calc(map.get($spacing, md) + map.get($spacing, '2xs')));
     @include border-radius(map.get($percentage, 50));
-    @include transition(
-      (box-shadow map.get($transition, medium) ease map.get($transition, 0)),
-      (transform map.get($transition, medium) ease map.get($transition, 0))
-    );
+    @include transition((box-shadow map.get($transition, medium) ease map.get($transition, 0)),
+      (transform map.get($transition, medium) ease map.get($transition, 0)));
 
     &::before,
     &::after {
@@ -70,15 +60,14 @@
       top: map.get($percentage, 50);
       left: map.get($percentage, 50);
 
-      box-shadow:
-        0 -#{map.get($spacing, sm)} 0 $black,
-        0 map.get($spacing, sm) 0 $black,
-        map.get($spacing, sm) 0 0 $black,
-        -#{map.get($spacing, sm)} 0 0 $black,
-        map.get($spacing, xs) map.get($spacing, xs) 0 $black,
-        -#{map.get($spacing, xs)} map.get($spacing, xs) 0 $black,
-        map.get($spacing, xs) -#{map.get($spacing, xs)} 0 $black,
-        -#{map.get($spacing, xs)} -#{map.get($spacing, xs)} 0 $black;
+      box-shadow: 0 -#{map.get($spacing, sm)} 0 $black,
+      0 map.get($spacing, sm) 0 $black,
+      map.get($spacing, sm) 0 0 $black,
+      -#{map.get($spacing, sm)} 0 0 $black,
+      map.get($spacing, xs) map.get($spacing, xs) 0 $black,
+      -#{map.get($spacing, xs)} map.get($spacing, xs) 0 $black,
+      map.get($spacing, xs) -#{map.get($spacing, xs)} 0 $black,
+      -#{map.get($spacing, xs)} -#{map.get($spacing, xs)} 0 $black;
 
       @include transform(0);
       @include size(map.get($spacing, '2xs'));
@@ -87,29 +76,23 @@
     }
   }
 
-  &:checked + div {
+  &:checked+.toggle {
     @include transform(0.5, 0deg);
-    @include box-shadow(
-      map.get($spacing, xl),
+    @include box-shadow(map.get($spacing, xl),
       -#{map.get($spacing, xl)},
       0,
       0,
       $black,
-      true
-    );
+      true);
 
     &::before {
       background: $black;
-      @include transition(
-        background map.get($transition, fast) ease map.get($transition, 0)
-      );
+      @include transition(background map.get($transition, fast) ease map.get($transition, 0));
     }
 
     &::after {
       @include transform(1.5);
-      @include transition(
-        transform map.get($transition, medium) ease map.get($transition, 0)
-      );
+      @include transition(transform map.get($transition, medium) ease map.get($transition, 0));
     }
   }
 }

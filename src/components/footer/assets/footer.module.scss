@@ -10,7 +10,6 @@
 }
 
 .copyright {
-  color: var(--text-colour);
   padding-top: map.get($spacing, xs);
   @include font-style(map.get($font-sizes, sm));
 }
