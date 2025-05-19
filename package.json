@@ -98,7 +98,7 @@
     "react-ios-pwa-prompt": "2.0.6",
     "release-please": "16.15.0",
     "rimraf": "6.0.1",
-    "sass": "1.83.1",
+    "sass": "1.89.0",
     "sass-loader": "16.0.4",
     "storybook": "8.4.7",
     "ts-jest": "29.2.5",
