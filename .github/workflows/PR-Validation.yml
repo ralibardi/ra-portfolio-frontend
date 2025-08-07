@@ -12,24 +12,35 @@ env:
 jobs:
   setup:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      group: fe-pr-setup-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: latest
+          version: 9
 
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
+      - name: Setup pnpm cache (store)
+        uses: actions/cache@v4
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -37,7 +48,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build React app with Vite
         run: pnpm run build
@@ -51,24 +62,35 @@ jobs:
   lint_and_test:
     runs-on: ubuntu-latest
     needs: setup
+    permissions:
+      contents: read
+    concurrency:
+      group: fe-pr-linttest-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: latest
+          version: 9
 
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
+      - name: Setup pnpm cache (store)
+        uses: actions/cache@v4
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -76,25 +98,30 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run lint checks (ESLint)
         run: pnpm run lint
 
       - name: Run unit tests
-        run: pnpm run test
+        run: pnpm run test -- --ci --maxWorkers=50%
 
       - name: Upload code coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           files: ./coverage/**/*.json
 
   sonarcloud:
     runs-on: ubuntu-latest
     needs: lint_and_test
+    permissions:
+      contents: read
+    concurrency:
+      group: fe-pr-sonar-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -112,16 +139,27 @@ jobs:
   chromatic:
     runs-on: ubuntu-latest
     needs: lint_and_test
+    permissions:
+      contents: read
+    concurrency:
+      group: fe-pr-chromatic-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: latest
+          version: 9
 
       - name: Get pnpm store directory
         shell: bash

@@ -49,7 +49,7 @@
     "start_url": "/",
     "display_override": ["window-controls-overlay", "standalone"],
     "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "background_color": "#fdfdfd",
     "screenshots": [
         {
             "src": "screenshots/screenshot-desktop.png",
