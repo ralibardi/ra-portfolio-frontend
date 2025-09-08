@@ -42,7 +42,7 @@
         color: var(--accent-colour);
     }
 
-    @media (min-width: 1024px) {
+    @include breakpoint(laptop) {
         display: block;
     }
 }

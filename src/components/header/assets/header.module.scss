@@ -9,7 +9,7 @@
     overflow: hidden;
     z-index: map.get($z-index, top);
 
-    @media (min-width: 480px) {
+    @include breakpoint(mobile-landscape) {
         @include flexbox(row, space-between, center);
     }
 }
@@ -18,7 +18,7 @@
     @include flexbox(row, space-between, center);
     order: -1;
 
-    @media (min-width: 768px) {
+    @include breakpoint(tablet) {
         order: 2;
     }
 }

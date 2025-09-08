@@ -1,0 +1,37 @@
+@use 'sass:map';
+@use '@assets/global' as *;
+
+.section {
+  width: 100%;
+}
+
+.spacing-sm {
+  padding-block: map.get($spacing, md);
+}
+.spacing-md {
+  padding-block: map.get($spacing, '2xl');
+}
+.spacing-lg {
+  padding-block: map.get($spacing, '3xl');
+}
+
+.header {
+  @include flexbox(column, flex-start, flex-start);
+  gap: map.get($spacing, xs);
+  margin-bottom: map.get($spacing, md);
+}
+
+.title {
+  @include font-style(
+    map.get($font-sizes, lg),
+    map.get($font-weights, semi-bold)
+  );
+}
+
+.subtitle {
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, regular),
+    var(--foreground-colour)
+  );
+}

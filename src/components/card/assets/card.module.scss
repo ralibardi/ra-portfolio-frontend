@@ -1,0 +1,51 @@
+@use 'sass:map';
+@use '@assets/global' as *;
+
+.card {
+  background-color: var(--background-colour);
+  color: var(--text-colour);
+  @include border-radius(map.get($border, md));
+  @include box-shadow(
+    map.get($spacing, 0),
+    map.get($spacing, '3xs'),
+    map.get($spacing, '2xs'),
+    map.get($spacing, 0),
+    rgba(0, 0, 0, 0.05)
+  );
+  padding: map.get($spacing, lg);
+  transition:
+    transform map.get($transition, fast) ease,
+    box-shadow map.get($transition, fast) ease;
+}
+
+.elevated {
+  @include box-shadow(
+    map.get($spacing, 0),
+    map.get($spacing, '2xs'),
+    map.get($spacing, xs),
+    map.get($spacing, 0),
+    rgba(0, 0, 0, 0.15)
+  );
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:hover {
+  @include transform(1.01);
+  @include box-shadow(
+    map.get($spacing, 0),
+    map.get($spacing, xs),
+    map.get($spacing, md),
+    map.get($spacing, 0),
+    rgba(0, 0, 0, 0.2)
+  );
+}
+
+.header {
+  margin-bottom: map.get($spacing, md);
+}
+.footer {
+  margin-top: map.get($spacing, md);
+}

@@ -1,0 +1,23 @@
+@use 'sass:map';
+@use '@assets/global' as *;
+
+.grid {
+  display: grid;
+  width: 100%;
+  gap: map.get($spacing, md);
+  grid-template-columns: repeat(var(--columns, 2), minmax(0, 1fr));
+
+  @include breakpoint(tablet) {
+    grid-template-columns: repeat(
+      var(--columnsMd, var(--columns)),
+      minmax(0, 1fr)
+    );
+  }
+
+  @include breakpoint(laptop) {
+    grid-template-columns: repeat(
+      var(--columnsLg, var(--columnsMd, var(--columns))),
+      minmax(0, 1fr)
+    );
+  }
+}

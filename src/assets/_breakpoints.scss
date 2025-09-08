@@ -1,9 +1,17 @@
 @use "sass:map";
 $breakpoints: (
-  'mobile-landscape': (min: 480px, max: 767px),
-  'tablet': (min: 768px, max: 991px),
-  'tablet-landscape': (min: 992px, max: 1199px),
-  'desktop': (min: 1200px)
+  // 480px–767px
+  'mobile-landscape': (min: 30rem, max: 47.9375rem),
+  // 768px–991px
+  'tablet': (min: 48rem, max: 61.9375rem),
+  // 992px–1199px
+  'tablet-landscape': (min: 62rem, max: 74.9375rem),
+  // 1024px–1439px
+  'laptop-only': (min: 64rem, max: 89.9375rem),
+  // 1024px+
+  'laptop': (min: 64rem),
+  // 1200px+
+  'desktop': (min: 75rem)
 );
 
 @mixin breakpoint($size) {

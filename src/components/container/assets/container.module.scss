@@ -1,0 +1,25 @@
+@use 'sass:map';
+@use '@assets/global' as *;
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.padded {
+  padding: map.get($spacing, lg);
+}
+
+.sm {
+  max-width: 40rem;
+}
+.md {
+  max-width: 48rem;
+}
+.lg {
+  max-width: 64rem;
+}
+.xl {
+  max-width: 80rem;
+}
