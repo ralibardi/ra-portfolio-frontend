@@ -9,6 +9,10 @@
       }
     },
     {
+      "route": "/api/*",
+      "allowedRoles": ["anonymous"]
+    },
+    {
       "route": "/*",
       "rewrite": "/index.html",
       "statusCode": 200
@@ -16,9 +20,25 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/locales/*"]
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/locales/*", "/api/*"]
   },
   "mimeTypes": {
-    ".json": "application/json"
+    ".json": "application/json",
+    ".webmanifest": "application/manifest+json"
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.azurewebsites.net https://*.azure.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "geolocation=(), microphone=(), camera=()"
+  },
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/index.html",
+      "statusCode": 200
+    }
   }
 }
