@@ -64,8 +64,8 @@ importers:
         specifier: 29.7.0
         version: 29.7.0
       '@prettier/plugin-pug':
-        specifier: 3.2.0
-        version: 3.2.0(prettier@3.4.2)
+        specifier: 3.4.2
+        version: 3.4.2(prettier@3.4.2)
       '@storybook/addon-essentials':
         specifier: 8.4.7
         version: 8.4.7(@types/react@19.0.10)(storybook@8.4.7(prettier@3.4.2))
@@ -1669,9 +1669,9 @@ packages:
     resolution: {integrity: sha512-fdDH1LSGfZdTH2sxdpVMw31BanV28K/Gry0cVFxaNP77neJSkd82mM8ErPNYs9e+0O7SdHBLTDzDgwUuy18RnQ==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@prettier/plugin-pug@3.2.0':
-    resolution: {integrity: sha512-SJEDgNjLpgZ2utQJGAFG96yho1hxX/tXflL24HztHYxzkPlDus2/XcvaW7WKQgMej1I+Pk6hLKp2FWv/zgzvkA==}
-    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
+  '@prettier/plugin-pug@3.4.2':
+    resolution: {integrity: sha512-/VOVeIscKYlPpsZrjrRV+44ZftCEIJq9Z/zR8PtAz/EDv82TKscw3z+fhTVqRz68G1TqQ/5COMFUVfPwPBH90w==}
+    engines: {node: '>=20.0.0', npm: '>=10.0.0'}
     peerDependencies:
       prettier: ^3.0.0
 
@@ -7027,7 +7027,7 @@ snapshots:
 
   '@pkgr/core@0.1.2': {}
 
-  '@prettier/plugin-pug@3.2.0(prettier@3.4.2)':
+  '@prettier/plugin-pug@3.4.2(prettier@3.4.2)':
     dependencies:
       prettier: 3.4.2
       pug-lexer: 5.0.1
