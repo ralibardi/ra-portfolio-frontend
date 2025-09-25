@@ -4,23 +4,41 @@
 .container {
   background-color: var(--background-colour);
   animation: fadeIn map.get($transition, medium) ease-in-out;
-  @include flexbox(row, center, center);
-  @include size(map.get($percentage, 100), map.get($percentage, 100));
+  @include flexbox(column, flex-start, center);
+  @include size(map.get($percentage, 100), auto);
   @include transition(background-color map.get($transition, fast) ease);
   @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
 }
 
+.bgDecor {
+  position: absolute;
+  inset: map.get($spacing, 0);
+  pointer-events: none;
+  background: radial-gradient(60rem 60rem at 10% 10%, map.get($primary, alpha-08), transparent),
+    radial-gradient(60rem 60rem at 90% 20%, map.get($secondary, alpha-08), transparent);
+  z-index: map.get($z-index, background);
+}
+
+.hero {
+  @include flexbox(row, center, center);
+  @include size(map.get($percentage, 100), 70vh);
+  padding-inline: map.get($spacing, xl);
+  text-align: center;
+}
+
 .constructionMessage {
   text-align: center;
-  margin-bottom: map.get($spacing, xl);
+  margin: map.get($spacing, xl) auto;
   padding: map.get($spacing, xl);
   @include border-radius(map.get($border, sm));
   @include flexbox(column, center, center);
+  background-color: var(--light-grey);
+  max-width: 64rem;
 }
 
 .constructionMessageTitle {
   margin-bottom: map.get($spacing, md);
-  color: var(--primary-colour);
+  color: var(--accent-colour);
   @include font-style(map.get($font-sizes, lg), map.get($font-weights, bold));
 }
 
@@ -28,4 +46,17 @@
   color: var(--text-colour);
   line-height: map.get($font-heights, normal);
   @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
+}
+
+.actions {
+  @include flexbox(row, center, center);
+  gap: map.get($spacing, md);
+  margin-top: map.get($spacing, xl);
+}
+
+.cards {
+  width: map.get($percentage, 100);
+  max-width: 80rem;
+  padding: map.get($spacing, xl);
+  margin: map.get($spacing, 0) auto map.get($spacing, '2xl');
 }

@@ -2,30 +2,72 @@
 @use 'variables' as *;
 
 @keyframes slideRight {
-    from { transform: translateX(map.get($percentage, -100)); opacity: map.get($percentage, 0); }
-    to { transform: translateX(map.get($percentage, 0)); opacity: map.get($percentage, 100); }
+    from {
+        transform: translateX(map.get($percentage, -100));
+        opacity: map.get($percentage, 0);
+    }
+
+    to {
+        transform: translateX(map.get($percentage, 0));
+        opacity: map.get($percentage, 100);
+    }
 }
 
 @keyframes extendEffect {
-    from { max-width: map.get($spacing, lg); opacity: map.get($percentage, 0); }
-    to { max-width: map.get($spacing, '4xl'); opacity: map.get($percentage, 100); }
+    from {
+        max-width: map.get($spacing, lg);
+        opacity: map.get($percentage, 0);
+    }
+
+    to {
+        max-width: map.get($spacing, '4xl');
+        opacity: map.get($percentage, 100);
+    }
 }
 
 @keyframes fadeIn {
-    from { opacity: map.get($percentage, 0); }
-    to { opacity: map.get($percentage, 100); }
+    from {
+        opacity: map.get($percentage, 0);
+    }
+
+    to {
+        opacity: map.get($percentage, 100);
+    }
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 @keyframes slideUp {
-    from { transform: translateY(map.get($percentage, 100)); opacity: map.get($percentage, 0); }
-    to { transform: translateY(map.get($percentage, 0)); opacity: map.get($percentage, 100); }
+    from {
+        transform: translateY(map.get($percentage, 100));
+        opacity: map.get($percentage, 0);
+    }
+
+    to {
+        transform: translateY(map.get($percentage, 0));
+        opacity: map.get($percentage, 100);
+    }
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
 }

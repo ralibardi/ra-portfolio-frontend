@@ -15,7 +15,10 @@ describe('useTheme', () => {
   it('should return the context when used within a ThemeProvider', () => {
     const { result } = customRenderHook(() => useTheme());
 
-    expect(result.current.theme).toBe('light');
+    expect(result.current.theme).toBe('system');
+    expect(result.current.toggleTheme).toBeDefined();
+    expect(result.current.setTheme).toBeDefined();
+    expect(result.current.effectiveTheme).toBeDefined();
   });
 
   it('should throw an error when used outside a ThemeProvider', () => {

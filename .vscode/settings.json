@@ -34,5 +34,6 @@
     "autoSave": "onFocusChange",
     "eol": "\n"
   },
-  "FSharp.suggestGitignore": false
+  "FSharp.suggestGitignore": false,
+  "kiroAgent.configureMCP": "Enabled"
 }

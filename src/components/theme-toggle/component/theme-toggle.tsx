@@ -9,9 +9,19 @@ const ThemeToggle: React.FC = () => {
     return null;
   }
 
-  const { theme, toggleTheme } = themeContext;
+  const { theme, effectiveTheme, toggleTheme } = themeContext;
 
-  return <ToggleSwitcher checked={theme === 'dark'} onChange={toggleTheme} />;
+  // Show the effective theme state, but cycle through all options on toggle
+  return (
+    <div
+      title={`Current theme: ${theme}${theme === 'system' ? ` (${effectiveTheme})` : ''}`}
+    >
+      <ToggleSwitcher
+        checked={effectiveTheme === 'dark'}
+        onChange={toggleTheme}
+      />
+    </div>
+  );
 };
 
 export default React.memo(ThemeToggle);

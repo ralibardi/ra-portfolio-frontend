@@ -28,12 +28,7 @@ const ToggleWithLabel: FunctionComponent<IToggleWithLabelProps> = ({
         onClick={toggleSwitch}
         data-testid="toggle-switch-container"
       >
-        <motion.div
-          className={styles.switch}
-          data-testid="toggle-switch"
-          layout
-          transition={spring}
-        />
+        <div className={styles.switch} data-testid="toggle-switch" />
       </button>
     </div>
   );

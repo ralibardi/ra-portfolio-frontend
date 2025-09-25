@@ -52,6 +52,28 @@ registerRoute(
   }),
 );
 
+// Runtime caching for Google Fonts stylesheets
+registerRoute(
+  ({ url }) => url.origin === 'https://fonts.googleapis.com',
+  new StaleWhileRevalidate({
+    cacheName: 'google-fonts-stylesheets',
+  }),
+);
+
+// Runtime caching for Google Fonts webfont files
+registerRoute(
+  ({ url }) => url.origin === 'https://fonts.gstatic.com',
+  new CacheFirst({
+    cacheName: 'google-fonts-webfonts',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 30,
+        maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year
+      }),
+    ],
+  }),
+);
+
 // Add push notification event listener
 self.addEventListener('push', (event: PushEvent) => {
   const data: JsonNotificationResult =

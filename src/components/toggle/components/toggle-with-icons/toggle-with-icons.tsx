@@ -42,12 +42,7 @@ const ToggleWithIcons: FunctionComponent<IToggleWithIconsProps> = ({
           data-testid="toggle-icon-left"
         />
       )}
-      <motion.div
-        className={styles.switch}
-        data-testid="toggle-switch"
-        layout
-        transition={spring}
-      />
+      <div className={styles.switch} data-testid="toggle-switch" />
       {iconRight && (
         <FontAwesomeIcon
           icon={iconRight}

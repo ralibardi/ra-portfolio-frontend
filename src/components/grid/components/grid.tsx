@@ -22,11 +22,11 @@ const Grid: FunctionComponent<PropsWithChildren<GridProps>> = ({
   gap = 'md',
   children,
 }) => {
-  const styleVars: CSSProperties = {
-    ['--columns' as any]: String(columns),
+  const styleVars: CSSProperties & Record<string, string> = {
+    '--columns': String(columns),
   };
-  if (columnsMd) styleVars['--columnsMd' as any] = String(columnsMd);
-  if (columnsLg) styleVars['--columnsLg' as any] = String(columnsLg);
+  if (columnsMd) styleVars['--columnsMd'] = String(columnsMd);
+  if (columnsLg) styleVars['--columnsLg'] = String(columnsLg);
 
   return (
     <div

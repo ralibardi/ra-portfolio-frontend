@@ -29,13 +29,13 @@
 
   &Left {
     @extend .icon;
-    color: map.get($grey, 2);
+    color: var(--grey);
   }
 
   &Right {
     @extend .icon;
     color: var(--accent-colour);
-    padding-right: 0;
+    padding-right: map.get($spacing, 0);
     padding-left: map.get($spacing, sm);
   }
 }

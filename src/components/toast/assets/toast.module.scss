@@ -1,0 +1,47 @@
+@use "sass:map";
+@use '@assets/global' as *;
+
+.container {
+    position: fixed;
+    right: map.get($spacing, xl);
+    bottom: map.get($spacing, xl);
+    display: grid;
+    gap: map.get($spacing, md);
+    z-index: map.get($z-index, top);
+}
+
+.toast {
+    @include border-radius(map.get($border, md));
+    padding: map.get($spacing, md) map.get($spacing, lg);
+    background: var(--foreground-colour);
+    color: var(--text-colour);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    @include box-shadow(map.get($spacing, 0), map.get($spacing, '3xs'), map.get($spacing, xs), map.get($spacing, 0), var(--shadow-colour));
+}
+
+.toast[data-type="success"] {
+    border-left: map.get($border, lg) solid var(--success-colour);
+}
+
+.toast[data-type="error"] {
+    border-left: map.get($border, lg) solid var(--error-colour);
+}
+
+.toast[data-type="info"] {
+    border-left: map.get($border, lg) solid var(--accent-colour);
+}
+
+.message {
+    @include font-style(map.get($font-sizes, md), map.get($font-weights, medium));
+}
+
+.close {
+    appearance: none;
+    background: transparent;
+    border: none;
+    color: var(--text-colour);
+    cursor: pointer;
+    @include font-style(map.get($font-sizes, lg), map.get($font-weights, medium));
+}

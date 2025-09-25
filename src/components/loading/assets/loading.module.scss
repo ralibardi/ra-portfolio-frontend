@@ -1,7 +1,8 @@
-@use "sass:map";@use '@assets/global' as *;
+@use "sass:map";
+@use '@assets/global' as *;
 
 .container {
-  height: 100%;
+  height: map.get($percentage, 100);
   @include flexbox(row, center, center);
 }
 

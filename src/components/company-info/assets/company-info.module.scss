@@ -13,7 +13,7 @@
   font-weight: map.get($font-weights, bold);
   text-decoration: none;
   font-size: map.get($font-sizes, md);
-  padding: 0 map.get($spacing, xs);
+  padding: map.get($spacing, 0) map.get($spacing, xs);
   gap: map.get($spacing, sm);
 }
 

@@ -1,34 +1,106 @@
-// Colours
-// Primary
+@use "sass:map";
+
+// Color System
+// Organized by color family with all variations (solid, alpha, tints, shades)
+
+// Primary Colors
 $primary: (
-  1: #4a90e2,
-  2: #357ABD,
-  3: #2A5D9E
+  // Solid colors
+  base: #4a90e2,
+  light: #357ABD,
+  dark: #2A5D9E,
+
+  // Alpha variations
+  alpha-08: rgba(74, 144, 226, 0.08)
 );
 
-// Secondary
+// Secondary Colors
 $secondary: (
-  1: #e67e22,
-  2: #d35400,
-  3: #f1c40f
+  // Solid colors
+  base: #e67e22,
+  medium: #d35400,
+  accent: #f1c40f,
+
+  // Alpha variations
+  alpha-08: rgba(230, 126, 34, 0.08)
 );
 
-// Neutrals
-$white: #fdfdfd;
-$black: #2c3e50;
+// Neutral Colors
+$neutral: (
+  // Solid colors
+  white: #fdfdfd,
+  black: #2c3e50,
 
-// Greys
+  // White alpha variations
+  white-alpha-95: rgba(253, 253, 253, 0.95),
+  white-alpha-90: rgba(253, 253, 253, 0.9),
+  white-alpha-30: rgba(253, 253, 253, 0.3),
+  white-alpha-10: rgba(253, 253, 253, 0.1),
+
+  // Black alpha variations
+  black-alpha-95: rgba(44, 62, 80, 0.95),
+  black-alpha-40: rgba(44, 62, 80, 0.4),
+  black-alpha-25: rgba(44, 62, 80, 0.25),
+  black-alpha-15: rgba(44, 62, 80, 0.15),
+  black-alpha-08: rgba(44, 62, 80, 0.08),
+  black-alpha-06: rgba(44, 62, 80, 0.06)
+);
+
+// Grey Scale
 $grey: (
-  1: #ecf0f1,
-  2: #bdc3c7,
-  3: #95a5a6,
-  4: #7f8c8d,
-  5: #34495e,
-  6: #2c3e50
+  // Light to dark progression
+  100: #ecf0f1,
+  // Lightest
+  200: #bdc3c7,
+  300: #95a5a6,
+  400: #7f8c8d,
+  500: #34495e,
+  600: #2c3e50 // Darkest (same as neutral black)
 );
 
-// Colour scheme
-$colour-scheme: (
+// Semantic Colors
+$success: (
+  base: #10b981,
+  // Green-500
+  light: #34d399,
+  // Green-400
+  dark: #059669,
+  // Green-600
+  alpha-08: rgba(16, 185, 129, 0.08)
+);
+
+$warning: (
+  base: #f59e0b,
+  // Amber-500
+  light: #fbbf24,
+  // Amber-400
+  dark: #d97706,
+  // Amber-600
+  alpha-08: rgba(245, 158, 11, 0.08)
+);
+
+$error: (
+  base: #ef4444,
+  // Red-500
+  light: #f87171,
+  // Red-400
+  dark: #dc2626,
+  // Red-600
+  alpha-08: rgba(239, 68, 68, 0.08)
+);
+
+$info: (
+  base: #3b82f6,
+  // Blue-500
+  light: #60a5fa,
+  // Blue-400
+  dark: #2563eb,
+  // Blue-600
+  alpha-08: rgba(59, 130, 246, 0.08)
+);
+
+// Theme Configuration
+$themes: (
   light: light,
   dark: dark
 );

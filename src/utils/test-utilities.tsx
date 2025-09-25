@@ -1,4 +1,5 @@
-import React, { act, FunctionComponent, ReactNode, ReactElement } from 'react';
+import React, { FunctionComponent, ReactNode, ReactElement } from 'react';
+import { act } from '@testing-library/react';
 import { MemoryRouter as Router } from 'react-router-dom';
 import {
   render,
@@ -16,9 +17,18 @@ interface IAllProvidersProps {
   children: ReactNode;
 }
 
+// Mock ToastProvider for testing
+const MockToastProvider: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => {
+  return <>{children}</>;
+};
+
 const AllProviders: FunctionComponent<IAllProvidersProps> = ({ children }) => (
   <Router>
-    <ThemeProvider>{children}</ThemeProvider>
+    <ThemeProvider>
+      <MockToastProvider>{children}</MockToastProvider>
+    </ThemeProvider>
   </Router>
 );
 

@@ -8,7 +8,7 @@ export type CardProps = {
   footer?: ReactNode;
   elevated?: boolean;
   interactive?: boolean;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
 };
 
 const Card: FunctionComponent<PropsWithChildren<CardProps>> = ({

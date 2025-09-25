@@ -7,14 +7,33 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  width: 100vw;
-  height: 100vh;
+  width: map.get($percentage, 100);
+  min-height: 100dvh;
   overflow-x: hidden;
+
+  // Default light theme
+  @include theme(light);
+
+  // System theme support
+  @media (prefers-color-scheme: dark) {
+    &:not([data-theme="light"]) {
+      @include theme(dark);
+    }
+  }
+
+  // Explicit theme overrides
+  &[data-theme="light"] {
+    @include theme(light);
+  }
+
+  &[data-theme="dark"] {
+    @include theme(dark);
+  }
 }
 
 html,
 body {
-  @include size(100vw, 100vh);
+  @include size(map.get($percentage, 100), auto);
   margin: map.get($spacing, 0);
   padding: map.get($spacing, 0);
   overflow-x: hidden;
@@ -22,18 +41,16 @@ body {
 
 body {
   @include flexbox(column, center, center);
-  @include theme(light);
   min-height: 100vh;
-
-  &.dark-mode {
-    @include theme(dark);
-  }
+  @include transition(background-color map.get($transition, fast) ease, color map.get($transition, fast) ease);
+  background-color: var(--background-colour);
+  color: var(--text-colour);
 }
 
 #root {
-  width: 100%;
-  min-height: 100vh;
-  height: 100%;
+  width: map.get($percentage, 100);
+  min-height: 100dvh;
+  height: map.get($percentage, 100);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -41,7 +58,7 @@ body {
 
 main {
   @include flexbox(column);
-  @include size(100%, 100%);
+  @include size(map.get($percentage, 100), map.get($percentage, 100));
   overflow: hidden;
   flex: 1;
 }
@@ -53,7 +70,7 @@ main {
   @include border-radius(map.get($border, xs));
   border: map.get($border, xs) solid var(--accent-colour);
   inset: auto map.get($spacing, xs) map.get($spacing, xs);
-  background: $white;
+  background: var(--background-colour);
   padding: map.get($spacing, xs);
   z-index: map.get($z-index, top);
 }

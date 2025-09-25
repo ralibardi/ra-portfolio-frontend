@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from '../assets/container.module.scss';
 
 export type ContainerProps = {
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
   className?: string;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl';
   padded?: boolean;

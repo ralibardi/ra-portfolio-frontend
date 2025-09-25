@@ -4,7 +4,7 @@
 .container {
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
+  width: map.get($percentage, 100);
 }
 
 .padded {
@@ -14,12 +14,15 @@
 .sm {
   max-width: 40rem;
 }
+
 .md {
   max-width: 48rem;
 }
+
 .lg {
   max-width: 64rem;
 }
+
 .xl {
   max-width: 80rem;
 }

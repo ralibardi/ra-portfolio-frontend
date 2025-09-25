@@ -1,0 +1,40 @@
+@use "sass:map";
+@use '@assets/global' as *;
+
+.container {
+    @include flexbox(column);
+    gap: map.get($spacing, '2xs');
+    width: map.get($percentage, 100);
+}
+
+.label {
+    @include font-style(map.get($font-sizes, sm), map.get($font-weights, medium), var(--text-colour));
+}
+
+.textarea {
+    @include font-style(map.get($font-sizes, md), map.get($font-weights, regular), var(--text-colour));
+    background: var(--background-colour);
+    border: map.get($border, xs) solid var(--foreground-colour);
+    @include border-radius(map.get($border, sm));
+    padding: map.get($spacing, sm) map.get($spacing, md);
+    outline: none;
+    resize: vertical;
+    @include transition((border-color map.get($transition, fast) ease), (box-shadow map.get($transition, fast) ease));
+
+    &:focus {
+        border-color: var(--accent-colour);
+        @include box-shadow(0, map.get($spacing, '3xs'), map.get($spacing, '2xs'), 0, map.get($neutral, black-alpha-08));
+    }
+}
+
+.textareaError {
+    border-color: var(--error-colour);
+}
+
+.helper {
+    @include font-style(map.get($font-sizes, sm), map.get($font-weights, regular), var(--foreground-colour));
+}
+
+.error {
+    color: var(--error-colour);
+}

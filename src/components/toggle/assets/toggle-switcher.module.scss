@@ -13,11 +13,11 @@
 }
 
 .light {
-  background-color: $black;
+  background-color: map.get($neutral, black);
 }
 
 .dark {
-  background-color: $white;
+  background-color: map.get($neutral, white);
 }
 
 .container input {
@@ -31,7 +31,7 @@
       -#{map.get($spacing, xs)},
       0,
       0,
-      $white,
+      map.get($neutral, white),
       true);
     @include size(calc(map.get($spacing, md) + map.get($spacing, '2xs')));
     @include border-radius(map.get($percentage, 50));
@@ -47,8 +47,8 @@
     }
 
     &::before {
-      left: 0;
-      top: 0;
+      left: map.get($spacing, 0);
+      top: map.get($spacing, 0);
       @include transition(background map.get($transition, fast) ease);
       @include border-radius(inherit);
     }
@@ -60,14 +60,14 @@
       top: map.get($percentage, 50);
       left: map.get($percentage, 50);
 
-      box-shadow: 0 -#{map.get($spacing, sm)} 0 $black,
-      0 map.get($spacing, sm) 0 $black,
-      map.get($spacing, sm) 0 0 $black,
-      -#{map.get($spacing, sm)} 0 0 $black,
-      map.get($spacing, xs) map.get($spacing, xs) 0 $black,
-      -#{map.get($spacing, xs)} map.get($spacing, xs) 0 $black,
-      map.get($spacing, xs) -#{map.get($spacing, xs)} 0 $black,
-      -#{map.get($spacing, xs)} -#{map.get($spacing, xs)} 0 $black;
+      box-shadow: 0 -#{map.get($spacing, sm)} 0 map.get($neutral, black),
+      0 map.get($spacing, sm) 0 map.get($neutral, black),
+      map.get($spacing, sm) 0 0 map.get($neutral, black),
+      -#{map.get($spacing, sm)} 0 0 map.get($neutral, black),
+      map.get($spacing, xs) map.get($spacing, xs) 0 map.get($neutral, black),
+      -#{map.get($spacing, xs)} map.get($spacing, xs) 0 map.get($neutral, black),
+      map.get($spacing, xs) -#{map.get($spacing, xs)} 0 map.get($neutral, black),
+      -#{map.get($spacing, xs)} -#{map.get($spacing, xs)} 0 map.get($neutral, black);
 
       @include transform(0);
       @include size(map.get($spacing, '2xs'));
@@ -82,11 +82,11 @@
       -#{map.get($spacing, xl)},
       0,
       0,
-      $black,
+      map.get($neutral, black),
       true);
 
     &::before {
-      background: $black;
+      background: map.get($neutral, black);
       @include transition(background map.get($transition, fast) ease map.get($transition, 0));
     }
 

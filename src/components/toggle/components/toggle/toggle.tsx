@@ -23,12 +23,7 @@ const Toggle: FunctionComponent<IToggleProps> = ({
       onClick={toggleSwitch}
       data-testid="toggle-container"
     >
-      <motion.div
-        className={styles.switch}
-        data-testid="toggle-switch"
-        layout
-        transition={spring}
-      />
+      <div className={styles.switch} data-testid="toggle-switch" />
     </button>
   );
 };

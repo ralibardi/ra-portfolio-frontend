@@ -2,19 +2,35 @@
 $spacing-base: 1rem;
 $border-base: 0.25rem;
 
-// Spacing
+// Spacing - Enhanced with intermediate values
 $spacing: (
   0: 0,
   '3xs': $spacing-base * 0.125,
+  // 2px
   '2xs': $spacing-base * 0.25,
+  // 4px
   xs: $spacing-base * 0.5,
+  // 8px
   sm: $spacing-base * 0.75,
+  // 12px
   md: $spacing-base,
-  lg: $spacing-base * 1.5,
-  xl: $spacing-base * 2,
-  '2xl': $spacing-base * 4,
-  '3xl': $spacing-base * 8,
-  '4xl': $spacing-base * 12,
+  // 16px (base)
+  lg: $spacing-base * 1.25,
+  // 20px - NEW intermediate
+  xl: $spacing-base * 1.5,
+  // 24px
+  '2xl': $spacing-base * 2,
+  // 32px
+  '3xl': $spacing-base * 3,
+  // 48px - NEW intermediate
+  '4xl': $spacing-base * 4,
+  // 64px
+  '5xl': $spacing-base * 6,
+  // 96px - NEW for larger layouts
+  '6xl': $spacing-base * 8,
+  // 128px
+  '7xl': $spacing-base * 12,
+  // 192px
 );
 
 // Border Sizes
@@ -38,17 +54,52 @@ $percentage: (
   100: 100%,
 );
 
-// Transitions
+// Transitions - Enhanced with easing curves
 $transition: (
   0: 0s,
-  fast: 0.2s,
-  medium: 0.5s,
-  slow: 1s,
+  fast: 0.15s,
+  normal: 0.25s,
+  medium: 0.4s,
+  slow: 0.6s,
+  slower: 1s,
 );
 
-// Z-Index
+// Easing Curves
+$easing: (
+  // Standard curves
+  linear: cubic-bezier(0, 0, 1, 1),
+  ease: cubic-bezier(0.25, 0.1, 0.25, 1),
+  ease-in: cubic-bezier(0.42, 0, 1, 1),
+  ease-out: cubic-bezier(0, 0, 0.58, 1),
+  ease-in-out: cubic-bezier(0.42, 0, 0.58, 1),
+
+  // Custom curves for better UX
+  bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55),
+  smooth: cubic-bezier(0.4, 0, 0.2, 1),
+  snappy: cubic-bezier(0.4, 0, 0.6, 1),
+);
+
+// Z-Index - Enhanced layering system
 $z-index: (
+  // Backgrounds and base layers
   background: -1,
-  default: 1,
-  top: 1000,
+  base: 0,
+
+  // Content layers
+  content: 1,
+  elevated: 10,
+
+  // Interactive elements
+  dropdown: 100,
+  sticky: 200,
+
+  // Overlays
+  overlay: 1000,
+  modal: 1100,
+  popover: 1200,
+
+  // System level
+  tooltip: 1300,
+  toast: 1400,
+  debug: 9999
 );

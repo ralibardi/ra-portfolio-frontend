@@ -1,0 +1,58 @@
+@use 'sass:map';
+@use '@assets/global' as *;
+
+// Example component demonstrating the enhanced styling system
+.demo-component {
+    // Enhanced spacing
+    padding: map.get($spacing, lg) map.get($spacing, '3xl');
+    margin: map.get($spacing, '5xl') auto;
+
+    // Enhanced typography
+    @include typography('2xl', semi-bold, relaxed);
+
+    // Semantic colors
+    @include semantic-background('success', 'light');
+    @include semantic-color('success', 'dark');
+
+    // Enhanced transitions with easing
+    @include enhanced-transition(all, normal, smooth);
+
+    // Responsive typography
+    @include responsive-typography(lg, '4xl');
+
+    // Future-proofing with logical properties
+    @include logical-margin(map.get($spacing, md), 0, map.get($spacing, lg), 0);
+
+    // Container query example (fallback to media query)
+    @include container-query(400px) {
+        @include typography('3xl', bold, loose);
+    }
+
+    &:hover {
+        @include semantic-background('success', 'base');
+        @include transform(1.02);
+    }
+}
+
+.warning-demo {
+    @include semantic-background('warning', 'alpha-08');
+    @include semantic-color('warning', 'dark');
+    padding: map.get($spacing, md);
+    border-left: map.get($border, lg) solid map.get($warning, base);
+}
+
+.error-demo {
+    @include semantic-background('error', 'alpha-08');
+    @include semantic-color('error', 'dark');
+    padding: map.get($spacing, md);
+    border-radius: map.get($border, md);
+}
+
+.info-demo {
+    @include semantic-background('info', 'alpha-08');
+    @include semantic-color('info', 'dark');
+    padding: map.get($spacing, md);
+
+    // Enhanced z-index usage
+    z-index: map.get($z-index, elevated);
+}

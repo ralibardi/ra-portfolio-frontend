@@ -6,6 +6,14 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 
+// Extend Axios config types to include custom properties
+interface ExtendedAxiosRequestConfig extends InternalAxiosRequestConfig {
+  retried?: boolean;
+  metadata?: {
+    startTime: number;
+  };
+}
+
 export interface IApiError {
   message: string;
   code: string;
@@ -35,7 +43,7 @@ class ApiClient {
       timeout: 10000, // 10 second timeout
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
       },
       // Enable compression
@@ -94,11 +102,16 @@ class ApiClient {
         return response;
       },
       (error: unknown) => {
-        const axiosError = axios.isAxiosError(error) ? error : new AxiosError('Unknown error');
-        
+        const axiosError = axios.isAxiosError(error)
+          ? error
+          : new AxiosError('Unknown error');
+
         // Retry logic for network errors
-        if (axiosError.code === 'NETWORK_ERROR' && !axiosError.config?.retried) {
-          axiosError.config!.retried = true;
+        if (
+          axiosError.code === 'NETWORK_ERROR' &&
+          !(axiosError.config as ExtendedAxiosRequestConfig)?.retried
+        ) {
+          (axiosError.config as ExtendedAxiosRequestConfig)!.retried = true;
           return this.axiosInstance.request(axiosError.config!);
         }
 
@@ -110,30 +123,43 @@ class ApiClient {
   private setupPerformanceMonitoring(): void {
     // Performance monitoring
     this.axiosInstance.interceptors.request.use((config) => {
-      config.metadata = { startTime: Date.now() };
+      (config as ExtendedAxiosRequestConfig).metadata = {
+        startTime: Date.now(),
+      };
       return config;
     });
 
     this.axiosInstance.interceptors.response.use(
       (response) => {
-        const duration = Date.now() - response.config.metadata?.startTime;
+        const duration =
+          Date.now() -
+          (response.config as ExtendedAxiosRequestConfig).metadata?.startTime!;
         if (duration > 1000) {
-          console.warn(`Slow API request: ${response.config.url} took ${duration}ms`);
+          console.warn(
+            `Slow API request: ${response.config.url} took ${duration}ms`,
+          );
         }
         return response;
       },
       (error) => {
         if (error.config) {
-          const duration = Date.now() - error.config.metadata?.startTime;
-          console.error(`Failed API request: ${error.config.url} took ${duration}ms`);
+          const duration =
+            Date.now() -
+            (error.config as ExtendedAxiosRequestConfig).metadata?.startTime!;
+          console.error(
+            `Failed API request: ${error.config.url} took ${duration}ms`,
+          );
         }
         return Promise.reject(error);
-      }
+      },
     );
   }
 
   private generateRequestId(): string {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+    );
   }
 
   private cacheResponse(url: string, data: unknown): void {
@@ -148,15 +174,15 @@ class ApiClient {
   private getCachedResponse<T>(url: string): T | null {
     const cacheKey = this.getCacheKey(url);
     const cached = this.cache.get(cacheKey);
-    
+
     if (cached && cached.expiry > Date.now()) {
       return cached.data as T;
     }
-    
+
     if (cached) {
       this.cache.delete(cacheKey);
     }
-    
+
     return null;
   }
 
@@ -189,7 +215,10 @@ class ApiClient {
     }
   }
 
-  public async get<T>(url: string, config?: AxiosRequestConfig & { useCache?: boolean }): Promise<T> {
+  public async get<T>(
+    url: string,
+    config?: AxiosRequestConfig & { useCache?: boolean },
+  ): Promise<T> {
     // Check cache first for GET requests
     if (config?.useCache !== false) {
       const cached = this.getCachedResponse<T>(url);
@@ -209,7 +238,7 @@ class ApiClient {
   ): Promise<T> {
     // Clear related cache entries
     this.invalidateCache(url);
-    
+
     const response = await this.axiosInstance.post<T>(url, data, config);
     return response.data;
   }
@@ -221,7 +250,7 @@ class ApiClient {
   ): Promise<T> {
     // Clear related cache entries
     this.invalidateCache(url);
-    
+
     const response = await this.axiosInstance.put<T>(url, data, config);
     return response.data;
   }
@@ -229,7 +258,7 @@ class ApiClient {
   public async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
     // Clear related cache entries
     this.invalidateCache(url);
-    
+
     const response = await this.axiosInstance.delete<T>(url, config);
     return response.data;
   }
@@ -238,7 +267,7 @@ class ApiClient {
     // Remove cache entries that might be affected by this mutation
     const baseUrl = url.split('?')[0].split('/').slice(0, -1).join('/');
     const keysToDelete: string[] = [];
-    
+
     this.cache.forEach((_, key) => {
       try {
         const decodedKey = atob(key);
@@ -249,8 +278,8 @@ class ApiClient {
         // Invalid base64, skip
       }
     });
-    
-    keysToDelete.forEach(key => this.cache.delete(key));
+
+    keysToDelete.forEach((key) => this.cache.delete(key));
   }
 
   public clearCache(): void {

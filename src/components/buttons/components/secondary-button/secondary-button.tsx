@@ -12,10 +12,13 @@ const SecondaryButton = memo(function SecondaryButton({
 }: ISecondaryButtonProps) {
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      if (!isLoading && onClick) {
-        onClick(e);
+      if (onClick) {
+        e.preventDefault();
+        if (!isLoading) {
+          onClick(e);
+        }
       }
+      // If no onClick handler, let the default behavior happen
     },
     [isLoading, onClick],
   );
@@ -28,7 +31,7 @@ const SecondaryButton = memo(function SecondaryButton({
       type="button"
       {...props}
       onClick={handleClick}
-      disabled={isLoading}
+      disabled={isLoading || props.disabled}
     >
       {isLoading ? (
         <Loading />

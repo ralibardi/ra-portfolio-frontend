@@ -2,15 +2,17 @@
 @use '@assets/global' as *;
 
 .section {
-  width: 100%;
+  width: map.get($percentage, 100);
 }
 
 .spacing-sm {
   padding-block: map.get($spacing, md);
 }
+
 .spacing-md {
   padding-block: map.get($spacing, '2xl');
 }
+
 .spacing-lg {
   padding-block: map.get($spacing, '3xl');
 }
@@ -22,16 +24,12 @@
 }
 
 .title {
-  @include font-style(
-    map.get($font-sizes, lg),
-    map.get($font-weights, semi-bold)
-  );
+  @include font-style(map.get($font-sizes, lg),
+    map.get($font-weights, semi-bold));
 }
 
 .subtitle {
-  @include font-style(
-    map.get($font-sizes, md),
+  @include font-style(map.get($font-sizes, md),
     map.get($font-weights, regular),
-    var(--foreground-colour)
-  );
+    var(--foreground-colour));
 }

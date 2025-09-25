@@ -1,4 +1,4 @@
-import React, { Children, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
 export const ComponentArray = <T,>({
   render,
@@ -8,6 +8,8 @@ export const ComponentArray = <T,>({
   of: T[];
 }) => (
   <Fragment>
-    {Children.toArray(of.map((item, index) => render(item, index)))}
+    {of.map((item, index) => (
+      <Fragment key={index}>{render(item, index)}</Fragment>
+    ))}
   </Fragment>
 );

@@ -2,12 +2,14 @@
 @use '@assets/global' as *;
 
 .container {
-    position: fixed;
+    position: sticky;
     top: 0;
     width: map.get($percentage, 100);
     @include flexbox(column, space-between, center);
     overflow: hidden;
     z-index: map.get($z-index, top);
+    background-color: var(--background-colour);
+    @include box-shadow(map.get($spacing, 0), map.get($spacing, '3xs'), map.get($spacing, '2xs'), map.get($spacing, 0), map.get($neutral, black-alpha-08));
 
     @include breakpoint(mobile-landscape) {
         @include flexbox(row, space-between, center);

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from '../assets/section.module.scss';
 
 export type SectionProps = {
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
   className?: string;
   spacing?: 'sm' | 'md' | 'lg';
   title?: string;

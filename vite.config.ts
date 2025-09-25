@@ -1,10 +1,28 @@
+/**
+ * Vite Configuration - Modern Web Performance Best Practices
+ *
+ * Chunking Strategy:
+ * - Automatic intelligent chunking (no manual configuration needed)
+ * - Vite automatically splits vendor code from application code
+ * - Dynamic imports create separate chunks for route-based code splitting
+ * - No empty chunks - only creates chunks with meaningful content
+ *
+ * Performance Optimizations:
+ * - 500KB chunk size limit (industry best practice)
+ * - CSS code splitting for better caching
+ * - Aggressive tree shaking to remove unused code
+ * - Asset inlining for small files (<4KB)
+ * - Modern compression and minification
+ * - Optimized for HTTP/2 multiplexing
+ */
 import { ConfigEnv, UserConfig, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { VitePWA } from 'vite-plugin-pwa';
 import { GenerateManifest } from './manifestGenerator';
 import path from 'path';
 import sass from 'sass';
-import { splitVendorChunkPlugin } from 'vite';
+
 import { visualizer } from 'rollup-plugin-visualizer';
 
 export default ({ mode }: ConfigEnv): UserConfig => {
@@ -25,31 +43,101 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         '@api': path.resolve(__dirname, 'src/api'),
       },
     },
-    assetsInclude: ['**/*.jpeg', '**/*.jpg', '**/*.svg', '**/*.png', '**/*.webp', '**/*.avif'],
+    assetsInclude: [
+      '**/*.jpeg',
+      '**/*.jpg',
+      '**/*.svg',
+      '**/*.png',
+      '**/*.webp',
+      '**/*.avif',
+    ],
     plugins: [
       react({
         babel: {
-          plugins: [
-            // Remove prop-types in production
-            isProd && 'babel-plugin-transform-remove-console',
-            isProd && ['babel-plugin-transform-remove-prop-types', { removeImport: true }],
-          ].filter(Boolean),
+          plugins: isProd ? ['babel-plugin-transform-remove-console'] : [],
         },
       }),
       tsconfigPaths(),
-      splitVendorChunkPlugin(),
+
+      VitePWA({
+        registerType: 'autoUpdate',
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,avif}'],
+          runtimeCaching: [
+            {
+              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'google-fonts-cache',
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+              },
+            },
+            {
+              urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'gstatic-fonts-cache',
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+              },
+            },
+            {
+              urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|avif)$/,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'images-cache',
+                expiration: {
+                  maxEntries: 100,
+                  maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+                },
+              },
+            },
+          ],
+        },
+        includeAssets: ['favicon.ico', 'appLogo.svg', 'robots.txt'],
+        manifest: {
+          name: 'Ronny Alibardi Portfolio',
+          short_name: 'RA Portfolio',
+          description:
+            'Portfolio showcasing the work and projects of Ronny Alibardi',
+          theme_color: '#ffffff',
+          background_color: '#fdfdfd',
+          display: 'standalone',
+          orientation: 'portrait',
+          scope: '/',
+          start_url: '/',
+          icons: [
+            {
+              src: 'icons/android/android-launchericon-192-192.png',
+              sizes: '192x192',
+              type: 'image/png',
+            },
+            {
+              src: 'icons/android/android-launchericon-512-512.png',
+              sizes: '512x512',
+              type: 'image/png',
+            },
+          ],
+        },
+      }),
       {
         name: 'manifest-generator',
         enforce: 'post',
         writeBundle: GenerateManifest,
       },
       // Bundle analyzer for production builds
-      isProd && visualizer({
-        filename: 'dist/stats.html',
-        open: false,
-        gzipSize: true,
-        brotliSize: true,
-      }),
+      isProd &&
+        visualizer({
+          filename: 'dist/stats.html',
+          open: false,
+          gzipSize: true,
+          brotliSize: true,
+        }),
     ].filter(Boolean),
     css: {
       preprocessorOptions: {
@@ -60,10 +148,18 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       },
       // CSS code splitting and optimization
       modules: {
-        generateScopedName: isProd ? '[hash:base64:5]' : '[name]__[local]__[hash:base64:5]',
+        generateScopedName: isProd
+          ? '[hash:base64:5]'
+          : '[name]__[local]__[hash:base64:5]',
+      },
+      // Modern CSS optimization
+      devSourcemap: isDev,
+      postcss: {
+        plugins: [],
       },
     },
     build: {
+      // Simplified build configuration - uses Vite's intelligent defaults
       outDir: 'dist',
       sourcemap: isDev ? true : 'hidden',
       minify: isProd ? 'terser' : false,
@@ -73,7 +169,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         compress: {
           drop_console: isProd,
           drop_debugger: isProd,
-          pure_funcs: isProd ? ['console.log', 'console.info', 'console.debug', 'console.warn'] : [],
+          pure_funcs: isProd
+            ? ['console.log', 'console.info', 'console.debug', 'console.warn']
+            : [],
         },
         mangle: {
           safari10: true,
@@ -81,12 +179,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       },
       rollupOptions: {
         output: {
-          chunkFileNames: (chunkInfo) => {
-            const facadeModuleId = chunkInfo.facadeModuleId
-              ? chunkInfo.facadeModuleId.split('/').pop()
-              : 'chunk';
-            return `static/js/${facadeModuleId}-[hash].js`;
-          },
+          // Modern chunking strategy following web performance best practices
+          chunkFileNames: 'static/js/[name]-[hash].js',
           entryFileNames: 'static/js/[name]-[hash].js',
           assetFileNames: (assetInfo) => {
             const info = assetInfo.name?.split('.') ?? [];
@@ -98,24 +192,29 @@ export default ({ mode }: ConfigEnv): UserConfig => {
             }
             return `static/${extType}/[name]-[hash][extname]`;
           },
-          manualChunks: {
-            // Vendor chunks for better caching
-            react: ['react', 'react-dom'],
-            router: ['react-router-dom'],
-            utils: ['axios', '@tanstack/react-query'],
-            ui: ['framer-motion', '@fortawesome/react-fontawesome'],
-          },
+
+          // Modern best practice: Let Vite handle chunking automatically
+          // This prevents empty chunks and optimizes based on actual usage
         },
-        external: [],
+
+        // Modern tree shaking configuration for optimal bundle size
         treeshake: {
           moduleSideEffects: false,
           propertyReadSideEffects: false,
           tryCatchDeoptimization: false,
+          // Additional optimizations
+          preset: 'smallest',
         },
       },
-      // Chunk size warnings
-      chunkSizeWarningLimit: 1000,
+      // Modern performance optimizations
+      chunkSizeWarningLimit: 500, // Best practice: warn for chunks > 500KB
       reportCompressedSize: isProd,
+
+      // Production-specific optimizations
+      ...(isProd && {
+        cssCodeSplit: true, // Split CSS into separate files for better caching
+        assetsInlineLimit: 4096, // Inline assets < 4KB (best practice)
+      }),
     },
     server: {
       port: 3000,
@@ -127,8 +226,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       port: 4173,
       host: true,
     },
-    // Optimize dependencies
+    // Modern dependency optimization
     optimizeDeps: {
+      // Pre-bundle these dependencies for faster dev server startup
       include: [
         'react',
         'react-dom',
@@ -136,8 +236,16 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'axios',
         '@tanstack/react-query',
         'framer-motion',
+        'i18next',
+        'react-i18next',
       ],
+      // Exclude problematic packages that should be handled by Vite
       exclude: ['@fortawesome/fontawesome-svg-core'],
+      // Modern optimization settings
+      force: false, // Only re-optimize when dependencies change
+      esbuildOptions: {
+        target: 'es2020', // Modern target for better optimization
+      },
     },
   });
 };
