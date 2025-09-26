@@ -1,6 +1,6 @@
-import { renderHook, act } from '@testing-library/react';
-import { useAdvancedTheme } from './use-advanced-theme';
+import { act } from '@testing-library/react';
 import { customRenderHook } from '@utils/test-utilities';
+import { useAdvancedTheme } from './use-advanced-theme';
 
 // Mock the theme utils module
 jest.mock('@utils/theme-utils', () => ({
@@ -14,29 +14,24 @@ jest.mock('@utils/theme-utils', () => ({
 
 // Import the mocked functions after the mock is set up
 import {
+  applyThemeToDocument,
+  enableThemeTransitions,
+  getEffectiveTheme,
   getThemeColor,
   isDarkTheme,
-  getEffectiveTheme,
-  enableThemeTransitions,
-  applyThemeToDocument,
   watchSystemTheme,
 } from '@utils/theme-utils';
 
-const mockGetThemeColor = getThemeColor as jest.MockedFunction<
-  typeof getThemeColor
->;
+const mockGetThemeColor = getThemeColor as jest.MockedFunction<typeof getThemeColor>;
 const mockIsDarkTheme = isDarkTheme as jest.MockedFunction<typeof isDarkTheme>;
-const mockGetEffectiveTheme = getEffectiveTheme as jest.MockedFunction<
-  typeof getEffectiveTheme
+const mockGetEffectiveTheme = getEffectiveTheme as jest.MockedFunction<typeof getEffectiveTheme>;
+const mockEnableThemeTransitions = enableThemeTransitions as jest.MockedFunction<
+  typeof enableThemeTransitions
 >;
-const mockEnableThemeTransitions =
-  enableThemeTransitions as jest.MockedFunction<typeof enableThemeTransitions>;
 const mockApplyThemeToDocument = applyThemeToDocument as jest.MockedFunction<
   typeof applyThemeToDocument
 >;
-const mockWatchSystemTheme = watchSystemTheme as jest.MockedFunction<
-  typeof watchSystemTheme
->;
+const mockWatchSystemTheme = watchSystemTheme as jest.MockedFunction<typeof watchSystemTheme>;
 
 describe('useAdvancedTheme', () => {
   beforeEach(() => {
@@ -46,7 +41,7 @@ describe('useAdvancedTheme', () => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
       value: jest.fn().mockImplementation((query) => ({
-        matches: query === '(prefers-color-scheme: dark)' ? false : true,
+        matches: query !== '(prefers-color-scheme: dark)',
         media: query,
         onchange: null,
         addListener: jest.fn(),
@@ -61,24 +56,20 @@ describe('useAdvancedTheme', () => {
     mockGetThemeColor.mockImplementation((theme, colors) => {
       const isDark =
         theme === 'dark' ||
-        (theme === 'system' &&
-          window.matchMedia?.('(prefers-color-scheme: dark)').matches);
+        (theme === 'system' && window.matchMedia?.('(prefers-color-scheme: dark)').matches);
       return isDark ? colors.dark : colors.light;
     });
 
     mockIsDarkTheme.mockImplementation((theme) => {
       return (
         theme === 'dark' ||
-        (theme === 'system' &&
-          window.matchMedia?.('(prefers-color-scheme: dark)').matches)
+        (theme === 'system' && window.matchMedia?.('(prefers-color-scheme: dark)').matches)
       );
     });
 
     mockGetEffectiveTheme.mockImplementation((theme) => {
       if (theme === 'system') {
-        return window.matchMedia?.('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light';
+        return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       }
       return theme;
     });
@@ -93,7 +84,9 @@ describe('useAdvancedTheme', () => {
 
     mockWatchSystemTheme.mockImplementation(() => {
       // Mock implementation - return cleanup function
-      return () => {};
+      return () => {
+        // Cleanup function for system theme watcher
+      };
     });
   });
 

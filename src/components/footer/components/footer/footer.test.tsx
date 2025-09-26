@@ -1,7 +1,6 @@
-import React from 'react';
+import { FOOTER } from '@app/i18n/keys';
 import { customRender, screen } from '@utils/test-utilities';
 import Footer from './footer';
-import { FOOTER } from '@app/i18n/keys';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),

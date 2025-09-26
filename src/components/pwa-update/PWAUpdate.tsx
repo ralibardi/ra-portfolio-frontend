@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import styles from './PWAUpdate.module.scss';
 
 interface PWAUpdateProps {
@@ -10,7 +11,7 @@ const PWAUpdate: React.FC<PWAUpdateProps> = ({ registration }) => {
   const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
-    if (registration && registration.waiting) {
+    if (registration?.waiting) {
       setShowUpdate(true);
     }
   }, [registration]);
@@ -41,13 +42,14 @@ const PWAUpdate: React.FC<PWAUpdateProps> = ({ registration }) => {
         <span className={styles.message}>A new version is available!</span>
         <div className={styles.actions}>
           <button
+            type="button"
             className={styles.updateBtn}
             onClick={handleUpdate}
             disabled={isUpdating}
           >
             {isUpdating ? 'Updating...' : 'Update'}
           </button>
-          <button className={styles.dismissBtn} onClick={handleDismiss}>
+          <button type="button" className={styles.dismissBtn} onClick={handleDismiss}>
             Later
           </button>
         </div>

@@ -1,12 +1,16 @@
 /// <reference types="vite/client" />
 
-// Add any custom type declarations here
-interface IImportMetaEnv {
-  // Define your environment variables here
+// Strongly typed environment variables
+interface ImportMetaEnv {
+  readonly VITE_API_BASE_URL: string;
+  readonly VITE_APP_ENV: 'development' | 'production' | 'test';
   readonly VITE_APP_TITLE: string;
-  // Add more as needed
+  readonly MODE: 'development' | 'production' | 'test';
+  readonly DEV: boolean;
+  readonly PROD: boolean;
+  readonly SSR: boolean;
 }
 
-interface IImportMetaEnv {
+interface ImportMeta {
   readonly env: ImportMetaEnv;
 }

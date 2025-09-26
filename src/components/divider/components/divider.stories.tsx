@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Divider from './divider';
 
@@ -28,9 +27,7 @@ export const Horizontal: Story = {
 
 export const Vertical: Story = {
   render: (args) => (
-    <div
-      style={{ display: 'flex', gap: 16, alignItems: 'stretch', height: 64 }}
-    >
+    <div style={{ display: 'flex', gap: 16, alignItems: 'stretch', height: 64 }}>
       <div>Left</div>
       <Divider {...args} />
       <div>Right</div>

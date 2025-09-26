@@ -1,7 +1,6 @@
-import React from 'react';
-import CompanyInfo from './company-info';
-import { customRender, screen } from '@utils/test-utilities';
 import { COMPANY_NAME } from '@app/i18n/keys';
+import { customRender, screen } from '@utils/test-utilities';
+import CompanyInfo from './company-info';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -9,9 +8,11 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
+// Mock the logo import to prevent empty src attribute
+jest.mock('../assets/logo.jpg', () => 'test-logo.jpg');
+
 describe('CompanyInfo', () => {
-  const renderCompanyInfo = (props = {}) =>
-    customRender(<CompanyInfo {...props} />);
+  const renderCompanyInfo = (props = {}) => customRender(<CompanyInfo {...props} />);
 
   test('renders company info component', () => {
     renderCompanyInfo();

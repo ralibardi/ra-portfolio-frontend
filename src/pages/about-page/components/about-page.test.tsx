@@ -1,6 +1,5 @@
-import React from 'react';
-import TestingPage from './about-page';
 import { act, customRender, screen } from '@utils/test-utilities';
+import TestingPage from './about-page';
 
 describe('AboutPage', () => {
   it('renders without crashing', async () => {

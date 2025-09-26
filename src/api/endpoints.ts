@@ -20,9 +20,7 @@ export const getEndpoint = <
     throw new Error(`Invalid category: ${String(category)}`);
   }
   if (!API_ENDPOINTS[category][endpoint]) {
-    throw new Error(
-      `Invalid endpoint: ${String(endpoint)} for category: ${String(category)}`,
-    );
+    throw new Error(`Invalid endpoint: ${String(endpoint)} for category: ${String(category)}`);
   }
   return API_ENDPOINTS[category][endpoint] as string;
 };

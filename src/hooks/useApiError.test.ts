@@ -1,6 +1,6 @@
+import type { IApiError } from '@api/api-client';
 import { renderHook } from '@testing-library/react';
 import { useApiError } from './useApiError';
-import { IApiError } from '@api/api-client';
 
 describe('useApiError', () => {
   // Save original window.location
@@ -8,11 +8,20 @@ describe('useApiError', () => {
 
   beforeEach(() => {
     // Mock console.error
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(console, 'error').mockImplementation(() => {
+      // Suppress console.error during tests
+    });
 
-    // Mock window.location
-    delete (window as Partial<Window>).location;
-    window.location = { ...originalLocation, href: '' };
+    // Mock window.location with a proper setter
+    const mockLocation = {
+      ...originalLocation,
+      href: 'http://localhost/',
+    };
+
+    Object.defineProperty(window, 'location', {
+      value: mockLocation,
+      writable: true,
+    });
   });
 
   afterEach(() => {

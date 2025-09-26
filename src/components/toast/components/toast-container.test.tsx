@@ -1,17 +1,18 @@
-import React from 'react';
-import { render, screen, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { ToastProvider, useToast } from '@contexts/toast-context';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import type React from 'react';
 import ToastContainer from './toast-container';
 
 const Harness: React.FC = () => {
   const { success, showToast } = useToast();
   return (
     <div>
-      <button onClick={() => success('Success!')} aria-label="trigger-success">
+      <button type="button" onClick={() => success('Success!')} aria-label="trigger-success">
         trigger
       </button>
       <button
+        type="button"
         onClick={() => showToast('Timed', { durationMs: 1000 })}
         aria-label="trigger-timed"
       >

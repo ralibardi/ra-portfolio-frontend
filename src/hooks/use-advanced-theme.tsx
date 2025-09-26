@@ -1,7 +1,7 @@
-import { useTheme } from './use-theme';
-import { useCallback, useMemo } from 'react';
-import { Theme } from '@type/theme';
+import type { Theme } from '@type/theme';
 import { getThemeColor, isDarkTheme } from '@utils/theme-utils';
+import { useCallback, useMemo } from 'react';
+import { useTheme } from './use-theme';
 
 /**
  * Advanced theme hook with additional utilities
@@ -16,30 +16,17 @@ export const useAdvancedTheme = () => {
     [themeContext.theme],
   );
 
-  const isCurrentlyDark = useMemo(
-    () => isDarkTheme(themeContext.theme),
-    [themeContext.theme],
-  );
+  const isCurrentlyDark = useMemo(() => isDarkTheme(themeContext.theme), [themeContext.theme]);
 
-  const setLightTheme = useCallback(
-    () => themeContext.setTheme('light'),
-    [themeContext],
-  );
+  const setLightTheme = useCallback(() => themeContext.setTheme('light'), [themeContext]);
 
-  const setDarkTheme = useCallback(
-    () => themeContext.setTheme('dark'),
-    [themeContext],
-  );
+  const setDarkTheme = useCallback(() => themeContext.setTheme('dark'), [themeContext]);
 
-  const setSystemTheme = useCallback(
-    () => themeContext.setTheme('system'),
-    [themeContext],
-  );
+  const setSystemTheme = useCallback(() => themeContext.setTheme('system'), [themeContext]);
 
   const cycleTheme = useCallback(() => {
     const { theme } = themeContext;
-    const nextTheme: Theme =
-      theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light';
+    const nextTheme: Theme = theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light';
     themeContext.setTheme(nextTheme);
   }, [themeContext]);
 

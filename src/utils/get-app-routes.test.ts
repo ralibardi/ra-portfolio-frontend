@@ -26,9 +26,7 @@ describe('getAppRoutes', () => {
   });
 
   it('should include contact route', () => {
-    const contactRoute = getAppRoutes.find(
-      (route) => route.path === '/contact',
-    );
+    const contactRoute = getAppRoutes.find((route) => route.path === '/contact');
     expect(contactRoute).toBeDefined();
   });
 
@@ -43,9 +41,7 @@ describe('getAppRoutes', () => {
   });
 
   it('should include photography route', () => {
-    const photographyRoute = getAppRoutes.find(
-      (route) => route.path === '/photography',
-    );
+    const photographyRoute = getAppRoutes.find((route) => route.path === '/photography');
     expect(photographyRoute).toBeDefined();
   });
 

@@ -1,15 +1,15 @@
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
-  faGithub,
-  faStackOverflow,
   faAndroid,
   faAppStore,
-  faLinkedinIn,
+  faGithub,
   faInstagram,
+  faLinkedinIn,
+  faSpotify,
+  faStackOverflow,
   faXbox,
   faXTwitter,
-  faSpotify,
 } from '@fortawesome/free-brands-svg-icons';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 import socialLinks from './socialLinks.json';
 

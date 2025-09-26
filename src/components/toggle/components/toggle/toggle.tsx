@@ -1,14 +1,9 @@
-import React, { FunctionComponent, useCallback } from 'react';
-import { IToggleProps } from '../../types/toggle-props';
-import { motion } from 'framer-motion';
-import { spring } from '@utils/animations/framer-motion-animation';
-
+import type React from 'react';
+import { type FunctionComponent, useCallback } from 'react';
 import styles from '../../assets/toggle.module.scss';
+import type { IToggleProps } from '../../types/toggle-props';
 
-const Toggle: FunctionComponent<IToggleProps> = ({
-  checked = false,
-  onClick,
-}) => {
+const Toggle: FunctionComponent<IToggleProps> = ({ checked = false, onClick }) => {
   const toggleSwitch = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       onClick(event);
@@ -18,6 +13,7 @@ const Toggle: FunctionComponent<IToggleProps> = ({
 
   return (
     <button
+      type="button"
       className={styles.toggle}
       data-ison={checked}
       onClick={toggleSwitch}

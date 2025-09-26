@@ -1,5 +1,5 @@
-import React, { FunctionComponent, lazy, useMemo } from 'react';
 import { getAppRoutes } from '@utils/get-app-routes';
+import { type FunctionComponent, lazy, useMemo } from 'react';
 
 const Topbar = lazy(() => import('@components/topbar'));
 const CompanyInfo = lazy(() => import('@components/company-info'));
@@ -8,10 +8,7 @@ const ThemeToggle = lazy(() => import('@components/theme-toggle'));
 import styles from '../assets/header.module.scss';
 
 const Header: FunctionComponent = () => {
-  const enabledRoutes = useMemo(
-    () => getAppRoutes.filter((r) => r.enabled && !r.hidden),
-    [],
-  );
+  const enabledRoutes = useMemo(() => getAppRoutes.filter((r) => r.enabled && !r.hidden), []);
 
   return (
     <header className={styles.container}>

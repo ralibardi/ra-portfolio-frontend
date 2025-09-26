@@ -1,11 +1,5 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import type React from 'react';
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
 
 export type ToastType = 'success' | 'error' | 'info';
 
@@ -32,9 +26,7 @@ interface ToastContextValue {
 
 const ToastContext = createContext<ToastContextValue | undefined>(undefined);
 
-export const ToastProvider: React.FC<React.PropsWithChildren> = ({
-  children,
-}) => {
+export const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
   const idCounter = useRef(0);
 
@@ -57,12 +49,9 @@ export const ToastProvider: React.FC<React.PropsWithChildren> = ({
   const api = useMemo<ToastContextValue>(
     () => ({
       showToast,
-      success: (message, durationMs) =>
-        showToast(message, { type: 'success', durationMs }),
-      error: (message, durationMs) =>
-        showToast(message, { type: 'error', durationMs }),
-      info: (message, durationMs) =>
-        showToast(message, { type: 'info', durationMs }),
+      success: (message, durationMs) => showToast(message, { type: 'success', durationMs }),
+      error: (message, durationMs) => showToast(message, { type: 'error', durationMs }),
+      info: (message, durationMs) => showToast(message, { type: 'info', durationMs }),
       toasts,
       remove,
     }),
@@ -79,4 +68,3 @@ export function useToast(): ToastContextValue {
 }
 
 export default ToastContext;
-

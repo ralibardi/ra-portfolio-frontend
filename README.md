@@ -71,8 +71,8 @@ pnpm run dev
 - `npm run build` - Build for production
 - `npm run test` - Run tests
 - `npm run storybook` - Start Storybook
-- `npm run lint` - Run ESLint
-- `npm run format` - Format code with Prettier
+- `npm run lint` - Run Biome linting
+- `npm run format` - Format code with Biome
 
 ## Project Structure
 
@@ -98,7 +98,7 @@ ra-portfolio/
 
 - All code changes require tests
 - Maintains 80%+ test coverage
-- Follows ESLint configuration
+- Follows Biome configuration
 - Passes SonarCloud quality gates
 
 ## Deployment

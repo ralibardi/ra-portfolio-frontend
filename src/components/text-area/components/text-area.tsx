@@ -1,5 +1,5 @@
-import React, { FunctionComponent, TextareaHTMLAttributes, useId } from 'react';
 import classNames from 'classnames';
+import React, { type FunctionComponent, type TextareaHTMLAttributes, useId } from 'react';
 import styles from '../assets/text-area.module.scss';
 
 export type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
@@ -24,10 +24,7 @@ const TextArea: FunctionComponent<TextAreaProps> = ({
   const textAreaId = id ?? autoId;
 
   return (
-    <div
-      className={classNames(styles.container, className)}
-      data-fullwidth={fullWidth}
-    >
+    <div className={classNames(styles.container, className)} data-fullwidth={fullWidth}>
       {label && (
         <label className={styles.label} htmlFor={textAreaId}>
           {label}
@@ -40,9 +37,7 @@ const TextArea: FunctionComponent<TextAreaProps> = ({
           [styles.textareaError]: Boolean(error),
         })}
         aria-invalid={Boolean(error)}
-        aria-describedby={
-          helperText || error ? `${textAreaId}-helper` : undefined
-        }
+        aria-describedby={helperText || error ? `${textAreaId}-helper` : undefined}
         {...props}
       />
       {(helperText || error) && (

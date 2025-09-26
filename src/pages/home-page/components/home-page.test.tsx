@@ -1,11 +1,8 @@
-import React from 'react';
-import HomePage from './home-page';
 import { render, screen } from '@testing-library/react';
+import HomePage from './home-page';
 
 // Mock the Loading component since it's lazy loaded
-jest.mock('@components/loading', () => () => (
-  <div data-testid="loading">Loading...</div>
-));
+jest.mock('@components/loading', () => () => <div data-testid="loading">Loading...</div>);
 
 describe('HomePage', () => {
   it('renders without crashing', async () => {

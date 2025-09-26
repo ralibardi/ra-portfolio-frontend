@@ -1,5 +1,5 @@
-import React, { FunctionComponent, PropsWithChildren } from 'react';
 import classNames from 'classnames';
+import React, { type FunctionComponent, type PropsWithChildren } from 'react';
 import styles from '../assets/container.module.scss';
 
 export type ContainerProps = {

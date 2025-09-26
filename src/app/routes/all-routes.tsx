@@ -1,17 +1,14 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React, { FunctionComponent, Suspense, lazy } from 'react';
+import type IRoute from '@type/route';
 import { getAppRoutes } from '@utils/get-app-routes';
-import IRoute from '@type/route';
 import { rootPath } from '@utils/route-paths';
+import React, { type FunctionComponent, lazy, Suspense } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const Loading = lazy(() => import('@components/loading'));
 const BasePage = lazy(() => import('@pages/base-page'));
 
 const AllRoutes: FunctionComponent = () => {
-  const enabledRoutes = React.useMemo(
-    () => getAppRoutes.filter((r) => r.enabled),
-    [],
-  );
+  const enabledRoutes = React.useMemo(() => getAppRoutes.filter((r) => r.enabled), []);
 
   return (
     <Suspense fallback={<Loading />}>

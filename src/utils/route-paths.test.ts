@@ -1,11 +1,11 @@
 import {
-  rootPath,
-  homePagePath,
-  codingPagePath,
-  photographyPagePath,
-  gamingPagePath,
   aboutPagePath,
+  codingPagePath,
   contactPagePath,
+  gamingPagePath,
+  homePagePath,
+  photographyPagePath,
+  rootPath,
 } from './route-paths';
 
 describe('Route Paths', () => {

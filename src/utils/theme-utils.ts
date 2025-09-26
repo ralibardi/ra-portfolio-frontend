@@ -1,4 +1,4 @@
-import { Theme } from '@type/theme';
+import type { Theme } from '@type/theme';
 
 /**
  * Theme utility functions for advanced theme management
@@ -11,9 +11,7 @@ export const THEME_STORAGE_KEY = 'ra-portfolio-theme';
  */
 export const getEffectiveTheme = (theme: Theme): 'light' | 'dark' => {
   if (theme === 'system') {
-    return window.matchMedia?.('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
   return theme;
 };
@@ -28,10 +26,7 @@ export const isDarkTheme = (theme: Theme): boolean => {
 /**
  * Get theme-appropriate color values
  */
-export const getThemeColor = (
-  theme: Theme,
-  colors: { light: string; dark: string },
-): string => {
+export const getThemeColor = (theme: Theme, colors: { light: string; dark: string }): string => {
   return isDarkTheme(theme) ? colors.dark : colors.light;
 };
 
@@ -91,17 +86,20 @@ const updateMetaTag = (name: string, content: string): void => {
  * Get system theme preference
  */
 export const getSystemThemePreference = (): 'light' | 'dark' => {
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
 /**
  * Listen for system theme changes
  */
-export const watchSystemTheme = (
-  callback: (theme: 'light' | 'dark') => void,
-): (() => void) => {
+export const watchSystemTheme = (callback: (theme: 'light' | 'dark') => void): (() => void) => {
+  // Handle environments where matchMedia is not available
+  if (!window.matchMedia) {
+    return () => {
+      // No-op cleanup function
+    };
+  }
+
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
   const handleChange = (e: MediaQueryListEvent) => {
@@ -131,8 +129,7 @@ export const disableThemeTransitions = (): void => {
 /**
  * Preload theme-specific assets
  */
-export const preloadThemeAssets = (theme: 'light' | 'dark'): void => {
+export const preloadThemeAssets = (_theme: 'light' | 'dark'): void => {
   // This could be used to preload theme-specific images or fonts
   // For now, it's a placeholder for future enhancements
-  console.debug(`Preloading assets for ${theme} theme`);
 };

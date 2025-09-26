@@ -1,8 +1,8 @@
-import React, { FunctionComponent, lazy, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { GetSocialLinks } from '../../utils/getSocialLinks';
-import styles from '../../assets/footer.module.scss';
 import { FOOTER } from '@app/i18n/keys';
+import { type FunctionComponent, lazy, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import styles from '../../assets/footer.module.scss';
+import { GetSocialLinks } from '../../utils/getSocialLinks';
 
 const FooterSocials = lazy(() => import('../footer-socials/footer-socials'));
 

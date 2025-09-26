@@ -1,4 +1,3 @@
-import React from 'react';
 import { act, customRender, screen } from '@utils/test-utilities';
 import ErrorPage from './error-page';
 
@@ -59,16 +58,14 @@ describe('ErrorPage', () => {
     });
 
     expect(detailsElement).toBeInTheDocument();
-    expect(summaryElement).toHaveTextContent(
-      `${error.name} - ${error.message}`,
-    );
+    expect(summaryElement).toHaveTextContent(`${error.name} - ${error.message}`);
     expect(stackElement).toHaveTextContent('Test stack trace');
   });
 
   it('calls window.history.back when the back button is clicked', async () => {
-    const backSpy = jest
-      .spyOn(window.history, 'back')
-      .mockImplementation(() => {});
+    const backSpy = jest.spyOn(window.history, 'back').mockImplementation(() => {
+      // Mock implementation for history.back()
+    });
     customRender(<ErrorPage />);
     const { backButton } = await act(() => {
       const backButton = screen.getByRole('button');

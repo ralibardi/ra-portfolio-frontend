@@ -1,5 +1,5 @@
+import type { IApiError } from '@api/api-client';
 import { useCallback } from 'react';
-import { IApiError } from '@api/api-client';
 
 export const useApiError = () => {
   const handleApiError = useCallback((error: IApiError) => {
@@ -22,7 +22,8 @@ export const useApiError = () => {
         // Handle network errors
         break;
       default:
-        // Handle other errors
+        // Log unhandled errors for debugging
+        // biome-ignore lint/suspicious/noConsole: Error logging for debugging
         console.error('API Error:', error);
     }
 

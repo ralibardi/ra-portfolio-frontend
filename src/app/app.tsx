@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useContext } from 'react';
 import AllRoutes from '@app/routes/all-routes';
+import React, { type FunctionComponent, useContext } from 'react';
 import '@app/i18n/config';
 import ThemeContext from '@contexts/theme-context';
 

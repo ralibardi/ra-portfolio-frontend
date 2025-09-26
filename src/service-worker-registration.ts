@@ -13,9 +13,7 @@
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     window.location.hostname === '[::1]' ||
-    /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/.test(
-      window.location.hostname,
-    ),
+    /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/.test(window.location.hostname),
 );
 
 type Config = {
@@ -25,10 +23,7 @@ type Config = {
 
 export function Register(config?: Config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-    const publicUrl = new URL(
-      process.env.PUBLIC_URL || '',
-      window.location.href,
-    );
+    const publicUrl = new URL(process.env.PUBLIC_URL || '', window.location.href);
     if (publicUrl.origin !== window.location.origin) return;
 
     window.addEventListener('load', () => {
@@ -39,7 +34,13 @@ export function Register(config?: Config) {
           'ready' in navigator.serviceWorker &&
           typeof navigator.serviceWorker.ready.catch === 'function'
         ) {
-          navigator.serviceWorker.ready.catch(console.error);
+          navigator.serviceWorker.ready.catch((error) => {
+            // Silently handle service worker ready errors
+            if (process.env.NODE_ENV === 'development') {
+              // biome-ignore lint/suspicious/noConsole: Development logging
+              console.error('Service worker ready error:', error);
+            }
+          });
         }
       } else {
         RegisterValidSW(swUrl, config);
@@ -67,8 +68,8 @@ function RegisterValidSW(swUrl: string, config?: Config) {
         };
       };
     })
-    .catch((error) => {
-      console.error('Error during service worker registration:', error);
+    .catch((_error) => {
+      // Silently ignore service worker registration errors
     });
 }
 
@@ -76,27 +77,36 @@ function CheckValidServiceWorker(swUrl: string, config?: Config) {
   fetch(swUrl, { headers: { 'Service-Worker': 'script' } })
     .then((response) => {
       const contentType = response.headers.get('content-type');
-      if (
-        response.status === 404 ||
-        (contentType && !contentType.includes('javascript'))
-      ) {
+      if (response.status === 404 || (contentType && !contentType.includes('javascript'))) {
         navigator.serviceWorker.ready
           .then((registration) => registration.unregister())
           .then(() => window.location.reload())
-          .catch(console.error);
+          .catch((error) => {
+            // Silently handle service worker unregister errors
+            if (process.env.NODE_ENV === 'development') {
+              // biome-ignore lint/suspicious/noConsole: Development logging
+              console.error('Service worker unregister error:', error);
+            }
+          });
       } else {
         RegisterValidSW(swUrl, config);
       }
     })
-    .catch(console.error);
+    .catch((error) => {
+      // Silently handle service worker check errors
+      if (process.env.NODE_ENV === 'development') {
+        // biome-ignore lint/suspicious/noConsole: Development logging
+        console.error('Service worker check error:', error);
+      }
+    });
 }
 
 export function Unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready
       .then((registration) => registration.unregister())
-      .catch((error) => {
-        console.error(error.message);
+      .catch((_error) => {
+        // Silently ignore service worker unregister errors
       });
   }
 }

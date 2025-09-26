@@ -1,5 +1,5 @@
-import React, { FunctionComponent, PropsWithChildren } from 'react';
 import classNames from 'classnames';
+import React, { type FunctionComponent, type PropsWithChildren } from 'react';
 import styles from '../assets/section.module.scss';
 
 export type SectionProps = {
@@ -20,13 +20,7 @@ const Section: FunctionComponent<PropsWithChildren<SectionProps>> = ({
 }) => {
   const Component = as as unknown as React.ElementType;
   return (
-    <Component
-      className={classNames(
-        styles.section,
-        styles[`spacing-${spacing}`],
-        className,
-      )}
-    >
+    <Component className={classNames(styles.section, styles[`spacing-${spacing}`], className)}>
       {(title || subtitle) && (
         <header className={styles.header}>
           {title && <h2 className={styles.title}>{title}</h2>}

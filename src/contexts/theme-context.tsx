@@ -1,19 +1,20 @@
-import { Theme } from '@type/theme';
-import { IThemeContext } from '@type/theme-context';
+import type { Theme } from '@type/theme';
+import type { IThemeContext } from '@type/theme-context';
 import {
-  THEME_STORAGE_KEY,
-  getEffectiveTheme,
   applyThemeToDocument,
-  watchSystemTheme,
   enableThemeTransitions,
+  getEffectiveTheme,
+  THEME_STORAGE_KEY,
+  watchSystemTheme,
 } from '@utils/theme-utils';
-import React, {
+import type React from 'react';
+import {
   createContext,
-  useState,
-  useEffect,
-  FunctionComponent,
+  type FunctionComponent,
   useCallback,
+  useEffect,
   useMemo,
+  useState,
 } from 'react';
 
 const ThemeContext = createContext<IThemeContext | null>(null);
@@ -38,7 +39,7 @@ export const ThemeProvider: FunctionComponent<{
   useEffect(() => {
     enableThemeTransitions();
     applyThemeToDocument(theme);
-  }, []);
+  }, [theme]);
 
   // Handle system theme changes
   useEffect(() => {
@@ -64,7 +65,6 @@ export const ThemeProvider: FunctionComponent<{
           return 'dark';
         case 'dark':
           return 'system';
-        case 'system':
         default:
           return 'light';
       }
@@ -89,11 +89,7 @@ export const ThemeProvider: FunctionComponent<{
     [theme, toggleTheme, setSpecificTheme, getEffectiveThemeValue],
   );
 
-  return (
-    <ThemeContext.Provider value={contextValue}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 };
 
 export default ThemeContext;

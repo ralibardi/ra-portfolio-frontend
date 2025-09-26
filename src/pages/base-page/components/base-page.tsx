@@ -1,4 +1,4 @@
-import React, { FunctionComponent, lazy, Suspense } from 'react';
+import { type FunctionComponent, lazy, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
 const Loading = lazy(() => import('@components/loading'));

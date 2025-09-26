@@ -1,16 +1,11 @@
-import React, {
-  FunctionComponent,
-  lazy,
-  Suspense,
-  useCallback,
-  useState,
-} from 'react';
-import styles from '../assets/contact-page.module.scss';
-import { useToast } from '@contexts/toast-context';
-import TextInput from '@components/text-input';
-import TextArea from '@components/text-area';
-import Divider from '@components/divider';
 import { PrimaryButton, SecondaryButton } from '@components/buttons';
+import Divider from '@components/divider';
+import TextArea from '@components/text-area';
+import TextInput from '@components/text-input';
+import { useToast } from '@contexts/toast-context';
+import type React from 'react';
+import { type FunctionComponent, lazy, Suspense, useCallback, useState } from 'react';
+import styles from '../assets/contact-page.module.scss';
 
 const Loading = lazy(() => import('@components/loading'));
 
@@ -19,7 +14,7 @@ const ContactPage: FunctionComponent = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const { success, error } = useToast();
+  const { success } = useToast();
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {

@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import NavLink from './nav-link';
 import { faHome, faUser } from '@fortawesome/free-solid-svg-icons';
-import IRoute from '@type/route';
+import type { Meta, StoryObj } from '@storybook/react';
+import type IRoute from '@type/route';
+import NavLink from './nav-link';
 
 const meta: Meta<typeof NavLink> = {
   title: 'Links/NavLink',

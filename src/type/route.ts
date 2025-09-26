@@ -1,5 +1,5 @@
-import { FunctionComponent } from 'react';
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import type { FunctionComponent } from 'react';
 
 interface IRoute {
   readonly path: string;

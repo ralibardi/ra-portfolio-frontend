@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import PrimaryButton from './primary-button';
 
@@ -31,7 +30,9 @@ export const WithOnClick = {
   ...Template,
   args: {
     ...Default.args,
-    onClick: () => {},
+    onClick: () => {
+      // Storybook action placeholder
+    },
   },
 };
 

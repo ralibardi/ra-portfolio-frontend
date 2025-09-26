@@ -1,8 +1,8 @@
-import React, { memo, useCallback } from 'react';
 import Loading from '@components/loading';
-import { ISecondaryButtonProps } from '../../types/secondary-button-props';
-
+import type React from 'react';
+import { memo, useCallback, useId } from 'react';
 import styles from '../../assets/secondary-button.module.scss';
+import type { ISecondaryButtonProps } from '../../types/secondary-button-props';
 
 const SecondaryButton = memo(function SecondaryButton({
   onClick,
@@ -10,6 +10,7 @@ const SecondaryButton = memo(function SecondaryButton({
   isLoading = false,
   ...props
 }: ISecondaryButtonProps) {
+  const buttonId = useId();
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       if (onClick) {
@@ -27,7 +28,7 @@ const SecondaryButton = memo(function SecondaryButton({
     <button
       className={styles.button}
       data-testid="secondary-button-container"
-      id="secondary-button"
+      id={buttonId}
       type="button"
       {...props}
       onClick={handleClick}

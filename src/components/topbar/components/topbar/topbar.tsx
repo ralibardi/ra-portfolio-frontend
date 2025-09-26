@@ -1,10 +1,9 @@
-import React, { FunctionComponent, useMemo } from 'react';
-import IRoute from '@type/route';
+import type IRoute from '@type/route';
+import React, { type FunctionComponent, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import NavLink from '../nav-link/nav-link';
-import { ITopbarProps } from '../../types/topbar-props';
-
 import styles from '../../assets/topbar.module.scss';
+import type { ITopbarProps } from '../../types/topbar-props';
+import NavLink from '../nav-link/nav-link';
 
 const Topbar: FunctionComponent<ITopbarProps> = ({ routes }) => {
   const location = useLocation();
@@ -22,9 +21,7 @@ const Topbar: FunctionComponent<ITopbarProps> = ({ routes }) => {
 
   return (
     <nav className={styles.container} data-testid="topbar-container">
-      {routes && routes.length > 1 && (
-        <div className={styles.padding}>{navLinks}</div>
-      )}
+      {routes && routes.length > 1 && <div className={styles.padding}>{navLinks}</div>}
     </nav>
   );
 };

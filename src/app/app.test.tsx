@@ -1,6 +1,6 @@
-import React, { act, FunctionComponent } from 'react';
-import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from '@contexts/theme-context';
+import { render, screen } from '@testing-library/react';
+import { act, type FunctionComponent } from 'react';
 import App from './app';
 
 const TestableComponent: FunctionComponent = () => {

@@ -32,6 +32,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
     "esModuleInterop": true
   },
   "include": ["src", "public", "jest.config.ts"],

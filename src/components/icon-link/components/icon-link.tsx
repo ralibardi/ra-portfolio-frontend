@@ -1,7 +1,7 @@
-import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IIconLinkProps } from '../types/icon-link-props';
+import { memo } from 'react';
 import styles from '../assets/icon-link.module.scss';
+import type { IIconLinkProps } from '../types/icon-link-props';
 
 const IconLink = memo(({ icon, linkUrl, title }: IIconLinkProps) => {
   const ariaLabel = title ?? icon?.iconName ?? 'Link';
@@ -15,11 +15,7 @@ const IconLink = memo(({ icon, linkUrl, title }: IIconLinkProps) => {
       className={styles.container}
       data-testid="icon-link"
     >
-      <FontAwesomeIcon
-        icon={icon}
-        className={styles.icon}
-        data-testid="icon-link-icon"
-      />
+      <FontAwesomeIcon icon={icon} className={styles.icon} data-testid="icon-link-icon" />
       {title && (
         <span className={styles.label} data-testid="icon-link-label">
           {title}

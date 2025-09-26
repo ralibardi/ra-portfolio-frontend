@@ -1,7 +1,7 @@
-import React from 'react';
-import ContactPage from './contact-page';
-import { customRender, screen, act, waitFor } from '@utils/test-utilities';
 import userEvent from '@testing-library/user-event';
+import { act, customRender, screen, waitFor } from '@utils/test-utilities';
+import type React from 'react';
+import ContactPage from './contact-page';
 
 // Mock the toast context to track calls
 const mockSuccess = jest.fn();
@@ -12,9 +12,7 @@ jest.mock('@contexts/toast-context', () => ({
     success: mockSuccess,
     error: mockError,
   }),
-  ToastProvider: ({ children }: { children: React.ReactNode }) => (
-    <>{children}</>
-  ),
+  ToastProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
 describe('ContactPage', () => {
@@ -127,9 +125,7 @@ describe('ContactPage', () => {
 
     // Wait for submission to complete
     await waitFor(() => {
-      expect(mockSuccess).toHaveBeenCalledWith(
-        'Thanks! Your message has been sent.',
-      );
+      expect(mockSuccess).toHaveBeenCalledWith('Thanks! Your message has been sent.');
     });
 
     // Verify form fields are cleared after successful submission
@@ -234,9 +230,7 @@ describe('ContactPage', () => {
 
     // Wait for submission to complete
     await waitFor(() => {
-      expect(mockSuccess).toHaveBeenCalledWith(
-        'Thanks! Your message has been sent.',
-      );
+      expect(mockSuccess).toHaveBeenCalledWith('Thanks! Your message has been sent.');
     });
   });
 
@@ -269,9 +263,7 @@ describe('ContactPage', () => {
 
     expect(screen.getByPlaceholderText('Your full name')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText('How can I help you?'),
-    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('How can I help you?')).toBeInTheDocument();
   });
 
   it('renders divider with message label', async () => {

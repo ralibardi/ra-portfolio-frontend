@@ -1,18 +1,16 @@
-import React, { FunctionComponent } from 'react';
-import { customRender, screen, act } from '@utils/test-utilities';
-import userEvent from '@testing-library/user-event';
-import ThemeContext, { ThemeProvider } from './theme-context';
-import { IThemeContext } from '@type/theme-context';
 import { useTheme } from '@hooks/use-theme';
+import userEvent from '@testing-library/user-event';
+import type { IThemeContext } from '@type/theme-context';
+import { act, customRender, screen } from '@utils/test-utilities';
+import type { FunctionComponent } from 'react';
+import ThemeContext, { ThemeProvider } from './theme-context';
 
 describe('ThemeProvider', () => {
-  const TestComponent: FunctionComponent<{ onClick?: () => void }> = ({
-    onClick,
-  }) => {
+  const TestComponent: FunctionComponent<{ onClick?: () => void }> = ({ onClick }) => {
     const themeContextValue = useTheme();
     const { toggleTheme } = themeContextValue;
     return (
-      <button onClick={onClick || toggleTheme} data-testid="toggle-theme">
+      <button type="button" onClick={onClick || toggleTheme} data-testid="toggle-theme">
         Toggle Theme
       </button>
     );
@@ -90,7 +88,7 @@ describe('ThemeProvider', () => {
 
   it.skip('initializes theme based on system preference and localStorage', () => {
     const mockMatchMedia = jest.fn().mockImplementation((query) => ({
-      matches: query === '(prefers-color-scheme: dark)' ? false : true,
+      matches: query !== '(prefers-color-scheme: dark)',
       addListener: jest.fn(),
       removeListener: jest.fn(),
     }));

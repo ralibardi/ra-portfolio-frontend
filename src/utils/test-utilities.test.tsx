@@ -1,11 +1,10 @@
-import React from 'react';
-import { customRender } from './test-utilities';
 import userEvent from '@testing-library/user-event';
+import { customRender } from './test-utilities';
 
 describe('clickButton', () => {
-  const renderButton = (onClick: jest.Mock, disabled: boolean = false) => {
+  const renderButton = (onClick: jest.Mock, disabled = false) => {
     const { getByRole } = customRender(
-      <button onClick={onClick} disabled={disabled}>
+      <button type="button" onClick={onClick} disabled={disabled}>
         Click me
       </button>,
     );

@@ -1,4 +1,4 @@
-import { Theme } from './theme';
+import type { Theme } from './theme';
 
 export interface IThemeContext {
   readonly theme: Theme;

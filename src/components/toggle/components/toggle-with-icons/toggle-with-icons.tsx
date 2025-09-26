@@ -1,10 +1,8 @@
-import React, { FunctionComponent, useCallback, useMemo } from 'react';
-import cn from 'classnames';
-import { IToggleWithIconsProps } from '../../types/toggle-with-icons-props';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import { spring } from '@utils/animations/framer-motion-animation';
+import cn from 'classnames';
+import React, { type FunctionComponent, useCallback, useMemo } from 'react';
 import styles from '../../assets/toggle-with-icons.module.scss';
+import type { IToggleWithIconsProps } from '../../types/toggle-with-icons-props';
 
 const ToggleWithIcons: FunctionComponent<IToggleWithIconsProps> = ({
   iconLeft,
@@ -14,7 +12,7 @@ const ToggleWithIcons: FunctionComponent<IToggleWithIconsProps> = ({
 }) => {
   const toggleSwitch = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
-      onClick && onClick(event);
+      onClick?.(event);
     },
     [onClick],
   );
@@ -30,6 +28,7 @@ const ToggleWithIcons: FunctionComponent<IToggleWithIconsProps> = ({
 
   return (
     <button
+      type="button"
       className={styles.toggle}
       data-ison={checked}
       onClick={toggleSwitch}

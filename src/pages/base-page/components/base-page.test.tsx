@@ -1,16 +1,9 @@
-import React from 'react';
-import BasePage from './base-page';
 import { act, customRender, screen } from '@utils/test-utilities';
+import BasePage from './base-page';
 
-jest.mock('@components/header', () => () => (
-  <div data-testid="header">Mock Header</div>
-));
-jest.mock('@components/footer', () => () => (
-  <div data-testid="footer">Mock Footer</div>
-));
-jest.mock('@components/loading', () => () => (
-  <div data-testid="loading">Mock Loading</div>
-));
+jest.mock('@components/header', () => () => <div data-testid="header">Mock Header</div>);
+jest.mock('@components/footer', () => () => <div data-testid="footer">Mock Footer</div>);
+jest.mock('@components/loading', () => () => <div data-testid="loading">Mock Loading</div>);
 
 describe('BasePage', () => {
   it('renders without crashing', async () => {

@@ -1,10 +1,11 @@
 import axios, {
   AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  InternalAxiosRequestConfig,
-  AxiosResponse,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
 } from 'axios';
+import { env } from '@/config/environment';
 
 // Extend Axios config types to include custom properties
 interface ExtendedAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -39,7 +40,7 @@ class ApiClient {
 
   private constructor() {
     this.axiosInstance = axios.create({
-      baseURL: import.meta.env.VITE_API_BASE_URL as string,
+      baseURL: env.apiBaseUrl,
       timeout: 10000, // 10 second timeout
       headers: {
         'Content-Type': 'application/json',
@@ -86,9 +87,7 @@ class ApiClient {
       },
       (error: unknown) =>
         Promise.reject(
-          this.handleError(
-            axios.isAxiosError(error) ? error : new AxiosError('Unknown error'),
-          ),
+          this.handleError(axios.isAxiosError(error) ? error : new AxiosError('Unknown error')),
         ),
     );
 
@@ -102,17 +101,17 @@ class ApiClient {
         return response;
       },
       (error: unknown) => {
-        const axiosError = axios.isAxiosError(error)
-          ? error
-          : new AxiosError('Unknown error');
+        const axiosError = axios.isAxiosError(error) ? error : new AxiosError('Unknown error');
 
         // Retry logic for network errors
         if (
           axiosError.code === 'NETWORK_ERROR' &&
+          axiosError.config &&
           !(axiosError.config as ExtendedAxiosRequestConfig)?.retried
         ) {
-          (axiosError.config as ExtendedAxiosRequestConfig)!.retried = true;
-          return this.axiosInstance.request(axiosError.config!);
+          const config = axiosError.config as ExtendedAxiosRequestConfig;
+          config.retried = true;
+          return this.axiosInstance.request(config);
         }
 
         return Promise.reject(this.handleError(axiosError));
@@ -131,24 +130,31 @@ class ApiClient {
 
     this.axiosInstance.interceptors.response.use(
       (response) => {
-        const duration =
-          Date.now() -
-          (response.config as ExtendedAxiosRequestConfig).metadata?.startTime!;
-        if (duration > 1000) {
-          console.warn(
-            `Slow API request: ${response.config.url} took ${duration}ms`,
-          );
+        const metadata = (response.config as ExtendedAxiosRequestConfig).metadata;
+        if (metadata?.startTime) {
+          const duration = Date.now() - metadata.startTime;
+          if (duration > 1000) {
+            // Log slow requests in development
+            if (process.env.NODE_ENV === 'development') {
+              // Development performance monitoring
+              // biome-ignore lint/suspicious/noConsole: Development logging
+              console.warn(`Slow API request: ${response.config.url} took ${duration}ms`);
+            }
+          }
         }
         return response;
       },
       (error) => {
         if (error.config) {
-          const duration =
-            Date.now() -
-            (error.config as ExtendedAxiosRequestConfig).metadata?.startTime!;
-          console.error(
-            `Failed API request: ${error.config.url} took ${duration}ms`,
-          );
+          const metadata = (error.config as ExtendedAxiosRequestConfig).metadata;
+          if (metadata?.startTime) {
+            const duration = Date.now() - metadata.startTime;
+            if (process.env.NODE_ENV === 'development') {
+              // Development error monitoring
+              // biome-ignore lint/suspicious/noConsole: Development logging
+              console.error(`Failed API request: ${error.config.url} took ${duration}ms`);
+            }
+          }
         }
         return Promise.reject(error);
       },
@@ -157,8 +163,7 @@ class ApiClient {
 
   private generateRequestId(): string {
     return (
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 15)
+      Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
     );
   }
 
@@ -200,19 +205,19 @@ class ApiClient {
         code: String(error.response.status),
         details: responseData,
       };
-    } else if (error.request) {
+    }
+    if (error.request) {
       // The request was made but no response was received
       return {
         message: 'No response received from server',
         code: 'NETWORK_ERROR',
       };
-    } else {
-      // Something happened in setting up the request
-      return {
-        message: error.message || 'An unexpected error occurred',
-        code: 'UNKNOWN_ERROR',
-      };
     }
+    // Something happened in setting up the request
+    return {
+      message: error.message || 'An unexpected error occurred',
+      code: 'UNKNOWN_ERROR',
+    };
   }
 
   public async get<T>(
@@ -231,11 +236,7 @@ class ApiClient {
     return response.data;
   }
 
-  public async post<T>(
-    url: string,
-    data?: unknown,
-    config?: AxiosRequestConfig,
-  ): Promise<T> {
+  public async post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     // Clear related cache entries
     this.invalidateCache(url);
 
@@ -243,11 +244,7 @@ class ApiClient {
     return response.data;
   }
 
-  public async put<T>(
-    url: string,
-    data?: unknown,
-    config?: AxiosRequestConfig,
-  ): Promise<T> {
+  public async put<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     // Clear related cache entries
     this.invalidateCache(url);
 
@@ -279,7 +276,9 @@ class ApiClient {
       }
     });
 
-    keysToDelete.forEach((key) => this.cache.delete(key));
+    for (const key of keysToDelete) {
+      this.cache.delete(key);
+    }
   }
 
   public clearCache(): void {

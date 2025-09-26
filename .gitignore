@@ -13,9 +13,10 @@ build/
 out/
 
 # Environment
-.env
 .env.local
 .env.*.local
+
+
 
 # IDE
 .idea/

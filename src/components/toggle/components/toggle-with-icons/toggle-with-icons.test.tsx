@@ -1,8 +1,7 @@
-import React from 'react';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ToggleWithIcons from './toggle-with-icons';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 describe('ToggleWithIcons', () => {
   it('renders without crashing', () => {
@@ -11,13 +10,7 @@ describe('ToggleWithIcons', () => {
   });
 
   it('renders with the correct icons', () => {
-    render(
-      <ToggleWithIcons
-        iconLeft={faCheck}
-        iconRight={faTimes}
-        onClick={jest.fn()}
-      />,
-    );
+    render(<ToggleWithIcons iconLeft={faCheck} iconRight={faTimes} onClick={jest.fn()} />);
 
     expect(screen.getByTestId('toggle-icon-left')).toHaveClass('iconLeft');
     expect(screen.getByTestId('toggle-icon-right')).toHaveClass('iconRight');
@@ -25,10 +18,7 @@ describe('ToggleWithIcons', () => {
 
   it('renders unchecked by default', () => {
     render(<ToggleWithIcons onClick={jest.fn()} />);
-    expect(screen.getByTestId('toggle-container')).not.toHaveAttribute(
-      'data-ison',
-      'true',
-    );
+    expect(screen.getByTestId('toggle-container')).not.toHaveAttribute('data-ison', 'true');
   });
 
   it('calls onClick when clicked', async () => {

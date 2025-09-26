@@ -1,7 +1,6 @@
-import React from 'react';
 import userEvent from '@testing-library/user-event';
-import ThemeToggle from './theme-toggle';
 import { customRender, screen } from '@utils/test-utilities';
+import ThemeToggle from './theme-toggle';
 
 describe('ThemeToggle', () => {
   test('displays the toggle component', () => {
@@ -15,7 +14,7 @@ describe('ThemeToggle', () => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
       value: jest.fn().mockImplementation((query) => ({
-        matches: query === '(prefers-color-scheme: dark)' ? false : true,
+        matches: query !== '(prefers-color-scheme: dark)',
         media: query,
         onchange: null,
         addListener: jest.fn(),

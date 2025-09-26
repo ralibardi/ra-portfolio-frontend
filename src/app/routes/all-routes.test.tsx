@@ -1,14 +1,10 @@
-import React, { act, FunctionComponent } from 'react';
-import { render, screen } from '@testing-library/react';
-import AllRoutes from './all-routes';
 import { ThemeProvider } from '@contexts/theme-context';
+import { render, screen } from '@testing-library/react';
+import { act, type FunctionComponent } from 'react';
+import AllRoutes from './all-routes';
 
-jest.mock('@pages/base-page', () => () => (
-  <div data-testid="root-route">Mock BasePage</div>
-));
-jest.mock('@components/loading', () => () => (
-  <div data-testid="loading">Mock Loading</div>
-));
+jest.mock('@pages/base-page', () => () => <div data-testid="root-route">Mock BasePage</div>);
+jest.mock('@components/loading', () => () => <div data-testid="loading">Mock Loading</div>);
 
 const TestableComponent: FunctionComponent = () => {
   return (

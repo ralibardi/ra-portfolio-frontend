@@ -1,4 +1,4 @@
-import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import type { AxiosInstance, AxiosResponse } from 'axios';
 
 // Mock the entire axios module - variable names with 'mock' prefix are allowed in Jest
@@ -59,8 +59,7 @@ Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
 describe('ApiClient', () => {
   // Get the axios instance created by apiClient
-  const mockAxiosInstance = (axios.create as jest.Mock).mock.results[0]
-    .value as AxiosInstance;
+  const mockAxiosInstance = (axios.create as jest.Mock).mock.results[0].value as AxiosInstance;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -81,10 +80,7 @@ describe('ApiClient', () => {
     await apiClient.get('/test-endpoint');
 
     // Verify API call was made
-    expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-      '/test-endpoint',
-      undefined,
-    );
+    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/test-endpoint', undefined);
   });
 
   it('should make a POST request', async () => {
@@ -92,11 +88,7 @@ describe('ApiClient', () => {
 
     await apiClient.post('/test-endpoint', mockData);
 
-    expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-      '/test-endpoint',
-      mockData,
-      undefined,
-    );
+    expect(mockAxiosInstance.post).toHaveBeenCalledWith('/test-endpoint', mockData, undefined);
   });
 
   it('should make a PUT request', async () => {
@@ -104,19 +96,12 @@ describe('ApiClient', () => {
 
     await apiClient.put('/test-endpoint', mockData);
 
-    expect(mockAxiosInstance.put).toHaveBeenCalledWith(
-      '/test-endpoint',
-      mockData,
-      undefined,
-    );
+    expect(mockAxiosInstance.put).toHaveBeenCalledWith('/test-endpoint', mockData, undefined);
   });
 
   it('should make a DELETE request', async () => {
     await apiClient.delete('/test-endpoint');
 
-    expect(mockAxiosInstance.delete).toHaveBeenCalledWith(
-      '/test-endpoint',
-      undefined,
-    );
+    expect(mockAxiosInstance.delete).toHaveBeenCalledWith('/test-endpoint', undefined);
   });
 });

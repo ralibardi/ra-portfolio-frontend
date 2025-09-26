@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
 import classNames from 'classnames';
+import React, { type FunctionComponent } from 'react';
 import styles from '../assets/divider.module.scss';
 
 export type DividerProps = {
@@ -14,21 +14,12 @@ const Divider: FunctionComponent<DividerProps> = ({
   className,
 }) => {
   if (orientation === 'vertical') {
-    return (
-      <span
-        className={classNames(styles.vDivider, className)}
-        role="separator"
-        aria-orientation="vertical"
-      />
-    );
+    return <hr className={classNames(styles.vDivider, className)} aria-orientation="vertical" />;
   }
 
   return (
-    <div
-      className={classNames(styles.hDivider, className)}
-      role="separator"
-      aria-orientation="horizontal"
-    >
+    <div className={classNames(styles.hDivider, className)}>
+      <hr aria-orientation="horizontal" />
       {label && <span className={styles.label}>{label}</span>}
     </div>
   );

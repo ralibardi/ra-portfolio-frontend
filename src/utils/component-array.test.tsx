@@ -1,4 +1,3 @@
-import React from 'react';
 import { customRender } from '@utils/test-utilities';
 import { ComponentArray } from './component-array';
 

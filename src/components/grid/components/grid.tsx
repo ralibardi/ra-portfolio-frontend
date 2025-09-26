@@ -1,9 +1,5 @@
-import React, {
-  CSSProperties,
-  FunctionComponent,
-  PropsWithChildren,
-} from 'react';
 import classNames from 'classnames';
+import React, { type CSSProperties, type FunctionComponent, type PropsWithChildren } from 'react';
 import styles from '../assets/grid.module.scss';
 
 export type GridProps = {
@@ -29,11 +25,7 @@ const Grid: FunctionComponent<PropsWithChildren<GridProps>> = ({
   if (columnsLg) styleVars['--columnsLg'] = String(columnsLg);
 
   return (
-    <div
-      className={classNames(styles.grid, className)}
-      style={styleVars}
-      data-gap={gap}
-    >
+    <div className={classNames(styles.grid, className)} style={styleVars} data-gap={gap}>
       {children}
     </div>
   );

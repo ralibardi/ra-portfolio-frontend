@@ -100,7 +100,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run lint checks (ESLint)
+      - name: Run lint checks (Biome)
         run: pnpm run lint
 
       - name: Run unit tests

@@ -1,18 +1,17 @@
-import React, { FunctionComponent, Suspense, useMemo } from 'react';
-import Loading from '@components/loading';
-import Grid from '@components/grid';
-import Card from '@components/card';
-import IconLink from '@components/icon-link';
 import { PrimaryButton, SecondaryButton } from '@components/buttons';
+import Card from '@components/card';
 import { GetSocialLinks } from '@components/footer/utils/getSocialLinks';
+import Grid from '@components/grid';
+import IconLink from '@components/icon-link';
+import Loading from '@components/loading';
+import { type FunctionComponent, Suspense, useMemo } from 'react';
 
 import styles from '../assets/home-page.module.scss';
 
 const HomePage: FunctionComponent = () => {
   const socialLinks = useMemo(() => GetSocialLinks().slice(0, 3), []);
 
-  const openLink = (url: string) => () =>
-    window.open(url, '_blank', 'noopener');
+  const openLink = (url: string) => () => window.open(url, '_blank', 'noopener');
 
   return (
     <div className={styles.container} data-testid="container">
@@ -20,12 +19,10 @@ const HomePage: FunctionComponent = () => {
       <Suspense fallback={<Loading />}>
         <div className={styles.hero}>
           <div className={styles.constructionMessage}>
-            <h1 className={styles.constructionMessageTitle}>
-              Under Construction
-            </h1>
+            <h1 className={styles.constructionMessageTitle}>Under Construction</h1>
             <p className={styles.constructionMessageText}>
-              Thank you for your patience. The website is currently under
-              development and will be available soon.
+              Thank you for your patience. The website is currently under development and will be
+              available soon.
             </p>
             <div className={styles.actions}>
               <PrimaryButton

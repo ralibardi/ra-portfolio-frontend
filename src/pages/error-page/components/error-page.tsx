@@ -1,8 +1,8 @@
-import React, { FunctionComponent, memo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { PAGES } from '@app/i18n/keys';
 import { ButtonWithIcon } from '@components/buttons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { type FunctionComponent, memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styles from '../assets/error-page.module.scss';
 
@@ -25,10 +25,7 @@ const ErrorPage: FunctionComponent<IErrorPage> = memo(({ error }) => {
       </div>
       {error && (
         <details className={styles.description} data-testid="error-details">
-          <summary
-            className={styles.message}
-            data-testid="error-details-message"
-          >
+          <summary className={styles.message} data-testid="error-details-message">
             {error.name} - {error.message}
           </summary>
           <pre className={styles.stack} data-testid="error-details-stack">

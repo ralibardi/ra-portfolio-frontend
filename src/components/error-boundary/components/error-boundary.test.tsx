@@ -1,11 +1,13 @@
-import React, { act } from 'react';
 import { render, screen } from '@testing-library/react';
+import { act } from 'react';
 import ErrorBoundary from './error-boundary';
 
 describe('ErrorBoundary', () => {
   let consoleErrorSpy: jest.SpyInstance;
   beforeAll(() => {
-    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      // Suppress console errors in tests
+    });
   });
 
   afterAll(() => {
@@ -53,9 +55,9 @@ describe('ErrorBoundary', () => {
       throw new Error(errorMessage);
     };
 
-    const consoleErrorSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      // Suppress console.error during test
+    });
 
     render(
       <ErrorBoundary>
@@ -78,9 +80,9 @@ describe('ErrorBoundary', () => {
       throw new Error(errorMessage);
     };
 
-    const consoleErrorSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      // Suppress console.error during test
+    });
 
     render(
       <ErrorBoundary>
@@ -103,9 +105,9 @@ describe('ErrorBoundary', () => {
       throw new Error(errorMessage);
     };
 
-    const consoleErrorSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      // Suppress console.error during test
+    });
 
     render(
       <ErrorBoundary>
@@ -129,9 +131,9 @@ describe('ErrorBoundary', () => {
       throw new Error(errorMessage);
     };
 
-    const consoleErrorSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      // Suppress console.error during test
+    });
 
     render(
       <ErrorBoundary>

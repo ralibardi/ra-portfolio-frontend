@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import FooterSocials from './footer-socials';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { ISocialLink } from '../../utils/getSocialLinks';
+import type { Meta, StoryObj } from '@storybook/react';
+import type { ISocialLink } from '../../utils/getSocialLinks';
+import FooterSocials from './footer-socials';
 
 const meta: Meta<typeof FooterSocials> = {
   title: 'Links/FooterSocials',

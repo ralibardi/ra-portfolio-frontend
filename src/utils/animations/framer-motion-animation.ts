@@ -1,4 +1,4 @@
-import { Transition, Variants } from 'framer-motion';
+import type { Transition, Variants } from 'framer-motion';
 
 export const fadeIn: Variants = {
   initial: { opacity: 0 },

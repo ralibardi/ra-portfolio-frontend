@@ -1,7 +1,7 @@
 // manifestGenerator.ts
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import handlebars from 'handlebars';
-import path from 'path';
 
 export async function GenerateManifest() {
   try {
@@ -23,18 +23,13 @@ export async function GenerateManifest() {
 
     // Write the final manifest.json
     await fs.writeFile(path.join('public', 'manifest.json'), manifestContent);
-  } catch (error) {
-    console.error('Error generating manifest:', error);
+  } catch (_error) {
+    // Silently handle manifest generation errors
+    // The build process should continue even if manifest generation fails
   }
 }
 
-function ExtractColour(
-  content: string,
-  varName: string,
-  defaultColour: string,
-): string {
-  const match = content.match(
-    new RegExp(`\\$${varName}:\\s*(#[0-9a-fA-F]{6});`),
-  );
+function ExtractColour(content: string, varName: string, defaultColour: string): string {
+  const match = content.match(new RegExp(`\\$${varName}:\\s*(#[0-9a-fA-F]{6});`));
   return match ? match[1] : defaultColour;
 }

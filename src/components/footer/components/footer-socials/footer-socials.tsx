@@ -1,6 +1,6 @@
-import React, { FunctionComponent, lazy, useMemo } from 'react';
+import type { ISocialLink } from '@components/footer/utils/getSocialLinks';
 import { ComponentArray } from '@utils/component-array';
-import { ISocialLink } from '@components/footer/utils/getSocialLinks';
+import { type FunctionComponent, lazy, useMemo } from 'react';
 
 const IconLink = lazy(() => import('@components/icon-link'));
 
@@ -12,10 +12,7 @@ interface IFooterSocials {
 
 const FooterSocials: FunctionComponent<IFooterSocials> = ({ socialLinks }) => {
   const socialLinksSorted = useMemo(
-    () =>
-      socialLinks
-        .filter((link) => !link.isHidden)
-        .sort((a, b) => a.order - b.order),
+    () => socialLinks.filter((link) => !link.isHidden).sort((a, b) => a.order - b.order),
     [socialLinks],
   );
 
@@ -24,6 +21,7 @@ const FooterSocials: FunctionComponent<IFooterSocials> = ({ socialLinks }) => {
       <ComponentArray
         render={({ icon, link }) => <IconLink icon={icon} linkUrl={link} />}
         of={socialLinksSorted}
+        keyExtractor={(item) => item.link}
       />
     </div>
   );

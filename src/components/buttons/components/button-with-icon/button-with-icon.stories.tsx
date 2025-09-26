@@ -1,6 +1,6 @@
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import type { Meta, StoryObj } from '@storybook/react';
 import ButtonWithIcon from './button-with-icon';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof ButtonWithIcon> = {
   title: 'Buttons/ButtonWithIcon',
@@ -33,7 +33,9 @@ export const OnClick: Story = {
   ...Template,
   args: {
     ...DefaultState.args,
-    onClick: () => {},
+    onClick: () => {
+      // Storybook action placeholder
+    },
   },
 };
 

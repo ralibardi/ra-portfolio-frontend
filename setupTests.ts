@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom';
+import { TextDecoder, TextEncoder } from 'node:util';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import englishTranslation from './public/locales/en-GB/translation.json';
-
-import { TextEncoder, TextDecoder } from 'util';
 
 // Polyfill TextEncoder and TextDecoder for Jest environment
 global.TextEncoder = TextEncoder;
@@ -38,4 +37,6 @@ i18n
       },
     },
   })
-  .catch((error) => console.error('i18n error:', error));
+  .catch((_error) => {
+    // Silently handle i18n initialization errors in tests
+  });

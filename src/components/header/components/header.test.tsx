@@ -1,4 +1,3 @@
-import React from 'react';
 import { act, customRender, screen } from '@utils/test-utilities';
 import Header from './header';
 
@@ -6,9 +5,7 @@ import Header from './header';
 jest.mock('@components/company-info', () => () => (
   <div data-testid="company-info">Mock CompanyInfo</div>
 ));
-jest.mock('@components/topbar', () => () => (
-  <div data-testid="topbar">Mock Topbar</div>
-));
+jest.mock('@components/topbar', () => () => <div data-testid="topbar">Mock Topbar</div>);
 jest.mock('@components/theme-toggle', () => () => (
   <div data-testid="theme-toggle">Mock ThemeToggle</div>
 ));

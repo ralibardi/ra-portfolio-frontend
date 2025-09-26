@@ -1,26 +1,24 @@
-import React, { FunctionComponent, ReactNode, ReactElement } from 'react';
-import { act } from '@testing-library/react';
-import { MemoryRouter as Router } from 'react-router-dom';
+import { ThemeProvider } from '@contexts/theme-context';
 import {
+  act,
+  type RenderHookOptions,
+  type RenderHookResult,
+  type RenderOptions,
+  type RenderResult,
   render,
-  RenderHookOptions,
-  RenderHookResult,
-  RenderOptions,
-  RenderResult,
+  renderHook,
   screen,
   waitFor,
 } from '@testing-library/react';
-import { ThemeProvider } from '@contexts/theme-context';
-import { renderHook } from '@testing-library/react';
+import type { FunctionComponent, ReactElement, ReactNode } from 'react';
+import { MemoryRouter as Router } from 'react-router-dom';
 
 interface IAllProvidersProps {
   children: ReactNode;
 }
 
 // Mock ToastProvider for testing
-const MockToastProvider: FunctionComponent<{ children: ReactNode }> = ({
-  children,
-}) => {
+const MockToastProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
   return <>{children}</>;
 };
 
@@ -32,10 +30,8 @@ const AllProviders: FunctionComponent<IAllProvidersProps> = ({ children }) => (
   </Router>
 );
 
-const customRender = (
-  ui: ReactElement,
-  options?: RenderOptions,
-): RenderResult => render(ui, { wrapper: AllProviders, ...options });
+const customRender = (ui: ReactElement, options?: RenderOptions): RenderResult =>
+  render(ui, { wrapper: AllProviders, ...options });
 
 const customRenderHook = <TProps extends IAllProvidersProps, TResult>(
   callback: (props: TProps) => TResult,

@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PWAUpdate from './PWAUpdate';
 
@@ -36,17 +35,13 @@ describe('PWAUpdate', () => {
 
   it('should not render when no registration is provided', () => {
     render(<PWAUpdate />);
-    expect(
-      screen.queryByText('A new version is available!'),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText('A new version is available!')).not.toBeInTheDocument();
   });
 
   it('should not render when registration has no waiting service worker', () => {
     const registrationWithoutWaiting = {} as ServiceWorkerRegistration;
     render(<PWAUpdate registration={registrationWithoutWaiting} />);
-    expect(
-      screen.queryByText('A new version is available!'),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText('A new version is available!')).not.toBeInTheDocument();
   });
 
   it('should render update banner when registration has waiting service worker', () => {
@@ -80,9 +75,7 @@ describe('PWAUpdate', () => {
     const dismissButton = screen.getByText('Later');
     await user.click(dismissButton);
 
-    expect(
-      screen.queryByText('A new version is available!'),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText('A new version is available!')).not.toBeInTheDocument();
   });
 
   it('should not handle update when no waiting service worker', async () => {

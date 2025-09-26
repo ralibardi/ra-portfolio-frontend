@@ -1,4 +1,4 @@
-import React, { FunctionComponent, lazy, Suspense } from 'react';
+import { type FunctionComponent, lazy, Suspense } from 'react';
 
 const Loading = lazy(() => import('@components/loading'));
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { ToastProvider, useToast, ToastType } from './toast-context';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import type React from 'react';
+import { ToastProvider, useToast } from './toast-context';
 
 // Test component to interact with toast context
 const TestComponent: React.FC = () => {
@@ -9,36 +9,37 @@ const TestComponent: React.FC = () => {
   return (
     <div>
       <button
+        type="button"
         onClick={() => showToast('Test message', { type: 'success' })}
         data-testid="show-success"
       >
         Show Success Toast
       </button>
       <button
+        type="button"
         onClick={() => showToast('Error message', { type: 'error' })}
         data-testid="show-error"
       >
         Show Error Toast
       </button>
       <button
+        type="button"
         onClick={() => showToast('Info message', { type: 'info' })}
         data-testid="show-info"
       >
         Show Info Toast
       </button>
-      <button
-        onClick={() => success('Success helper')}
-        data-testid="success-helper"
-      >
+      <button type="button" onClick={() => success('Success helper')} data-testid="success-helper">
         Success Helper
       </button>
-      <button onClick={() => error('Error helper')} data-testid="error-helper">
+      <button type="button" onClick={() => error('Error helper')} data-testid="error-helper">
         Error Helper
       </button>
-      <button onClick={() => info('Info helper')} data-testid="info-helper">
+      <button type="button" onClick={() => info('Info helper')} data-testid="info-helper">
         Info Helper
       </button>
       <button
+        type="button"
         onClick={() => toasts.length > 0 && remove(toasts[0].id)}
         data-testid="remove-first"
       >
@@ -61,7 +62,9 @@ describe('ToastContext', () => {
   });
 
   afterEach(() => {
-    jest.runOnlyPendingTimers();
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
     jest.useRealTimers();
   });
 
@@ -178,7 +181,9 @@ describe('ToastContext', () => {
     expect(screen.getByTestId('toast-count')).toHaveTextContent('1');
 
     // Fast-forward time to trigger auto-hide (default 3000ms)
-    jest.advanceTimersByTime(3000);
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('toast-count')).toHaveTextContent('0');
@@ -206,6 +211,7 @@ describe('ToastContext', () => {
       return (
         <div>
           <button
+            type="button"
             onClick={() => remove('non-existent-id')}
             data-testid="remove-non-existent"
           >
@@ -237,7 +243,7 @@ describe('ToastContext', () => {
 
       return (
         <div>
-          <button onClick={handleShowToast} data-testid="show-toast">
+          <button type="button" onClick={handleShowToast} data-testid="show-toast">
             Show Toast
           </button>
           <div data-testid="toast-count">{toasts.length}</div>
@@ -255,7 +261,9 @@ describe('ToastContext', () => {
     expect(screen.getByTestId('toast-count')).toHaveTextContent('1');
 
     // Fast-forward time by custom duration
-    jest.advanceTimersByTime(1000);
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('toast-count')).toHaveTextContent('0');
@@ -269,6 +277,7 @@ describe('ToastContext', () => {
       return (
         <div>
           <button
+            type="button"
             onClick={() => showToast('Default message')}
             data-testid="show-default"
           >
@@ -298,9 +307,9 @@ describe('ToastContext', () => {
 
   it('should throw error when useToast is used outside provider', () => {
     // Suppress console.error for this test
-    const consoleSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      // Suppress console.error during test
+    });
 
     const TestComponentOutsideProvider: React.FC = () => {
       useToast();
@@ -321,18 +330,21 @@ describe('ToastContext', () => {
       return (
         <div>
           <button
+            type="button"
             onClick={() => success('Success with duration', 500)}
             data-testid="success-duration"
           >
             Success with Duration
           </button>
           <button
+            type="button"
             onClick={() => error('Error with duration', 500)}
             data-testid="error-duration"
           >
             Error with Duration
           </button>
           <button
+            type="button"
             onClick={() => info('Info with duration', 500)}
             data-testid="info-duration"
           >
@@ -356,7 +368,9 @@ describe('ToastContext', () => {
     expect(screen.getByTestId('toast-count')).toHaveTextContent('3');
 
     // Fast-forward time by custom duration
-    jest.advanceTimersByTime(500);
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('toast-count')).toHaveTextContent('0');
@@ -376,12 +390,10 @@ describe('ToastContext', () => {
 
       return (
         <div>
-          <button onClick={handleShowToast} data-testid="show-toast">
+          <button type="button" onClick={handleShowToast} data-testid="show-toast">
             Show Toast
           </button>
-          <div data-testid="unique-ids">
-            {hasUniqueIds ? 'unique' : 'duplicate'}
-          </div>
+          <div data-testid="unique-ids">{hasUniqueIds ? 'unique' : 'duplicate'}</div>
           <div data-testid="toast-count">{toasts.length}</div>
         </div>
       );

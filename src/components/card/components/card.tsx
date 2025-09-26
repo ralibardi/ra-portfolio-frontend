@@ -1,5 +1,5 @@
-import React, { FunctionComponent, PropsWithChildren, ReactNode } from 'react';
 import classNames from 'classnames';
+import React, { type FunctionComponent, type PropsWithChildren, type ReactNode } from 'react';
 import styles from '../assets/card.module.scss';
 
 export type CardProps = {

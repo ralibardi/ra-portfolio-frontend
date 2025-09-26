@@ -1,8 +1,8 @@
-import React, { memo, useCallback } from 'react';
 import Loading from '@components/loading';
-import { IPrimaryButtonProps } from '../../types/primary-button-props';
-
+import type React from 'react';
+import { memo, useCallback, useId } from 'react';
 import styles from '../../assets/primary-button.module.scss';
+import type { IPrimaryButtonProps } from '../../types/primary-button-props';
 
 const PrimaryButton = memo(function PrimaryButton({
   onClick,
@@ -10,6 +10,7 @@ const PrimaryButton = memo(function PrimaryButton({
   isLoading,
   ...props
 }: IPrimaryButtonProps) {
+  const buttonId = useId();
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       if (onClick) {
@@ -27,7 +28,7 @@ const PrimaryButton = memo(function PrimaryButton({
     <button
       className={styles.button}
       data-testid="primary-button-container"
-      id="primary-button"
+      id={buttonId}
       type="button"
       {...props}
       onClick={handleClick}

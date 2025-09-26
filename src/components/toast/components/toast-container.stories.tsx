@@ -1,6 +1,6 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
 import { ToastProvider, useToast } from '@contexts/toast-context';
+import type { Meta, StoryObj } from '@storybook/react';
+import type React from 'react';
 import ToastContainer from './toast-container';
 
 const meta: Meta<typeof ToastContainer> = {
@@ -31,4 +31,3 @@ export const Playground: Story = {
     </ToastProvider>
   ),
 };
-

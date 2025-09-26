@@ -1,5 +1,5 @@
-import React, { FunctionComponent, PropsWithChildren } from 'react';
 import classNames from 'classnames';
+import React, { type FunctionComponent, type PropsWithChildren } from 'react';
 import styles from '../assets/badge.module.scss';
 
 export type BadgeProps = {
@@ -15,14 +15,7 @@ const Badge: FunctionComponent<PropsWithChildren<BadgeProps>> = ({
   children,
 }) => {
   return (
-    <span
-      className={classNames(
-        styles.badge,
-        styles[variant],
-        styles[size],
-        className,
-      )}
-    >
+    <span className={classNames(styles.badge, styles[variant], styles[size], className)}>
       {children}
     </span>
   );

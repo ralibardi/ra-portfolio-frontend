@@ -18,17 +18,11 @@ export interface IRefreshTokenRequest {
 
 class AuthService {
   async login(credentials: ILoginRequest): Promise<ILoginResponse> {
-    return apiClient.post<ILoginResponse>(
-      getEndpoint('AUTH', 'LOGIN'),
-      credentials,
-    );
+    return apiClient.post<ILoginResponse>(getEndpoint('AUTH', 'LOGIN'), credentials);
   }
 
   async refreshToken(request: IRefreshTokenRequest): Promise<ILoginResponse> {
-    return apiClient.post<ILoginResponse>(
-      getEndpoint('AUTH', 'REFRESH_TOKEN'),
-      request,
-    );
+    return apiClient.post<ILoginResponse>(getEndpoint('AUTH', 'REFRESH_TOKEN'), request);
   }
 
   async logout(): Promise<void> {

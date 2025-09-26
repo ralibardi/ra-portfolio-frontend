@@ -2,9 +2,9 @@
 
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
-import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
+import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -24,14 +24,13 @@ registerRoute(
     request.mode === 'navigate' &&
     !url.pathname.startsWith('/_') &&
     url.origin === self.location.origin,
-  createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html'),
+  createHandlerBoundToURL(`${process.env.PUBLIC_URL}/index.html`),
 );
 
 // Cache images
 registerRoute(
   ({ url }) =>
-    url.origin === self.location.origin &&
-    /\.(png|jpg|jpeg|svg|gif)$/i.test(url.pathname),
+    url.origin === self.location.origin && /\.(png|jpg|jpeg|svg|gif)$/i.test(url.pathname),
   new CacheFirst({
     cacheName: 'images',
     plugins: [
@@ -45,8 +44,7 @@ registerRoute(
 
 // Cache CSS and JavaScript files
 registerRoute(
-  ({ url }) =>
-    url.origin === self.location.origin && /\.(css|js)$/i.test(url.pathname),
+  ({ url }) => url.origin === self.location.origin && /\.(css|js)$/i.test(url.pathname),
   new StaleWhileRevalidate({
     cacheName: 'static-resources',
   }),
@@ -76,8 +74,7 @@ registerRoute(
 
 // Add push notification event listener
 self.addEventListener('push', (event: PushEvent) => {
-  const data: JsonNotificationResult =
-    (event.data?.json() as JsonNotificationResult) ?? {};
+  const data: JsonNotificationResult = (event.data?.json() as JsonNotificationResult) ?? {};
 
   const title: string = data.title || 'New Notification';
   const options: NotificationOptions = {
@@ -98,18 +95,16 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
 
 self.addEventListener('message', (event) => {
   if (event.data?.type === 'SKIP_WAITING') {
-    self.skipWaiting().catch(console.error);
+    self.skipWaiting().catch(() => {
+      // Silently handle skip waiting errors
+    });
   }
 });
 
 // Offline fallback
 const offlineFallbackPage = '/offline.html';
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches
-      .open('offline-cache')
-      .then((cache) => cache.add(offlineFallbackPage)),
-  );
+  event.waitUntil(caches.open('offline-cache').then((cache) => cache.add(offlineFallbackPage)));
 });
 
 self.addEventListener('fetch', (event) => {
@@ -120,8 +115,7 @@ self.addEventListener('fetch', (event) => {
           .match(offlineFallbackPage)
           .then(
             (response) =>
-              response ||
-              new Response('Offline content not available', { status: 404 }),
+              response || new Response('Offline content not available', { status: 404 }),
           ),
       ),
     );

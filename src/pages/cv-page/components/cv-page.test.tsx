@@ -1,6 +1,5 @@
-import React from 'react';
-import CVPage from './cv-page';
 import { render, screen } from '@testing-library/react';
+import CVPage from './cv-page';
 
 describe('CVPage', () => {
   it('renders without crashing', async () => {

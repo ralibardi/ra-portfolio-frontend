@@ -1,11 +1,13 @@
 import { renderHook } from '@testing-library/react';
-import { useTheme } from './use-theme';
 import { customRenderHook } from '@utils/test-utilities';
+import { useTheme } from './use-theme';
 
 describe('useTheme', () => {
   let consoleErrorSpy: jest.SpyInstance;
   beforeAll(() => {
-    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      // Suppress console.error during tests
+    });
   });
 
   afterAll(() => {

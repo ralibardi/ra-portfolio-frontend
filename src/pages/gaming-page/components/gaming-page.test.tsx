@@ -1,6 +1,5 @@
-import React from 'react';
-import GamingPage from './gaming-page';
 import { render, screen } from '@testing-library/react';
+import GamingPage from './gaming-page';
 
 describe('GamingPage', () => {
   it('renders without crashing', async () => {

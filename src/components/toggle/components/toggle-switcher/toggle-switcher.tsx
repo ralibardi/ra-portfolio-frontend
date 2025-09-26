@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useMemo } from 'react';
 import cn from 'classnames';
-import { IToggleSwitcherProps } from '../../types/toggle-switcher-props';
-
+import React, { type FunctionComponent, useId, useMemo } from 'react';
 import styles from '../../assets/toggle-switcher.module.scss';
+import type { IToggleSwitcherProps } from '../../types/toggle-switcher-props';
 
 const ToggleSwitcher: FunctionComponent<IToggleSwitcherProps> = ({
   checked,
   onChange,
   invertedIconLogic = false,
 }) => {
+  const toggleId = useId();
   const isChecked = useMemo(
     () => (invertedIconLogic ? !checked : checked),
     [checked, invertedIconLogic],
@@ -27,13 +27,13 @@ const ToggleSwitcher: FunctionComponent<IToggleSwitcherProps> = ({
     <label
       className={containerClassName}
       data-testid="toggle-label"
-      htmlFor="toggle-input"
-      id="toggle-switcher"
+      htmlFor={toggleId}
+      id={`${toggleId}-label`}
       aria-label="Dark mode toggle"
     >
       <input
         type="checkbox"
-        id="toggle-input"
+        id={toggleId}
         data-testid="toggle-input"
         checked={isChecked}
         onChange={onChange}

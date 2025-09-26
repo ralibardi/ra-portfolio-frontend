@@ -1,8 +1,7 @@
-import React from 'react';
+import { faAccessibleIcon } from '@fortawesome/free-brands-svg-icons';
+import type IRoute from '@type/route';
 import { customRender, screen } from '@utils/test-utilities';
 import Topbar from './topbar';
-import IRoute from '@type/route';
-import { faAccessibleIcon } from '@fortawesome/free-brands-svg-icons';
 
 const TestableComponent = () => <div />;
 
@@ -37,8 +36,6 @@ describe('Topbar', () => {
   it('renders the correct number of nav links', () => {
     customRender(<Topbar routes={mockRoutes} />);
     const navLinks = screen.getAllByTestId('nav-link-label');
-    expect(navLinks).toHaveLength(
-      mockRoutes.filter((r) => r.enabled && !r.hidden).length,
-    );
+    expect(navLinks).toHaveLength(mockRoutes.filter((r) => r.enabled && !r.hidden).length);
   });
 });

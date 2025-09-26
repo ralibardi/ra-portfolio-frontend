@@ -1,7 +1,7 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
+import { initReactI18next } from 'react-i18next';
 
 i18n
   .use(LanguageDetector)
@@ -28,6 +28,11 @@ i18n
     },
     load: 'languageOnly',
   })
-  .catch(console.error);
+  .catch((error) => {
+    // Silently handle i18n initialization errors in production
+    if (process.env.NODE_ENV === 'development') {
+      throw error;
+    }
+  });
 
 export default i18n;

@@ -1,21 +1,28 @@
-import React from 'react';
-import FooterSocials from './footer-socials';
 import { faAccessibleIcon } from '@fortawesome/free-brands-svg-icons';
 import { customRender, screen } from '@utils/test-utilities';
-import { ISocialLink } from '../../utils/getSocialLinks';
+import type { ISocialLink } from '../../utils/getSocialLinks';
+import FooterSocials from './footer-socials';
 
-jest.mock('@components/icon-link', () => ({
-  __esModule: true,
-  default: ({ linkUrl }: { linkUrl: string }) => (
-    <a href={linkUrl} data-testid="icon-link" />
-  ),
-}));
+jest.mock('@components/icon-link', () => {
+  const mockModule = {
+    // biome-ignore lint/style/useNamingConvention: Required for Jest ES module mock
+    __esModule: true,
+    default: ({ linkUrl }: { linkUrl: string }) => (
+      <a href={linkUrl} data-testid="icon-link" aria-label="Social link">
+        Link
+      </a>
+    ),
+  };
+  return mockModule;
+});
 
 jest.mock('@utils/component-array', () => ({
   ComponentArray: ({ of }: { of: ISocialLink[] }) => (
     <>
-      {of.map((item, index) => (
-        <a href={item.link} data-testid="icon-link" key={index} />
+      {of.map((item) => (
+        <a href={item.link} data-testid="icon-link" key={item.link} aria-label="Social link">
+          Link
+        </a>
       ))}
     </>
   ),

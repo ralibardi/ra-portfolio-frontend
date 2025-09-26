@@ -1,5 +1,5 @@
-import React, { FunctionComponent, InputHTMLAttributes, useId } from 'react';
 import classNames from 'classnames';
+import React, { type FunctionComponent, type InputHTMLAttributes, useId } from 'react';
 import styles from '../assets/text-input.module.scss';
 
 export type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -22,10 +22,7 @@ const TextInput: FunctionComponent<TextInputProps> = ({
   const inputId = id ?? autoId;
 
   return (
-    <div
-      className={classNames(styles.container, className)}
-      data-fullwidth={fullWidth}
-    >
+    <div className={classNames(styles.container, className)} data-fullwidth={fullWidth}>
       {label && (
         <label className={styles.label} htmlFor={inputId}>
           {label}

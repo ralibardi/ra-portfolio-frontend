@@ -1,9 +1,9 @@
-import React, { memo, useCallback } from 'react';
 import Loading from '@components/loading';
-import { IButtonWithIconProps } from '../../types/button-with-icon-props';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import type React from 'react';
+import { memo, useCallback, useId } from 'react';
 import styles from '../../assets/button-with-icon.module.scss';
+import type { IButtonWithIconProps } from '../../types/button-with-icon-props';
 
 const ButtonWithIcon = memo(function ButtonWithIcon({
   icon,
@@ -12,6 +12,7 @@ const ButtonWithIcon = memo(function ButtonWithIcon({
   isLoading,
   ...props
 }: IButtonWithIconProps) {
+  const buttonId = useId();
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -26,7 +27,7 @@ const ButtonWithIcon = memo(function ButtonWithIcon({
     <button
       className={styles.button}
       data-testid="button-with-icon-container"
-      id="button-with-icon"
+      id={buttonId}
       type="button"
       {...props}
       onClick={handleClick}
@@ -35,10 +36,7 @@ const ButtonWithIcon = memo(function ButtonWithIcon({
       {isLoading ? (
         <Loading size="auto" />
       ) : (
-        <div
-          className={styles.content}
-          data-testid="button-with-icon-label-container"
-        >
+        <div className={styles.content} data-testid="button-with-icon-label-container">
           <FontAwesomeIcon
             icon={icon}
             className={styles.icon}

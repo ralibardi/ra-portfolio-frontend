@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
@@ -6,9 +5,7 @@ import { SecondaryButton } from '..';
 
 describe('SecondaryButton', () => {
   const renderButton = (props = {}) => {
-    return render(
-      <SecondaryButton label="Test" onClick={jest.fn()} {...props} />,
-    );
+    return render(<SecondaryButton label="Test" onClick={jest.fn()} {...props} />);
   };
 
   test('renders correctly', () => {
@@ -17,7 +14,8 @@ describe('SecondaryButton', () => {
     const buttonContainer = screen.getByTestId('secondary-button-container');
     const label = screen.getByTestId('secondary-button-label');
 
-    expect(buttonContainer).toHaveAttribute('id', 'secondary-button');
+    expect(buttonContainer).toHaveAttribute('id');
+    expect(buttonContainer.getAttribute('id')).toBeTruthy();
     expect(label).toHaveTextContent('Test');
   });
 
@@ -34,10 +32,9 @@ describe('SecondaryButton', () => {
   test('shows spinner when loading', () => {
     renderButton({ label: 'Loading', isLoading: true });
 
-    expect(screen.getByTestId('secondary-button-container')).toHaveAttribute(
-      'id',
-      'secondary-button',
-    );
+    const buttonContainer = screen.getByTestId('secondary-button-container');
+    expect(buttonContainer).toHaveAttribute('id');
+    expect(buttonContainer.getAttribute('id')).toBeTruthy();
     expect(screen.getByTestId('loading-container')).toBeInTheDocument();
     expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
   });

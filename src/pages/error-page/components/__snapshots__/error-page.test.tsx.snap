@@ -13,7 +13,7 @@ exports[`ErrorPage matches snapshot when error is provided 1`] = `
       <button
         class="button"
         data-testid="button-with-icon-container"
-        id="button-with-icon"
+        id=":r6:"
         type="button"
       >
         <div

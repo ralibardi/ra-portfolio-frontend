@@ -1,16 +1,16 @@
+import type { Theme } from '../type/theme';
 import {
-  getEffectiveTheme,
-  isDarkTheme,
-  getThemeColor,
   applyThemeToDocument,
-  getSystemThemePreference,
-  watchSystemTheme,
-  enableThemeTransitions,
   disableThemeTransitions,
+  enableThemeTransitions,
+  getEffectiveTheme,
+  getSystemThemePreference,
+  getThemeColor,
+  isDarkTheme,
   preloadThemeAssets,
   THEME_STORAGE_KEY,
+  watchSystemTheme,
 } from './theme-utils';
-import { Theme } from '../type/theme';
 
 // Define theme constants for testing
 const THEME_LIGHT: Theme = 'light';
@@ -70,8 +70,8 @@ describe('theme-utils', () => {
 
     it('should handle missing matchMedia', () => {
       const originalMatchMedia = window.matchMedia;
-      // @ts-ignore
-      delete window.matchMedia;
+      // @ts-expect-error
+      window.matchMedia = undefined;
 
       expect(getEffectiveTheme(THEME_SYSTEM)).toBe('light');
 
@@ -134,10 +134,7 @@ describe('theme-utils', () => {
 
       applyThemeToDocument(THEME_LIGHT);
 
-      expect(mockDocumentElement.setAttribute).toHaveBeenCalledWith(
-        'data-theme',
-        'light',
-      );
+      expect(mockDocumentElement.setAttribute).toHaveBeenCalledWith('data-theme', 'light');
     });
 
     it('should apply dark theme to document', () => {
@@ -156,10 +153,7 @@ describe('theme-utils', () => {
 
       applyThemeToDocument(THEME_DARK);
 
-      expect(mockDocumentElement.setAttribute).toHaveBeenCalledWith(
-        'data-theme',
-        'dark',
-      );
+      expect(mockDocumentElement.setAttribute).toHaveBeenCalledWith('data-theme', 'dark');
     });
 
     it('should handle system theme', () => {
@@ -179,10 +173,7 @@ describe('theme-utils', () => {
       mockMatchMedia.mockReturnValue({ matches: true });
       applyThemeToDocument(THEME_SYSTEM);
 
-      expect(mockDocumentElement.setAttribute).toHaveBeenCalledWith(
-        'data-theme',
-        'dark',
-      );
+      expect(mockDocumentElement.setAttribute).toHaveBeenCalledWith('data-theme', 'dark');
     });
   });
 
@@ -192,9 +183,7 @@ describe('theme-utils', () => {
 
       const theme = getSystemThemePreference();
       expect(theme).toBe('dark');
-      expect(mockMatchMedia).toHaveBeenCalledWith(
-        '(prefers-color-scheme: dark)',
-      );
+      expect(mockMatchMedia).toHaveBeenCalledWith('(prefers-color-scheme: dark)');
     });
 
     it('should return light when system prefers light', () => {
@@ -206,8 +195,8 @@ describe('theme-utils', () => {
 
     it('should handle missing matchMedia', () => {
       const originalMatchMedia = window.matchMedia;
-      // @ts-ignore
-      delete window.matchMedia;
+      // @ts-expect-error
+      window.matchMedia = undefined;
 
       const theme = getSystemThemePreference();
       expect(theme).toBe('light');
@@ -231,26 +220,18 @@ describe('theme-utils', () => {
       const callback = jest.fn();
       const unwatch = watchSystemTheme(callback);
 
-      expect(mockMatchMedia).toHaveBeenCalledWith(
-        '(prefers-color-scheme: dark)',
-      );
-      expect(mockAddEventListener).toHaveBeenCalledWith(
-        'change',
-        expect.any(Function),
-      );
+      expect(mockMatchMedia).toHaveBeenCalledWith('(prefers-color-scheme: dark)');
+      expect(mockAddEventListener).toHaveBeenCalledWith('change', expect.any(Function));
 
       // Test cleanup
       unwatch();
-      expect(mockRemoveEventListener).toHaveBeenCalledWith(
-        'change',
-        expect.any(Function),
-      );
+      expect(mockRemoveEventListener).toHaveBeenCalledWith('change', expect.any(Function));
     });
 
     it('should handle missing matchMedia', () => {
       const originalMatchMedia = window.matchMedia;
-      // @ts-ignore
-      delete window.matchMedia;
+      // @ts-expect-error
+      window.matchMedia = undefined;
 
       const callback = jest.fn();
       const unwatch = watchSystemTheme(callback);
@@ -277,9 +258,7 @@ describe('theme-utils', () => {
     it('should remove theme transition CSS property', () => {
       disableThemeTransitions();
 
-      expect(mockDocumentElement.style.removeProperty).toHaveBeenCalledWith(
-        '--theme-transition',
-      );
+      expect(mockDocumentElement.style.removeProperty).toHaveBeenCalledWith('--theme-transition');
     });
   });
 

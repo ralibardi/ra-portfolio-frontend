@@ -1,7 +1,6 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { render, screen } from '@testing-library/react';
 import IconLink from './icon-link';
 
 // Add the required icon to the library

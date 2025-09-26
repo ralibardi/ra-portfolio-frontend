@@ -1,28 +1,28 @@
-import { lazy } from 'react';
+import { PAGES } from '@app/i18n/keys';
 import {
   faAddressCard,
   faCamera,
   faFile,
   faGamepad,
   faHome,
+  faStethoscope,
   faTerminal,
   faUser,
-  faStethoscope,
   faX,
 } from '@fortawesome/free-solid-svg-icons';
-import IRoute from '@type/route';
+import type IRoute from '@type/route';
+import { lazy } from 'react';
 import {
   aboutPagePath,
   codingPagePath,
   contactPagePath,
+  cvPagePath,
+  errorPagePath,
   gamingPagePath,
+  healthPagePath,
   homePagePath,
   photographyPagePath,
-  cvPagePath,
-  healthPagePath,
-  errorPagePath,
 } from './route-paths';
-import { PAGES } from '@app/i18n/keys';
 
 const HomePage = lazy(() => import('@pages/home-page'));
 const CodingPage = lazy(() => import('@pages/coding-page'));

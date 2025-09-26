@@ -8,8 +8,9 @@
     "build": "tsc && vite build",
     "build:dev": "tsc && vite build --mode development",
     "watch": "vite build --watch",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint . --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
     "preview": "vite preview",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
@@ -17,7 +18,7 @@
     "test": "jest -u",
     "test:coverage": "jest -u --coverage",
     "test:watch": "jest -u --watch",
-    "update:husky": "pnpm update husky lint-staged eslint prettier",
+    "update:husky": "pnpm update husky lint-staged @biomejs/biome",
     "clean": "rimraf dist",
     "clean:all": "rimraf dist node_modules package-lock.json",
     "sass:migrate": "find . -name '*.scss' -not -path '*node_modules*' -exec sass-migrator module --migrate-deps {} \\;"
@@ -31,9 +32,9 @@
   "devDependencies": {
     "@babel/core": "7.26.10",
     "@babel/preset-env": "7.26.0",
-    "@babel/preset-flow": "7.25.9",
     "@babel/preset-react": "7.26.3",
     "@babel/preset-typescript": "7.26.0",
+    "@biomejs/biome": "2.2.4",
     "@chromatic-com/storybook": "2.0.2",
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.6.0",
@@ -43,7 +44,6 @@
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@fortawesome/react-fontawesome": "0.2.2",
     "@jest/globals": "29.7.0",
-    "@prettier/plugin-pug": "3.2.0",
     "@storybook/addon-essentials": "8.4.7",
     "@storybook/addon-interactions": "8.4.7",
     "@storybook/addon-links": "8.4.7",
@@ -56,15 +56,11 @@
     "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.3.0",
-    "@testing-library/react-hooks": "8.0.1",
     "@testing-library/user-event": "14.5.2",
     "@types/jest": "29.5.14",
     "@types/react": "19.0.10",
     "@types/react-dom": "18.3.0",
-    "@types/react-sidebar": "3.0.4",
     "@types/serviceworker": "0.0.95",
-    "@typescript-eslint/eslint-plugin": "8.19.1",
-    "@typescript-eslint/parser": "8.19.1",
     "@vitejs/plugin-react": "4.3.4",
     "axios": "1.8.4",
     "babel-jest": "29.7.0",
@@ -72,13 +68,6 @@
     "babel-plugin-transform-vite-meta-env": "1.0.3",
     "chromatic": "11.22.2",
     "classnames": "2.5.1",
-    "eslint": "9.18.0",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-prettier": "5.2.1",
-    "eslint-plugin-react": "7.37.4",
-    "eslint-plugin-react-hooks": "5.1.0",
-    "eslint-plugin-react-refresh": "0.4.19",
-    "eslint-plugin-storybook": "0.11.2",
     "framer-motion": "11.11.17",
     "handlebars": "4.7.8",
     "husky": "9.1.7",
@@ -92,19 +81,14 @@
     "jest-transform-css": "6.0.2",
     "jest-transform-stub": "2.0.0",
     "lint-staged": "15.3.0",
-    "prettier": "3.4.2",
-    "prop-types": "15.8.1",
     "react-error-boundary": "4.0.13",
     "react-i18next": "15.4.1",
     "react-ios-pwa-prompt": "2.0.6",
-    "release-please": "16.15.0",
     "rimraf": "6.0.1",
     "rollup-plugin-visualizer": "5.12.0",
     "sass": "1.83.1",
-    "sass-loader": "16.0.4",
     "storybook": "8.4.7",
     "ts-jest": "29.2.5",
-    "ts-node": "10.9.2",
     "typescript": "5.7.3",
     "vite": "5.4.6",
     "vite-plugin-pwa": "0.21.1",
@@ -116,9 +100,9 @@
     "workbox-strategies": "7.3.0"
   },
   "peerDependencies": {
-    "@types/react": "17.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "@types/react": "19.0.10",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -136,5 +120,10 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a"
+  "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "biome check --write"
+    ]
+  }
 }
