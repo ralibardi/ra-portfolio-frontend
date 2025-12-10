@@ -76,15 +76,42 @@ pnpm run dev
 
 ## Project Structure
 
+```
 ra-portfolio/
 ├── src/
-│ ├── components/ # Reusable UI components
-│ ├── pages/ # Page components
-│ ├── assets/ # Static assets
-│ ├── locales/ # Translation files
-│ └── styles/ # Global styles
-├── public/ # Public assets
-└── stories/ # Storybook stories
+│   ├── app/
+│   │   ├── routes/          # Route definitions
+│   │   └── styles/          # Global SCSS architecture
+│   ├── components/          # Reusable UI components
+│   ├── pages/               # Page components
+│   ├── contexts/            # React contexts
+│   ├── hooks/               # Custom React hooks
+│   ├── api/                 # API client and services
+│   ├── utils/               # Utility functions
+│   └── type/                # TypeScript types
+├── docs/                    # 📚 Documentation
+│   ├── architecture/        # System design and decisions
+│   ├── guides/              # How-to guides
+│   ├── kiro-notes/          # AI-generated explanations
+│   └── api/                 # API documentation
+├── public/                  # Public assets
+└── .storybook/              # Storybook configuration
+```
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the `docs/` folder:
+
+- **[Architecture](docs/architecture/)** - System design, SCSS architecture, license info
+- **[Guides](docs/guides/)** - Setup, development, testing, deployment guides
+- **[Kiro Notes](docs/kiro-notes/)** - AI-generated migration guides and quick references
+- **[API](docs/api/)** - API endpoint specifications (coming soon)
+
+### Quick Links
+- 🎨 [SCSS Architecture](docs/architecture/SCSS_ARCHITECTURE.md) - Complete styling system guide
+- 📝 [License Explanation](docs/architecture/LICENSE_EXPLANATION.md) - Why proprietary license
+- 🔄 [SCSS Migration Guide](docs/kiro-notes/2024-12-scss-migration.md) - Migrating to new structure
+- ⚡ [SCSS Quick Reference](docs/kiro-notes/scss-quick-reference.md) - Common patterns
 
 ## Contributing
 
@@ -107,7 +134,11 @@ The application is automatically deployed to Azure Static Web Apps through GitHu
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Copyright (c) 2024 Ronny Alibardi. All Rights Reserved.
+
+This project uses a **proprietary license**. The code is viewable for evaluation and learning purposes, but copying, redistribution, or commercial use is prohibited.
+
+See [LICENSE](LICENSE) for full terms and [LICENSE_EXPLANATION.md](docs/architecture/LICENSE_EXPLANATION.md) for detailed reasoning.
 
 ## Contact
 

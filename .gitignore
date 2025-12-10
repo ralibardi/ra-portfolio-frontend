@@ -1,36 +1,49 @@
 # Dependencies
 node_modules/
-.pnpm-store/
+.pnp
+.pnp.js
 
 # Testing
 coverage/
-.nyc_output/
+.nyc_output
 
-# Build
+# Production
 dist/
 build/
-.next/
-out/
+storybook-static/
 
-# Environment
+# Misc
+.DS_Store
 .env.local
-.env.*.local
-
-
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Logs
-logs/
+.env.development.local
+.env.test.local
+.env.production.local
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# System Files
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
 .DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Documentation (optional - uncomment if you want to ignore certain docs)
+# docs/kiro-notes/archive/
+
+# OS files
 Thumbs.db
