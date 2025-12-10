@@ -1,0 +1,153 @@
+// =============================================================================
+// THEME
+// Theme configuration with CSS custom properties
+// =============================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Theme Maps
+// -----------------------------------------------------------------------------
+$themes: (
+  light: (
+    // Primary colors
+    --accent-colour: map.get($primary, base),
+    --accent-colour-hover: map.get($primary, light),
+    --accent-colour-active: map.get($primary, dark),
+    
+    // Secondary colors
+    --secondary-colour: map.get($secondary, medium),
+    --secondary-colour-hover: map.get($secondary, base),
+    --secondary-colour-active: map.get($secondary, accent),
+    
+    // Semantic colors
+    --success-colour: map.get($success, base),
+    --success-colour-light: map.get($success, light),
+    --success-colour-dark: map.get($success, dark),
+    --warning-colour: map.get($warning, base),
+    --warning-colour-light: map.get($warning, light),
+    --warning-colour-dark: map.get($warning, dark),
+    --error-colour: map.get($error, base),
+    --error-colour-light: map.get($error, light),
+    --error-colour-dark: map.get($error, dark),
+    --info-colour: map.get($info, base),
+    --info-colour-light: map.get($info, light),
+    --info-colour-dark: map.get($info, dark),
+    
+    // Text colors
+    --text-colour: map.get($neutral, black),
+    --text-colour-muted: map.get($grey, 500),
+    --text-colour-inverse: map.get($neutral, white),
+    
+    // Background colors
+    --background-colour: map.get($neutral, white),
+    --background-colour-alt: map.get($grey, 100),
+    --background-colour-elevated: map.get($neutral, white),
+    --background-colour-overlay: map.get($neutral, white-alpha-95),
+    
+    // Surface colors
+    --surface-colour: map.get($neutral, white),
+    --surface-colour-hover: map.get($grey, 100),
+    --surface-colour-active: map.get($grey, 200),
+    
+    // Border and divider colors
+    --border-colour: map.get($grey, 200),
+    --border-colour-strong: map.get($grey, 300),
+    --divider-colour: map.get($grey, 200),
+    
+    // Utility colors
+    --foreground-colour: map.get($grey, 300),
+    --shadow-colour: map.get($neutral, black-alpha-08),
+    --shadow-colour-strong: map.get($neutral, black-alpha-15),
+    --focus-colour: map.get($primary, base),
+  ),
+  dark: (
+    // Primary colors
+    --accent-colour: map.get($primary, light),
+    --accent-colour-hover: map.get($primary, base),
+    --accent-colour-active: map.get($primary, dark),
+    
+    // Secondary colors
+    --secondary-colour: map.get($secondary, medium),
+    --secondary-colour-hover: map.get($secondary, base),
+    --secondary-colour-active: map.get($secondary, accent),
+    
+    // Semantic colors
+    --success-colour: map.get($success, light),
+    --success-colour-light: map.get($success, base),
+    --success-colour-dark: map.get($success, dark),
+    --warning-colour: map.get($warning, light),
+    --warning-colour-light: map.get($warning, base),
+    --warning-colour-dark: map.get($warning, dark),
+    --error-colour: map.get($error, light),
+    --error-colour-light: map.get($error, base),
+    --error-colour-dark: map.get($error, dark),
+    --info-colour: map.get($info, light),
+    --info-colour-light: map.get($info, base),
+    --info-colour-dark: map.get($info, dark),
+    
+    // Text colors
+    --text-colour: map.get($neutral, white),
+    --text-colour-muted: map.get($grey, 300),
+    --text-colour-inverse: map.get($neutral, black),
+    
+    // Background colors
+    --background-colour: map.get($grey, 600),
+    --background-colour-alt: map.get($grey, 500),
+    --background-colour-elevated: map.get($grey, 500),
+    --background-colour-overlay: map.get($neutral, black-alpha-95),
+    
+    // Surface colors
+    --surface-colour: map.get($grey, 500),
+    --surface-colour-hover: map.get($grey, 400),
+    --surface-colour-active: map.get($grey, 300),
+    
+    // Border and divider colors
+    --border-colour: map.get($grey, 400),
+    --border-colour-strong: map.get($grey, 300),
+    --divider-colour: map.get($grey, 400),
+    
+    // Utility colors
+    --foreground-colour: map.get($grey, 400),
+    --shadow-colour: map.get($neutral, black-alpha-25),
+    --shadow-colour-strong: map.get($neutral, black-alpha-40),
+    --focus-colour: map.get($primary, light),
+  )
+);
+
+// Theme Mixin
+// -----------------------------------------------------------------------------
+@mixin theme($mode: light) {
+  $theme: map.get($themes, $mode);
+  
+  @if $theme {
+    @each $name, $value in $theme {
+      #{$name}: #{$value};
+    }
+  } @else {
+    @warn "Unsupported theme mode: #{$mode}";
+  }
+}
+
+// Theme Application
+// -----------------------------------------------------------------------------
+:root {
+  // Default light theme
+  @include theme(light);
+  
+  // System theme support
+  @media (prefers-color-scheme: dark) {
+    &:not([data-theme="light"]) {
+      @include theme(dark);
+    }
+  }
+  
+  // Explicit theme overrides
+  &[data-theme="light"] {
+    @include theme(light);
+  }
+  
+  &[data-theme="dark"] {
+    @include theme(dark);
+  }
+}

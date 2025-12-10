@@ -1,0 +1,103 @@
+// =============================================================================
+// TYPOGRAPHY BASE
+// Base typography styles and heading definitions
+// =============================================================================
+
+@use '../abstracts' as *;
+
+// Root typography
+// -----------------------------------------------------------------------------
+:root {
+  font-family: $font-family;
+  font-size: map.get($font-sizes, md);
+  font-weight: map.get($font-weights, regular);
+  line-height: map.get($font-heights, normal);
+  color: var(--text-colour);
+}
+
+// Headings
+// -----------------------------------------------------------------------------
+h1 {
+  @include typography('5xl', bold, tight);
+  
+  @include breakpoint('desktop') {
+    font-size: map.get($font-sizes, '6xl');
+  }
+}
+
+h2 {
+  @include typography('4xl', bold, tight);
+  
+  @include breakpoint('desktop') {
+    font-size: map.get($font-sizes, '5xl');
+  }
+}
+
+h3 {
+  @include typography('3xl', semi-bold, snug);
+  
+  @include breakpoint('desktop') {
+    font-size: map.get($font-sizes, '4xl');
+  }
+}
+
+h4 {
+  @include typography('2xl', semi-bold, snug);
+  
+  @include breakpoint('desktop') {
+    font-size: map.get($font-sizes, '3xl');
+  }
+}
+
+h5 {
+  @include typography('xl', medium, normal);
+  
+  @include breakpoint('desktop') {
+    font-size: map.get($font-sizes, '2xl');
+  }
+}
+
+h6 {
+  @include typography('lg', medium, normal);
+  
+  @include breakpoint('desktop') {
+    font-size: map.get($font-sizes, 'xl');
+  }
+}
+
+// Paragraphs
+// -----------------------------------------------------------------------------
+p {
+  @include typography(md, regular, relaxed);
+  margin-bottom: map.get($spacing, md);
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Text utilities
+// -----------------------------------------------------------------------------
+.text-small {
+  @include typography(sm, regular, normal);
+}
+
+.text-large {
+  @include typography(lg, regular, relaxed);
+}
+
+.text-muted {
+  color: var(--text-colour-muted);
+}
+
+.text-bold {
+  font-weight: map.get($font-weights, bold);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-truncate {
+  @include truncate;
+}

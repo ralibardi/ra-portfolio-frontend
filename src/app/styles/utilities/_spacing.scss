@@ -1,0 +1,36 @@
+// =============================================================================
+// SPACING UTILITIES
+// Margin and padding utility classes
+// =============================================================================
+
+@use '../abstracts' as *;
+
+// Margin utilities
+// -----------------------------------------------------------------------------
+@each $name, $value in $spacing {
+  .m-#{$name} { margin: $value; }
+  .mt-#{$name} { margin-top: $value; }
+  .mr-#{$name} { margin-right: $value; }
+  .mb-#{$name} { margin-bottom: $value; }
+  .ml-#{$name} { margin-left: $value; }
+  .mx-#{$name} { margin-inline: $value; }
+  .my-#{$name} { margin-block: $value; }
+}
+
+// Padding utilities
+// -----------------------------------------------------------------------------
+@each $name, $value in $spacing {
+  .p-#{$name} { padding: $value; }
+  .pt-#{$name} { padding-top: $value; }
+  .pr-#{$name} { padding-right: $value; }
+  .pb-#{$name} { padding-bottom: $value; }
+  .pl-#{$name} { padding-left: $value; }
+  .px-#{$name} { padding-inline: $value; }
+  .py-#{$name} { padding-block: $value; }
+}
+
+// Gap utilities
+// -----------------------------------------------------------------------------
+@each $name, $value in $spacing {
+  .gap-#{$name} { gap: $value; }
+}

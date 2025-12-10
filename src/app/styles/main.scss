@@ -1,0 +1,71 @@
+// =============================================================================
+// MAIN STYLESHEET
+// Entry point for all styles - imports in correct order
+// =============================================================================
+
+// 1. Abstracts - Variables, functions, mixins (no CSS output)
+// -----------------------------------------------------------------------------
+@use 'abstracts' as *;
+
+// 2. Base - Reset, theme, typography (foundational styles)
+// -----------------------------------------------------------------------------
+@use 'base';
+
+// 3. Utilities - Layout, spacing, colors (utility classes)
+// -----------------------------------------------------------------------------
+@use 'utilities';
+
+// 4. Animations - Transitions, keyframes (animation definitions)
+// -----------------------------------------------------------------------------
+@use 'animations';
+
+// 5. Application-specific styles
+// -----------------------------------------------------------------------------
+html,
+body {
+  @include size(map.get($percentage, 100), auto);
+  margin: map.get($spacing, 0);
+  padding: map.get($spacing, 0);
+  overflow-x: hidden;
+}
+
+body {
+  @include flexbox(column, center, center);
+  min-height: 100vh;
+  @include transition(
+    (background-color map.get($transition, fast) ease),
+    (color map.get($transition, fast) ease)
+  );
+  background-color: var(--background-colour);
+  color: var(--text-colour);
+}
+
+#root {
+  width: map.get($percentage, 100);
+  min-height: 100dvh;
+  height: map.get($percentage, 100);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+main {
+  @include flexbox(column);
+  @include size(map.get($percentage, 100), map.get($percentage, 100));
+  overflow: hidden;
+  flex: 1;
+}
+
+// PWA-specific styles
+// -----------------------------------------------------------------------------
+.apple-prompt {
+  display: none;
+  position: fixed;
+  text-align: center;
+  @include border-radius(map.get($border, xs));
+  border: map.get($border, xs) solid var(--accent-colour);
+  inset: auto map.get($spacing, xs) map.get($spacing, xs);
+  background: var(--background-colour);
+  padding: map.get($spacing, xs);
+  z-index: map.get($z-index, top);
+}

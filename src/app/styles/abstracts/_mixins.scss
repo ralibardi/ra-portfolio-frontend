@@ -1,0 +1,168 @@
+// =============================================================================
+// MIXINS
+// Reusable style patterns and utilities
+// =============================================================================
+
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use 'colors' as *;
+@use 'variables' as *;
+@use 'typography' as *;
+@use 'breakpoints' as *;
+
+// Typography Mixins
+// -----------------------------------------------------------------------------
+
+// Basic font styling
+@mixin font-style($size: map.get($font-sizes, md), $weight: map.get($font-weights, medium), $color: var(--text-colour)) {
+  font: $weight $size $font-family;
+  color: $color;
+}
+
+// Enhanced typography with line height
+@mixin typography($size: md, $weight: regular, $height: normal, $color: var(--text-colour)) {
+  font-family: $font-family;
+  font-size: map.get($font-sizes, $size);
+  font-weight: map.get($font-weights, $weight);
+  line-height: map.get($font-heights, $height);
+  color: $color;
+}
+
+// Responsive typography
+@mixin responsive-typography($mobile-size: md, $desktop-size: lg) {
+  @include typography($mobile-size);
+  
+  @include breakpoint('desktop') {
+    font-size: map.get($font-sizes, $desktop-size);
+  }
+}
+
+// Text truncation
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Layout Mixins
+// -----------------------------------------------------------------------------
+
+// Size utility
+@mixin size($width: auto, $height: auto) {
+  width: $width;
+  height: $height;
+}
+
+// Flexbox layout
+@mixin flexbox($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-flow: $direction $wrap;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// Absolute centering
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Visual Effects Mixins
+// -----------------------------------------------------------------------------
+
+// Box shadow
+@mixin box-shadow($x: map.get($spacing, 0), $y: map.get($spacing, '3xs'), $blur: map.get($spacing, '2xs'), $spread: map.get($spacing, '2xs'), $color: map.get($neutral, black), $inset: false) {
+  $shadow: $x $y $blur;
+  
+  @if $spread != null {
+    $shadow: $shadow $spread;
+  }
+  
+  box-shadow: if($inset, inset, null) $shadow $color;
+}
+
+// Border radius
+@mixin border-radius($radius: map.get($border, md)) {
+  border-radius: $radius;
+}
+
+// Transform
+@mixin transform($scale: 1, $rotate: 0deg, $translate: null) {
+  $transforms: ();
+  
+  @if $scale != 1 {
+    $transforms: list.append($transforms, scale($scale));
+  }
+  
+  @if $rotate != 0deg {
+    $transforms: list.append($transforms, rotate($rotate));
+  }
+  
+  @if $translate {
+    $transforms: list.append($transforms, translate($translate));
+  }
+  
+  transform: if(list.length($transforms) > 0, list.join($transforms, ' '), none);
+}
+
+// Responsive Mixins
+// -----------------------------------------------------------------------------
+
+@mixin responsive($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media screen and (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+@mixin breakpoint($name) {
+  @if map.has-key($breakpoints, $name) {
+    $bp: map.get($breakpoints, $name);
+    
+    @if map.has-key($bp, 'min') and map.has-key($bp, 'max') {
+      @media (min-width: map.get($bp, 'min')) and (max-width: map.get($bp, 'max')) {
+        @content;
+      }
+    } @else if map.has-key($bp, 'min') {
+      @media (min-width: map.get($bp, 'min')) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$name}";
+  }
+}
+
+// Container query support (with fallback)
+@mixin container-query($size) {
+  @media (min-width: #{$size}) {
+    @content;
+  }
+}
+
+// Accessibility Mixins
+// -----------------------------------------------------------------------------
+
+@mixin prefers-reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

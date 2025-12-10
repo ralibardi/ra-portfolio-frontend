@@ -1,0 +1,54 @@
+// =============================================================================
+// VISIBILITY UTILITIES
+// Display, visibility, and accessibility utilities
+// =============================================================================
+
+@use '../abstracts' as *;
+
+// Display utilities
+// -----------------------------------------------------------------------------
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+// Visibility utilities
+// -----------------------------------------------------------------------------
+.invisible {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
+// Screen reader only
+// -----------------------------------------------------------------------------
+.sr-only {
+  @include visually-hidden;
+}
+
+// Responsive visibility
+// -----------------------------------------------------------------------------
+@each $breakpoint, $value in $breakpoints {
+  @include breakpoint($breakpoint) {
+    .hidden-#{$breakpoint} {
+      display: none;
+    }
+    
+    .visible-#{$breakpoint} {
+      display: block;
+    }
+  }
+}

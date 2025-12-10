@@ -1,0 +1,29 @@
+// =============================================================================
+// BREAKPOINTS
+// Responsive design breakpoints for different screen sizes
+// =============================================================================
+
+$breakpoints: (
+  'mobile-landscape': (
+    min: 30rem,      // 480px
+    max: 47.9375rem, // 767px
+  ),
+  'tablet': (
+    min: 48rem,      // 768px
+    max: 61.9375rem, // 991px
+  ),
+  'tablet-landscape': (
+    min: 62rem,      // 992px
+    max: 74.9375rem, // 1199px
+  ),
+  'laptop-only': (
+    min: 64rem,      // 1024px
+    max: 89.9375rem, // 1439px
+  ),
+  'laptop': (
+    min: 64rem,      // 1024px+
+  ),
+  'desktop': (
+    min: 75rem,      // 1200px+
+  ),
+);

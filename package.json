@@ -2,6 +2,11 @@
   "name": "ra-portfolio",
   "version": "1.0.0",
   "private": true,
+  "license": "UNLICENSED",
+  "author": {
+    "name": "Ronny Alibardi",
+    "email": "ronny.alibardi@outlook.com"
+  },
   "type": "module",
   "scripts": {
     "dev": "pnpm run build:dev && vite",

@@ -1,0 +1,63 @@
+// =============================================================================
+// LAYOUT UTILITIES
+// Flexbox, grid, and positioning utilities
+// =============================================================================
+
+@use '../abstracts' as *;
+
+// Container
+// -----------------------------------------------------------------------------
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: map.get($spacing, md);
+  
+  @include breakpoint('desktop') {
+    padding-inline: map.get($spacing, xl);
+  }
+}
+
+// Flexbox utilities
+// -----------------------------------------------------------------------------
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  @include flexbox(column);
+}
+
+.flex-row {
+  @include flexbox(row);
+}
+
+.flex-center {
+  @include flexbox(row, center, center);
+}
+
+.flex-between {
+  @include flexbox(row, space-between, center);
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+// Grid utilities
+// -----------------------------------------------------------------------------
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}

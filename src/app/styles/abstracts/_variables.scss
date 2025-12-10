@@ -1,0 +1,79 @@
+// =============================================================================
+// VARIABLES
+// Core design tokens for spacing, sizing, and other non-color values
+// =============================================================================
+
+// Base Units
+// -----------------------------------------------------------------------------
+$spacing-base: 1rem;
+$border-base: 0.25rem;
+
+// Spacing Scale
+// -----------------------------------------------------------------------------
+// Enhanced spacing system with intermediate values for better design flexibility
+$spacing: (
+  0: 0,
+  '3xs': $spacing-base * 0.125,  // 2px
+  '2xs': $spacing-base * 0.25,   // 4px
+  xs: $spacing-base * 0.5,       // 8px
+  sm: $spacing-base * 0.75,      // 12px
+  md: $spacing-base,             // 16px (base)
+  lg: $spacing-base * 1.25,      // 20px
+  xl: $spacing-base * 1.5,       // 24px
+  '2xl': $spacing-base * 2,      // 32px
+  '3xl': $spacing-base * 3,      // 48px
+  '4xl': $spacing-base * 4,      // 64px
+  '5xl': $spacing-base * 6,      // 96px
+  '6xl': $spacing-base * 8,      // 128px
+  '7xl': $spacing-base * 12,     // 192px
+);
+
+// Border Sizes
+// -----------------------------------------------------------------------------
+$border: (
+  xs: $border-base * 0.25,  // 1px
+  sm: $border-base * 0.5,   // 2px
+  md: $border-base,         // 4px (base)
+  lg: $border-base * 2,     // 8px
+  xl: $border-base * 3,     // 12px
+  '2xl': $border-base * 4,  // 16px
+  '3xl': $border-base * 6,  // 24px
+  '4xl': $border-base * 8,  // 32px
+);
+
+// Percentage Values
+// -----------------------------------------------------------------------------
+$percentage: (
+  0: 0%,
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%,
+);
+
+// Z-Index Layering System
+// -----------------------------------------------------------------------------
+// Enhanced layering for complex UI components
+$z-index: (
+  // Backgrounds and base layers
+  background: -1,
+  base: 0,
+  
+  // Content layers
+  content: 1,
+  elevated: 10,
+  
+  // Interactive elements
+  dropdown: 100,
+  sticky: 200,
+  
+  // Overlays
+  overlay: 1000,
+  modal: 1100,
+  popover: 1200,
+  
+  // System level
+  tooltip: 1300,
+  toast: 1400,
+  debug: 9999
+);

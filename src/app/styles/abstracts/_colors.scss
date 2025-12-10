@@ -1,0 +1,87 @@
+// =============================================================================
+// COLORS
+// Color system organized by family with semantic naming
+// =============================================================================
+
+@use "sass:map";
+
+// Primary Colors
+// -----------------------------------------------------------------------------
+$primary: (
+  base: #4a90e2,
+  light: #357ABD,
+  dark: #2A5D9E,
+  alpha-08: rgba(74, 144, 226, 0.08)
+);
+
+// Secondary Colors
+// -----------------------------------------------------------------------------
+$secondary: (
+  base: #e67e22,
+  medium: #d35400,
+  accent: #f1c40f,
+  alpha-08: rgba(230, 126, 34, 0.08)
+);
+
+// Neutral Colors
+// -----------------------------------------------------------------------------
+$neutral: (
+  // Solid colors
+  white: #fdfdfd,
+  black: #2c3e50,
+  
+  // White alpha variations
+  white-alpha-95: rgba(253, 253, 253, 0.95),
+  white-alpha-90: rgba(253, 253, 253, 0.9),
+  white-alpha-30: rgba(253, 253, 253, 0.3),
+  white-alpha-10: rgba(253, 253, 253, 0.1),
+  
+  // Black alpha variations
+  black-alpha-95: rgba(44, 62, 80, 0.95),
+  black-alpha-40: rgba(44, 62, 80, 0.4),
+  black-alpha-25: rgba(44, 62, 80, 0.25),
+  black-alpha-15: rgba(44, 62, 80, 0.15),
+  black-alpha-08: rgba(44, 62, 80, 0.08),
+  black-alpha-06: rgba(44, 62, 80, 0.06)
+);
+
+// Grey Scale
+// -----------------------------------------------------------------------------
+$grey: (
+  100: #ecf0f1,  // Lightest
+  200: #bdc3c7,
+  300: #95a5a6,
+  400: #7f8c8d,
+  500: #34495e,
+  600: #2c3e50   // Darkest
+);
+
+// Semantic Colors
+// -----------------------------------------------------------------------------
+$success: (
+  base: #10b981,
+  light: #34d399,
+  dark: #059669,
+  alpha-08: rgba(16, 185, 129, 0.08)
+);
+
+$warning: (
+  base: #f59e0b,
+  light: #fbbf24,
+  dark: #d97706,
+  alpha-08: rgba(245, 158, 11, 0.08)
+);
+
+$error: (
+  base: #ef4444,
+  light: #f87171,
+  dark: #dc2626,
+  alpha-08: rgba(239, 68, 68, 0.08)
+);
+
+$info: (
+  base: #3b82f6,
+  light: #60a5fa,
+  dark: #2563eb,
+  alpha-08: rgba(59, 130, 246, 0.08)
+);

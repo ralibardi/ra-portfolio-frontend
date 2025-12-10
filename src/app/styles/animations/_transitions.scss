@@ -1,0 +1,53 @@
+// =============================================================================
+// TRANSITIONS
+// Transition durations and easing curves
+// =============================================================================
+
+@use '../abstracts' as *;
+
+// Transition Durations
+// -----------------------------------------------------------------------------
+$transition: (
+  0: 0s,
+  fast: 0.15s,
+  normal: 0.25s,
+  medium: 0.4s,
+  slow: 0.6s,
+  slower: 1s,
+);
+
+// Easing Curves
+// -----------------------------------------------------------------------------
+$easing: (
+  // Standard curves
+  linear: cubic-bezier(0, 0, 1, 1),
+  ease: cubic-bezier(0.25, 0.1, 0.25, 1),
+  ease-in: cubic-bezier(0.42, 0, 1, 1),
+  ease-out: cubic-bezier(0, 0, 0.58, 1),
+  ease-in-out: cubic-bezier(0.42, 0, 0.58, 1),
+  
+  // Custom curves
+  bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55),
+  smooth: cubic-bezier(0.4, 0, 0.2, 1),
+  snappy: cubic-bezier(0.4, 0, 0.6, 1),
+);
+
+// Transition Mixins
+// -----------------------------------------------------------------------------
+@mixin transition($properties...) {
+  $transitions: ();
+  
+  @each $prop in $properties {
+    @if meta.type-of($prop) == 'list' {
+      $transitions: list.append($transitions, list.join($prop, ' '), comma);
+    } @else {
+      $transitions: list.append($transitions, $prop, comma);
+    }
+  }
+  
+  transition: $transitions;
+}
+
+@mixin enhanced-transition($property, $duration: normal, $easing: smooth, $delay: 0s) {
+  transition: $property map.get($transition, $duration) map.get($easing, $easing) $delay;
+}

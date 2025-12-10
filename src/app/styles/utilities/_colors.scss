@@ -1,0 +1,66 @@
+// =============================================================================
+// COLOR UTILITIES
+// Text and background color utility classes
+// =============================================================================
+
+@use '../abstracts' as *;
+
+// Text color utilities
+// -----------------------------------------------------------------------------
+.text-primary {
+  color: var(--accent-colour);
+}
+
+.text-secondary {
+  color: var(--secondary-colour);
+}
+
+.text-success {
+  color: var(--success-colour);
+}
+
+.text-warning {
+  color: var(--warning-colour);
+}
+
+.text-error {
+  color: var(--error-colour);
+}
+
+.text-info {
+  color: var(--info-colour);
+}
+
+.text-muted {
+  color: var(--text-colour-muted);
+}
+
+// Background color utilities
+// -----------------------------------------------------------------------------
+.bg-primary {
+  background-color: var(--accent-colour);
+}
+
+.bg-secondary {
+  background-color: var(--secondary-colour);
+}
+
+.bg-success {
+  background-color: var(--success-colour);
+}
+
+.bg-warning {
+  background-color: var(--warning-colour);
+}
+
+.bg-error {
+  background-color: var(--error-colour);
+}
+
+.bg-info {
+  background-color: var(--info-colour);
+}
+
+.bg-surface {
+  background-color: var(--surface-colour);
+}

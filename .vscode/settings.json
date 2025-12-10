@@ -3,36 +3,58 @@
     "connectionId": "ralibardi",
     "projectKey": "ralibardi_ra-portfolio"
   },
-  "explorer.fileNesting": {
-    "enabled": true,
-    "patterns": {
-      "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, .env",
-      "manifestGenerator.*": "manifest.hbs",
-      "vite.config.ts": "eslint.*, .gitignore, .prettierrc, .babelrc, .editorconfig, commitlint.*, sonar-project.*, web.*,.npmrc,chromatic.*",
-      "index.html": "README.md",
-      "jest.config.ts": "setupTests.ts",
-      "*.{js,ts,jsx,tsx}": "${capture}.{js.map,min.js,d.ts,js,ts,jsx,tsx,stories.*,test.*,scss}"
-    }
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, .npmrc, .nvmrc, .yarnrc.yml",
+    "tsconfig.json": "tsconfig.*.json",
+    "vite.config.ts": ".gitignore, .prettierrc, .babelrc, .editorconfig, commitlint.*, sonar-project.*, web.config, chromatic.*, staticwebapp.config.json",
+    "index.html": "manifest.hbs, manifestGenerator.ts",
+    "jest.config.ts": "setupTests.ts, tsconfig.jest.json",
+    "biome.json": "qodana.yaml",
+    "README.md": "LICENSE, CHANGELOG.md, CONTRIBUTING.md",
+    ".env": ".env.*, .env.local, .env.development, .env.production",
+    "*.ts": "${capture}.test.ts, ${capture}.spec.ts, ${capture}.d.ts",
+    "*.tsx": "${capture}.test.tsx, ${capture}.spec.tsx, ${capture}.stories.tsx, ${capture}.module.scss, ${capture}.scss",
+    "*.js": "${capture}.test.js, ${capture}.spec.js, ${capture}.min.js, ${capture}.js.map",
+    "*.jsx": "${capture}.test.jsx, ${capture}.spec.jsx, ${capture}.module.scss, ${capture}.scss"
   },
-  "editor": {
-    "defaultFormatter": "esbenp.prettier-vscode",
-    "formatOnSave": true,
-    "formatOnType": true,
-    "formatOnPaste": true,
-    "codeActionsOnSave": {
-      "source.fixAll": "never"
-    }
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "eslint.workingDirectories": [{ "mode": "auto" }],
-  "git": {
-    "autofetch": true,
-    "enableSmartCommit": true
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "files.autoSave": "onFocusChange",
+  "files.eol": "\n",
+  "files.associations": {
+    "*.css": "scss"
   },
-  "files": {
-    "autoSave": "onFocusChange",
-    "eol": "\n"
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "FSharp.suggestGitignore": false,
   "kiroAgent.configureMCP": "Enabled"

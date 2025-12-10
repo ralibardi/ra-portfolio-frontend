@@ -1,0 +1,38 @@
+// =============================================================================
+// FUNCTIONS
+// Utility functions for calculations and transformations
+// =============================================================================
+
+@use "sass:map";
+@use "sass:math";
+@use "sass:string";
+
+// Get spacing value
+@function spacing($key) {
+  @return map.get($spacing, $key);
+}
+
+// Get color value
+@function color($family, $variant: 'base') {
+  @return map.get(map.get($colors, $family), $variant);
+}
+
+// Convert px to rem
+@function rem($px, $base: 16) {
+  @return math.div($px, $base) * 1rem;
+}
+
+// Convert rem to px
+@function px($rem, $base: 16) {
+  @return $rem * $base;
+}
+
+// Strip unit from value
+@function strip-unit($value) {
+  @return math.div($value, $value * 0 + 1);
+}
+
+// Clamp value between min and max
+@function clamp-value($value, $min, $max) {
+  @return math.max($min, math.min($value, $max));
+}
