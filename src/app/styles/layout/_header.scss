@@ -1,0 +1,38 @@
+// =============================================================================
+// HEADER
+// Main site header styles
+// =============================================================================
+
+@use '../abstracts' as *;
+
+.site-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: var(--surface-colour);
+  border-bottom: map.get($border, xs) solid var(--border-colour);
+  z-index: map.get($z-index, sticky);
+  @include enhanced-transition(all, fast, smooth);
+  
+  &__container {
+    @include flexbox(row, space-between, center);
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: map.get($spacing, md) map.get($spacing, lg);
+  }
+  
+  &__logo {
+    @include typography(xl, bold, none);
+    color: var(--accent-colour);
+  }
+  
+  &__nav {
+    @include flexbox(row, flex-end, center);
+    gap: map.get($spacing, lg);
+  }
+  
+  // Scrolled state
+  &--scrolled {
+    @include theme-aware-elevation(1);
+  }
+}

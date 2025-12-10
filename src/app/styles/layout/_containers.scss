@@ -1,0 +1,79 @@
+// =============================================================================
+// CONTAINERS
+// Container and wrapper utilities
+// =============================================================================
+
+@use '../abstracts' as *;
+
+// Main Container
+// -----------------------------------------------------------------------------
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: map.get($spacing, md);
+  
+  @include breakpoint('tablet') {
+    padding-inline: map.get($spacing, lg);
+  }
+  
+  @include breakpoint('desktop') {
+    padding-inline: map.get($spacing, xl);
+  }
+  
+  // Container sizes
+  &--sm {
+    max-width: 640px;
+  }
+  
+  &--md {
+    max-width: 768px;
+  }
+  
+  &--lg {
+    max-width: 1024px;
+  }
+  
+  &--xl {
+    max-width: 1280px;
+  }
+  
+  &--full {
+    max-width: 100%;
+  }
+  
+  // No padding variant
+  &--flush {
+    padding-inline: 0;
+  }
+}
+
+// Section Wrapper
+// -----------------------------------------------------------------------------
+.section {
+  padding-block: map.get($spacing, '3xl');
+  
+  @include breakpoint('desktop') {
+    padding-block: map.get($spacing, '4xl');
+  }
+  
+  &--sm {
+    padding-block: map.get($spacing, '2xl');
+  }
+  
+  &--lg {
+    padding-block: map.get($spacing, '5xl');
+  }
+}
+
+// Content Wrapper
+// -----------------------------------------------------------------------------
+.content-wrapper {
+  @include flexbox(column, flex-start, stretch);
+  gap: map.get($spacing, lg);
+  
+  &--centered {
+    align-items: center;
+    text-align: center;
+  }
+}

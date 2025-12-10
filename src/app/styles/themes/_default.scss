@@ -1,0 +1,13 @@
+// =============================================================================
+// DEFAULT THEME
+// Light and dark theme definitions
+// =============================================================================
+
+@use '../abstracts/colors' as *;
+
+// This file re-exports the theme system from base/theme
+// Themes are defined in base/_theme.scss and applied via CSS custom properties
+// This file exists to maintain the 7-1 pattern structure
+
+// Theme application is handled in base/_theme.scss
+// No additional styles needed here as themes use CSS custom properties

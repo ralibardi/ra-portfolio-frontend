@@ -28,6 +28,34 @@ Official documentation about:
 
 ---
 
+### `7-1-PATTERN.md`
+**Purpose**: Official 7-1 pattern architecture documentation
+
+**Contents**:
+- 7-1 pattern structure and organization
+- Folder responsibilities
+- Import order and best practices
+- Usage examples
+- Industry adoption
+
+**Audience**: Frontend developers, architects
+
+---
+
+### `CSS-MODULES-WITH-7-1.md`
+**Purpose**: How to combine CSS Modules with 7-1 pattern
+
+**Contents**:
+- Strategy for combining both approaches
+- Usage patterns and examples
+- Best practices
+- When to use what
+- Real-world examples
+
+**Audience**: Frontend developers
+
+---
+
 ### `LICENSE_EXPLANATION.md`
 **Purpose**: Explains the proprietary license choice
 

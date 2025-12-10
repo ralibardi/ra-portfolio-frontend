@@ -1,0 +1,62 @@
+// =============================================================================
+// FOOTER
+// Main site footer styles
+// =============================================================================
+
+@use '../abstracts' as *;
+
+.site-footer {
+  width: 100%;
+  background: var(--surface-colour);
+  border-top: map.get($border, xs) solid var(--border-colour);
+  margin-top: auto;
+  
+  &__container {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: map.get($spacing, '2xl') map.get($spacing, lg);
+  }
+  
+  &__content {
+    @include flexbox(row, space-between, flex-start, wrap);
+    gap: map.get($spacing, xl);
+    margin-bottom: map.get($spacing, xl);
+    
+    @include breakpoint('tablet') {
+      flex-wrap: nowrap;
+    }
+  }
+  
+  &__section {
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  &__title {
+    @include typography(lg, semi-bold, tight);
+    margin-bottom: map.get($spacing, md);
+    color: var(--text-colour);
+  }
+  
+  &__links {
+    @include flexbox(column, flex-start, flex-start);
+    gap: map.get($spacing, sm);
+  }
+  
+  &__link {
+    color: var(--text-colour-muted);
+    @include enhanced-transition(color, fast, smooth);
+    
+    &:hover {
+      color: var(--accent-colour);
+    }
+  }
+  
+  &__bottom {
+    padding-top: map.get($spacing, lg);
+    border-top: map.get($border, xs) solid var(--border-colour);
+    text-align: center;
+    color: var(--text-colour-muted);
+    @include typography(sm, regular, normal);
+  }
+}

@@ -48,6 +48,34 @@ These documents are created by Kiro AI assistant to:
 
 ---
 
+#### `2024-12-7-1-pattern-implementation.md`
+**Purpose**: Implementation guide for 7-1 SCSS pattern
+
+**Key Topics**:
+- What is the 7-1 pattern
+- New folder structure
+- Import order
+- Migration notes
+- Benefits
+
+**When to Use**: Understanding the 7-1 pattern implementation
+
+---
+
+#### `css-modules-7-1-examples.md`
+**Purpose**: Practical examples of CSS Modules with 7-1 pattern
+
+**Key Topics**:
+- Real-world component examples
+- Button, Card, Form components
+- Mixing global and module styles
+- Best practices
+- Quick patterns
+
+**When to Use**: Building components with CSS Modules
+
+---
+
 ## 🎯 How to Use These Notes
 
 ### For Developers

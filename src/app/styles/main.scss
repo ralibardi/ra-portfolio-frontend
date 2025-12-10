@@ -1,26 +1,70 @@
 // =============================================================================
-// MAIN STYLESHEET
-// Entry point for all styles - imports in correct order
+// MAIN STYLESHEET - 7-1 PATTERN
+// Entry point for all styles following the 7-1 architecture pattern
+// =============================================================================
+//
+// The 7-1 Pattern organizes SCSS into 7 folders + 1 main file:
+// 1. abstracts/   - Variables, functions, mixins (no CSS output)
+// 2. vendors/     - Third-party CSS
+// 3. base/        - Reset, typography, base styles
+// 4. layout/      - Layout components (header, footer, grid)
+// 5. components/  - UI components
+// 6. pages/       - Page-specific styles
+// 7. themes/      - Theme variations
+// + main.scss     - This file (imports everything)
+//
 // =============================================================================
 
-// 1. Abstracts - Variables, functions, mixins (no CSS output)
+// 1. ABSTRACTS
+// Configuration and helpers - no CSS output
 // -----------------------------------------------------------------------------
 @use 'abstracts' as *;
 
-// 2. Base - Reset, theme, typography (foundational styles)
+// 2. VENDORS
+// Third-party libraries and overrides
+// -----------------------------------------------------------------------------
+@use 'vendors';
+
+// 3. BASE
+// Reset, typography, and foundational styles
 // -----------------------------------------------------------------------------
 @use 'base';
 
-// 3. Utilities - Layout, spacing, colors (utility classes)
+// 4. LAYOUT
+// Layout-related styles (header, footer, grid, containers)
+// -----------------------------------------------------------------------------
+@use 'layout';
+
+// 5. COMPONENTS
+// Component-specific styles
+// -----------------------------------------------------------------------------
+@use 'components';
+
+// 6. PAGES
+// Page-specific styles
+// -----------------------------------------------------------------------------
+@use 'pages';
+
+// 7. THEMES
+// Theme variations
+// -----------------------------------------------------------------------------
+@use 'themes';
+
+// 8. UTILITIES
+// Utility classes (kept from previous structure)
 // -----------------------------------------------------------------------------
 @use 'utilities';
 
-// 4. Animations - Transitions, keyframes (animation definitions)
+// 9. ANIMATIONS
+// Animation definitions (kept from previous structure)
 // -----------------------------------------------------------------------------
 @use 'animations';
 
-// 5. Application-specific styles
-// -----------------------------------------------------------------------------
+// =============================================================================
+// APPLICATION-SPECIFIC STYLES
+// Global application styles that don't fit into other categories
+// =============================================================================
+
 html,
 body {
   @include size(map.get($percentage, 100), auto);
@@ -67,5 +111,5 @@ main {
   inset: auto map.get($spacing, xs) map.get($spacing, xs);
   background: var(--background-colour);
   padding: map.get($spacing, xs);
-  z-index: map.get($z-index, top);
+  z-index: map.get($z-index, toast);
 }

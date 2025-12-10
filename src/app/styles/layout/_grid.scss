@@ -1,0 +1,109 @@
+// =============================================================================
+// GRID SYSTEM
+// Responsive grid layout utilities
+// =============================================================================
+
+@use '../abstracts' as *;
+
+// Grid Container
+// -----------------------------------------------------------------------------
+.grid {
+  display: grid;
+  gap: map.get($spacing, md);
+  
+  &--gap-sm {
+    gap: map.get($spacing, sm);
+  }
+  
+  &--gap-lg {
+    gap: map.get($spacing, lg);
+  }
+  
+  &--gap-xl {
+    gap: map.get($spacing, xl);
+  }
+}
+
+// Grid Columns
+// -----------------------------------------------------------------------------
+.grid-cols-1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-cols-6 {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.grid-cols-12 {
+  grid-template-columns: repeat(12, 1fr);
+}
+
+// Responsive Grid
+// -----------------------------------------------------------------------------
+@include breakpoint('tablet') {
+  .grid-cols-sm-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid-cols-sm-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@include breakpoint('desktop') {
+  .grid-cols-md-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .grid-cols-md-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .grid-cols-md-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+// Grid Item Spanning
+// -----------------------------------------------------------------------------
+.col-span-2 {
+  grid-column: span 2;
+}
+
+.col-span-3 {
+  grid-column: span 3;
+}
+
+.col-span-4 {
+  grid-column: span 4;
+}
+
+.col-span-full {
+  grid-column: 1 / -1;
+}
+
+// Auto-fit Grid (responsive without media queries)
+// -----------------------------------------------------------------------------
+.grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: map.get($spacing, md);
+}
+
+.grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: map.get($spacing, md);
+}

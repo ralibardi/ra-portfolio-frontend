@@ -1,0 +1,55 @@
+// =============================================================================
+// NAVIGATION
+// Navigation menu styles
+// =============================================================================
+
+@use '../abstracts' as *;
+
+.nav {
+  &__list {
+    @include flexbox(row, flex-start, center);
+    gap: map.get($spacing, lg);
+  }
+  
+  &__item {
+    position: relative;
+  }
+  
+  &__link {
+    @include typography(md, medium, none);
+    color: var(--text-colour);
+    padding: map.get($spacing, sm) map.get($spacing, md);
+    @include border-radius(map.get($border, sm));
+    @include enhanced-transition(all, fast, smooth);
+    
+    &:hover {
+      color: var(--accent-colour);
+      background: var(--surface-colour-hover);
+    }
+    
+    &--active {
+      color: var(--accent-colour);
+      background: var(--surface-colour-active);
+    }
+  }
+  
+  // Mobile navigation
+  &--mobile {
+    @include flexbox(column, flex-start, stretch);
+    gap: map.get($spacing, xs);
+    
+    .nav__link {
+      width: 100%;
+      text-align: left;
+    }
+  }
+}
+
+// Mobile menu toggle
+.menu-toggle {
+  display: none;
+  
+  @include breakpoint('tablet') {
+    display: block;
+  }
+}
