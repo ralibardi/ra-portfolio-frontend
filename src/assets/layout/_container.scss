@@ -1,0 +1,200 @@
+// Layout - Container System
+// Global container styles with max-width breakpoints
+// Requirements: 1.3, 5.1, 5.2
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// =============================================================================
+// Base Container
+// =============================================================================
+
+.container {
+  width: map.get($percentage, 100);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: map.get($spacing, md);
+  padding-right: map.get($spacing, md);
+
+  @include breakpoint('tablet') {
+    padding-left: map.get($spacing, lg);
+    padding-right: map.get($spacing, lg);
+  }
+
+  @include breakpoint('desktop') {
+    padding-left: map.get($spacing, xl);
+    padding-right: map.get($spacing, xl);
+  }
+}
+
+// =============================================================================
+// Container Size Variants (max-width breakpoints)
+// =============================================================================
+
+.container-xs {
+  @extend .container;
+  max-width: 480px;
+}
+
+.container-sm {
+  @extend .container;
+  max-width: 640px;
+}
+
+.container-md {
+  @extend .container;
+  max-width: 768px;
+}
+
+.container-lg {
+  @extend .container;
+  max-width: 1024px;
+}
+
+.container-xl {
+  @extend .container;
+  max-width: 1280px;
+}
+
+.container-2xl {
+  @extend .container;
+  max-width: 1536px;
+}
+
+// =============================================================================
+// Full-width Container
+// =============================================================================
+
+.container-fluid {
+  width: map.get($percentage, 100);
+  padding-left: map.get($spacing, md);
+  padding-right: map.get($spacing, md);
+
+  @include breakpoint('tablet') {
+    padding-left: map.get($spacing, lg);
+    padding-right: map.get($spacing, lg);
+  }
+
+  @include breakpoint('desktop') {
+    padding-left: map.get($spacing, xl);
+    padding-right: map.get($spacing, xl);
+  }
+}
+
+// =============================================================================
+// Centered Content Container
+// =============================================================================
+
+.container-centered {
+  @extend .container;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// =============================================================================
+// Section Container (for page sections)
+// =============================================================================
+
+.section-container {
+  @extend .container;
+  padding-top: map.get($spacing, '2xl');
+  padding-bottom: map.get($spacing, '2xl');
+
+  @include breakpoint('tablet') {
+    padding-top: map.get($spacing, '3xl');
+    padding-bottom: map.get($spacing, '3xl');
+  }
+
+  @include breakpoint('desktop') {
+    padding-top: map.get($spacing, '4xl');
+    padding-bottom: map.get($spacing, '4xl');
+  }
+}
+
+// Section container variants
+.section-container-sm {
+  @extend .container;
+  padding-top: map.get($spacing, lg);
+  padding-bottom: map.get($spacing, lg);
+
+  @include breakpoint('tablet') {
+    padding-top: map.get($spacing, xl);
+    padding-bottom: map.get($spacing, xl);
+  }
+}
+
+.section-container-lg {
+  @extend .container;
+  padding-top: map.get($spacing, '3xl');
+  padding-bottom: map.get($spacing, '3xl');
+
+  @include breakpoint('tablet') {
+    padding-top: map.get($spacing, '4xl');
+    padding-bottom: map.get($spacing, '4xl');
+  }
+
+  @include breakpoint('desktop') {
+    padding-top: map.get($spacing, '5xl');
+    padding-bottom: map.get($spacing, '5xl');
+  }
+}
+
+// =============================================================================
+// Narrow Container (for text content)
+// =============================================================================
+
+.container-narrow {
+  @extend .container;
+  max-width: 720px;
+}
+
+.container-prose {
+  @extend .container;
+  max-width: 65ch; // Optimal reading width
+}
+
+// =============================================================================
+// Wide Container (for full-bleed sections)
+// =============================================================================
+
+.container-wide {
+  width: map.get($percentage, 100);
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: map.get($spacing, sm);
+  padding-right: map.get($spacing, sm);
+
+  @include breakpoint('tablet') {
+    padding-left: map.get($spacing, md);
+    padding-right: map.get($spacing, md);
+  }
+
+  @include breakpoint('desktop') {
+    padding-left: map.get($spacing, lg);
+    padding-right: map.get($spacing, lg);
+  }
+}
+
+// =============================================================================
+// Responsive Container (changes max-width at breakpoints)
+// =============================================================================
+
+.container-responsive {
+  @extend .container;
+  max-width: 100%;
+
+  @include breakpoint('tablet') {
+    max-width: 720px;
+  }
+
+  @include breakpoint('tablet-landscape') {
+    max-width: 960px;
+  }
+
+  @include breakpoint('desktop') {
+    max-width: 1140px;
+  }
+}

@@ -1,67 +1,43 @@
+// Main Entry Point - 7-1 Pattern
+// Imports all 7-1 folders in the correct cascade order
+
+// 1. Abstracts - Design tokens (no CSS output)
+// Note: Abstracts are imported via @use in CSS Modules, not here
+// This ensures they don't generate duplicate CSS
+
+// 2. Vendors - Third-party CSS
+@use 'vendors/normalize';
+
+// 3. Base - HTML element styles
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/animations' as base-animations;
+
+// 4. Layout - Layout structures
+@use 'layout/grid';
+@use 'layout/container';
+@use 'layout/header';
+@use 'layout/footer';
+@use 'layout/navigation';
+
+// 5. Components - Global component patterns
+@use 'components/buttons';
+
+// 6. Pages - Page-specific globals
+@use 'pages/home';
+
+// 7. Themes - Theme system is applied via base/reset
+// Theme mixins are available via abstracts for CSS Modules
+
+// 8. Utilities - Utility classes (highest specificity)
+@use 'utilities/spacing';
+@use 'utilities/flexbox';
+@use 'utilities/text';
+@use 'utilities/animations' as utility-animations;
+
+// Legacy support - Apple prompt styling
 @use 'sass:map';
-@use 'global' as *;
-
-:root {
-  @include font-style(map.get($font-sizes, md),
-    map.get($font-weights, regular));
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  width: map.get($percentage, 100);
-  min-height: 100dvh;
-  overflow-x: hidden;
-
-  // Default light theme
-  @include theme(light);
-
-  // System theme support
-  @media (prefers-color-scheme: dark) {
-    &:not([data-theme="light"]) {
-      @include theme(dark);
-    }
-  }
-
-  // Explicit theme overrides
-  &[data-theme="light"] {
-    @include theme(light);
-  }
-
-  &[data-theme="dark"] {
-    @include theme(dark);
-  }
-}
-
-html,
-body {
-  @include size(map.get($percentage, 100), auto);
-  margin: map.get($spacing, 0);
-  padding: map.get($spacing, 0);
-  overflow-x: hidden;
-}
-
-body {
-  @include flexbox(column, center, center);
-  min-height: 100vh;
-  @include transition(background-color map.get($transition, fast) ease, color map.get($transition, fast) ease);
-  background-color: var(--background-colour);
-  color: var(--text-colour);
-}
-
-#root {
-  width: map.get($percentage, 100);
-  min-height: 100dvh;
-  height: map.get($percentage, 100);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-main {
-  @include flexbox(column);
-  @include size(map.get($percentage, 100), map.get($percentage, 100));
-  overflow: hidden;
-  flex: 1;
-}
+@use 'abstracts' as *;
 
 .apple-prompt {
   display: none;
@@ -72,5 +48,5 @@ main {
   inset: auto map.get($spacing, xs) map.get($spacing, xs);
   background: var(--background-colour);
   padding: map.get($spacing, xs);
-  z-index: map.get($z-index, top);
+  z-index: map.get($z-index, toast);
 }

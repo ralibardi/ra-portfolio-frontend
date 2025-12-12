@@ -18,14 +18,7 @@ Object.defineProperty(navigator, 'serviceWorker', {
     addEventListener: jest.fn(),
   },
   writable: true,
-});
-
-// Mock window.location.reload
-Object.defineProperty(window, 'location', {
-  value: {
-    reload: jest.fn(),
-  },
-  writable: true,
+  configurable: true,
 });
 
 describe('PWAUpdate', () => {

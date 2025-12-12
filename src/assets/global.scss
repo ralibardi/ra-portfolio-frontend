@@ -1,6 +1,9 @@
-@forward 'animations';
-@forward 'breakpoints';
-@forward 'colours';
-@forward 'fonts';
-@forward 'mixins';
-@forward 'variables';
+// Global SCSS - Forwards all abstracts for legacy support
+// New code should use: @use '@assets/abstracts' as *;
+
+@forward 'abstracts/variables';
+@forward 'abstracts/colours';
+@forward 'abstracts/typography';
+@forward 'abstracts/mixins';
+@forward 'abstracts/functions';
+@forward 'abstracts/breakpoints';

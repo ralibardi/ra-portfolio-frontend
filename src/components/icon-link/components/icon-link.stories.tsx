@@ -1,5 +1,5 @@
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import IconLink from './icon-link';
 
 const meta: Meta<typeof IconLink> = {

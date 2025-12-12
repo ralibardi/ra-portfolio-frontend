@@ -1,0 +1,67 @@
+// Design Tokens - Breakpoints
+// Responsive breakpoint definitions and mixins
+
+@use "sass:map";
+
+// Breakpoint Definitions
+$breakpoints: (
+  'mobile-landscape': (min: 30rem, max: 47.9375rem),    // 480px–767px
+  'tablet': (min: 48rem, max: 61.9375rem),              // 768px–991px
+  'tablet-landscape': (min: 62rem, max: 74.9375rem),    // 992px–1199px
+  'laptop-only': (min: 64rem, max: 89.9375rem),         // 1024px–1439px
+  'laptop': (min: 64rem),                               // 1024px+
+  'desktop': (min: 75rem)                               // 1200px+
+);
+
+// Breakpoint Mixin
+@mixin breakpoint($size) {
+  @if map.has-key($breakpoints, $size) {
+    $breakpoint: map.get($breakpoints, $size);
+    $min: map.get($breakpoint, min);
+    $max: map.get($breakpoint, max);
+
+    @if $max {
+      @media (min-width: #{$min}) and (max-width: #{$max}) {
+        @content;
+      }
+    } @else {
+      @media (min-width: #{$min}) {
+        @content;
+      }
+    }
+  } @else {
+    @content;
+  }
+}
+
+// Mobile-first breakpoint mixin
+@mixin min-width($size) {
+  @if map.has-key($breakpoints, $size) {
+    $breakpoint: map.get($breakpoints, $size);
+    $min: map.get($breakpoint, min);
+    @media (min-width: #{$min}) {
+      @content;
+    }
+  } @else {
+    @media (min-width: #{$size}) {
+      @content;
+    }
+  }
+}
+
+// Max-width breakpoint mixin
+@mixin max-width($size) {
+  @if map.has-key($breakpoints, $size) {
+    $breakpoint: map.get($breakpoints, $size);
+    $max: map.get($breakpoint, max);
+    @if $max {
+      @media (max-width: #{$max}) {
+        @content;
+      }
+    }
+  } @else {
+    @media (max-width: #{$size}) {
+      @content;
+    }
+  }
+}

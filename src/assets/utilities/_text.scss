@@ -1,0 +1,105 @@
+// Utilities - Text
+// Text alignment, truncation, and styling utilities
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Text alignment
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+// Text transform
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+.normal-case { text-transform: none; }
+
+// Text decoration
+.underline { text-decoration: underline; }
+.line-through { text-decoration: line-through; }
+.no-underline { text-decoration: none; }
+
+// Text overflow
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-ellipsis { text-overflow: ellipsis; }
+.text-clip { text-overflow: clip; }
+
+// Whitespace
+.whitespace-normal { white-space: normal; }
+.whitespace-nowrap { white-space: nowrap; }
+.whitespace-pre { white-space: pre; }
+.whitespace-pre-line { white-space: pre-line; }
+.whitespace-pre-wrap { white-space: pre-wrap; }
+
+// Word break
+.break-normal { word-break: normal; overflow-wrap: normal; }
+.break-words { overflow-wrap: break-word; }
+.break-all { word-break: break-all; }
+
+// Font sizes
+.text-xs { font-size: map.get($font-sizes, xs); }
+.text-sm { font-size: map.get($font-sizes, sm); }
+.text-md { font-size: map.get($font-sizes, md); }
+.text-lg { font-size: map.get($font-sizes, lg); }
+.text-xl { font-size: map.get($font-sizes, xl); }
+.text-2xl { font-size: map.get($font-sizes, '2xl'); }
+.text-3xl { font-size: map.get($font-sizes, '3xl'); }
+.text-4xl { font-size: map.get($font-sizes, '4xl'); }
+.text-5xl { font-size: map.get($font-sizes, '5xl'); }
+
+// Font weights
+.font-thin { font-weight: map.get($font-weights, thin); }
+.font-light { font-weight: map.get($font-weights, light); }
+.font-normal { font-weight: map.get($font-weights, regular); }
+.font-medium { font-weight: map.get($font-weights, medium); }
+.font-semibold { font-weight: map.get($font-weights, semi-bold); }
+.font-bold { font-weight: map.get($font-weights, bold); }
+.font-extrabold { font-weight: map.get($font-weights, extra-bold); }
+.font-black { font-weight: map.get($font-weights, black); }
+
+// Line heights
+.leading-none { line-height: map.get($font-heights, none); }
+.leading-tight { line-height: map.get($font-heights, tight); }
+.leading-snug { line-height: map.get($font-heights, snug); }
+.leading-normal { line-height: map.get($font-heights, normal); }
+.leading-relaxed { line-height: map.get($font-heights, relaxed); }
+.leading-loose { line-height: map.get($font-heights, loose); }
+
+// Text colors
+.text-primary { color: var(--text-colour); }
+.text-muted { color: var(--text-colour-muted); }
+.text-inverse { color: var(--text-colour-inverse); }
+.text-accent { color: var(--accent-colour); }
+.text-success { color: var(--success-colour); }
+.text-warning { color: var(--warning-colour); }
+.text-error { color: var(--error-colour); }
+.text-info { color: var(--info-colour); }
+
+// Line clamp (multi-line truncation)
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

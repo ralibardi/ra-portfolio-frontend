@@ -1,0 +1,111 @@
+// Utilities - Animations
+// Animation utility classes
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Animation utilities
+.animate-fade-in {
+  animation: fadeIn map.get($transition, normal) map.get($easing, smooth);
+}
+
+.animate-fade-out {
+  animation: fadeOut map.get($transition, normal) map.get($easing, smooth);
+}
+
+.animate-slide-in-up {
+  animation: slideUp map.get($transition, normal) map.get($easing, smooth);
+}
+
+.animate-slide-in-down {
+  animation: slideDown map.get($transition, normal) map.get($easing, smooth);
+}
+
+.animate-slide-in-left {
+  animation: slideLeft map.get($transition, normal) map.get($easing, smooth);
+}
+
+.animate-slide-in-right {
+  animation: slideRight map.get($transition, normal) map.get($easing, smooth);
+}
+
+.animate-scale-in {
+  animation: scaleIn map.get($transition, normal) map.get($easing, smooth);
+}
+
+.animate-scale-out {
+  animation: scaleOut map.get($transition, normal) map.get($easing, smooth);
+}
+
+.animate-pulse {
+  animation: pulse map.get($transition, slow) map.get($easing, ease-in-out) infinite;
+}
+
+.animate-spin {
+  animation: spin map.get($transition, slower) linear infinite;
+}
+
+.animate-bounce {
+  animation: bounce map.get($transition, slow) map.get($easing, ease-in-out) infinite;
+}
+
+// Animation delays
+.delay-75 { animation-delay: 75ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-1000 { animation-delay: 1000ms; }
+
+// Animation durations
+.duration-75 { animation-duration: 75ms; }
+.duration-100 { animation-duration: 100ms; }
+.duration-150 { animation-duration: 150ms; }
+.duration-200 { animation-duration: 200ms; }
+.duration-300 { animation-duration: 300ms; }
+.duration-500 { animation-duration: 500ms; }
+.duration-700 { animation-duration: 700ms; }
+.duration-1000 { animation-duration: 1000ms; }
+
+// Animation fill modes
+.fill-none { animation-fill-mode: none; }
+.fill-forwards { animation-fill-mode: forwards; }
+.fill-backwards { animation-fill-mode: backwards; }
+.fill-both { animation-fill-mode: both; }
+
+// Animation iteration
+.animate-once { animation-iteration-count: 1; }
+.animate-infinite { animation-iteration-count: infinite; }
+
+// Transition utilities
+.transition-none { transition: none; }
+.transition-all { transition: all map.get($transition, normal) map.get($easing, smooth); }
+.transition-colors { transition: color, background-color, border-color map.get($transition, fast) map.get($easing, smooth); }
+.transition-opacity { transition: opacity map.get($transition, normal) map.get($easing, smooth); }
+.transition-transform { transition: transform map.get($transition, normal) map.get($easing, smooth); }
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-fade-out,
+  .animate-slide-in-up,
+  .animate-slide-in-down,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-scale-in,
+  .animate-scale-out,
+  .animate-pulse,
+  .animate-spin,
+  .animate-bounce {
+    animation: none;
+  }
+
+  .transition-all,
+  .transition-colors,
+  .transition-opacity,
+  .transition-transform {
+    transition: none;
+  }
+}

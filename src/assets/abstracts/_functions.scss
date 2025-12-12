@@ -1,0 +1,91 @@
+// Design Tokens - Functions
+// SCSS functions for calculations and utilities
+
+@use "sass:map";
+@use "sass:math";
+@use "sass:color";
+@use "sass:list";
+@use "sass:string";
+
+// Get spacing value from map
+@function spacing($key) {
+  @if map.has-key($spacing, $key) {
+    @return map.get($spacing, $key);
+  }
+  @warn "Unknown spacing key: #{$key}";
+  @return null;
+}
+
+// Get border value from map
+@function border($key) {
+  @if map.has-key($border, $key) {
+    @return map.get($border, $key);
+  }
+  @warn "Unknown border key: #{$key}";
+  @return null;
+}
+
+// Get font-size value from map
+@function font-size($key) {
+  @if map.has-key($font-sizes, $key) {
+    @return map.get($font-sizes, $key);
+  }
+  @warn "Unknown font-size key: #{$key}";
+  @return null;
+}
+
+// Get font-weight value from map
+@function font-weight($key) {
+  @if map.has-key($font-weights, $key) {
+    @return map.get($font-weights, $key);
+  }
+  @warn "Unknown font-weight key: #{$key}";
+  @return null;
+}
+
+// Get z-index value from map
+@function z($key) {
+  @if map.has-key($z-index, $key) {
+    @return map.get($z-index, $key);
+  }
+  @warn "Unknown z-index key: #{$key}";
+  @return null;
+}
+
+// Get transition duration from map
+@function duration($key) {
+  @if map.has-key($transition, $key) {
+    @return map.get($transition, $key);
+  }
+  @warn "Unknown transition key: #{$key}";
+  @return null;
+}
+
+// Get easing curve from map
+@function ease($key) {
+  @if map.has-key($easing, $key) {
+    @return map.get($easing, $key);
+  }
+  @warn "Unknown easing key: #{$key}";
+  @return null;
+}
+
+// Convert px to rem
+@function px-to-rem($px, $base: 16) {
+  @return math.div($px, $base) * 1rem;
+}
+
+// Convert rem to px
+@function rem-to-px($rem, $base: 16) {
+  @return math.div($rem, 1rem) * $base * 1px;
+}
+
+// Clamp value between min and max
+@function clamp-value($value, $min, $max) {
+  @return max($min, min($value, $max));
+}
+
+// Strip unit from value
+@function strip-unit($value) {
+  @return math.div($value, ($value * 0 + 1));
+}

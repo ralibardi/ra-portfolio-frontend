@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import ToggleSwitcher from './toggle-switcher';
 
 const meta: Meta<typeof ToggleSwitcher> = {

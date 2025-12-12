@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import CompanyInfo from './company-info';
 
 const meta: Meta<typeof CompanyInfo> = {

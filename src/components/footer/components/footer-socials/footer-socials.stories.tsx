@@ -1,5 +1,5 @@
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ISocialLink } from '../../utils/getSocialLinks';
 import FooterSocials from './footer-socials';
 

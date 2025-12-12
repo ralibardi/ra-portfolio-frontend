@@ -1,0 +1,42 @@
+// Pages - Home
+// Home page specific global styles
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Home page hero section
+.home-hero {
+  @include flexbox(column, center, center);
+  min-height: 80vh;
+  padding: map.get($spacing, '3xl') map.get($spacing, md);
+  text-align: center;
+
+  @include breakpoint('tablet') {
+    min-height: 90vh;
+    padding: map.get($spacing, '4xl') map.get($spacing, lg);
+  }
+}
+
+// Home page sections
+.home-section {
+  padding: map.get($spacing, '3xl') 0;
+
+  @include breakpoint('tablet') {
+    padding: map.get($spacing, '4xl') 0;
+  }
+}
+
+// Home page featured projects grid
+.home-projects-grid {
+  display: grid;
+  gap: map.get($spacing, lg);
+  grid-template-columns: 1fr;
+
+  @include breakpoint('tablet') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint('desktop') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

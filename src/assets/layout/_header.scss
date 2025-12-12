@@ -1,0 +1,66 @@
+// Layout - Header
+// Global header layout styles
+// Requirements: 1.3, 5.1, 5.2
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Site header layout
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: map.get($z-index, sticky);
+  width: map.get($percentage, 100);
+  background-color: var(--background-colour-overlay);
+  backdrop-filter: blur(8px);
+  border-bottom: map.get($border, xs) solid var(--border-colour);
+  @include transition(
+    background-color map.get($transition, fast) ease,
+    border-color map.get($transition, fast) ease
+  );
+}
+
+// Header container
+.header-container {
+  @include flexbox(row, space-between, center);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: map.get($spacing, sm) map.get($spacing, md);
+
+  @include breakpoint('tablet') {
+    padding: map.get($spacing, md) map.get($spacing, lg);
+  }
+
+  @include breakpoint('desktop') {
+    padding: map.get($spacing, md) map.get($spacing, xl);
+  }
+}
+
+// Header logo area
+.header-logo {
+  @include flexbox(row, flex-start, center);
+  gap: map.get($spacing, sm);
+}
+
+// Header navigation area
+.header-nav {
+  @include flexbox(row, flex-end, center);
+  gap: map.get($spacing, md);
+}
+
+// Header actions area
+.header-actions {
+  @include flexbox(row, flex-end, center);
+  gap: map.get($spacing, sm);
+}
+
+// Transparent header variant
+.site-header--transparent {
+  background-color: transparent;
+  border-bottom-color: transparent;
+  
+  &.is-scrolled {
+    background-color: var(--background-colour-overlay);
+    border-bottom-color: var(--border-colour);
+  }
+}

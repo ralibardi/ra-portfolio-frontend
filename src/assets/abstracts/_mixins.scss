@@ -1,0 +1,368 @@
+// Design Tokens - Mixins
+// Reusable SCSS mixins for consistent styling
+
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use 'colours' as *;
+@use 'variables' as *;
+@use 'typography' as *;
+@use 'breakpoints' as *;
+
+// Theme configuration with semantic color mapping
+$theme-colors: (
+  light: (
+    // Primary colors
+    --accent-colour: map.get($primary, base),
+    --accent-colour-hover: map.get($primary, light),
+    --accent-colour-active: map.get($primary, dark),
+
+    // Secondary colors
+    --secondary-colour: map.get($secondary, medium),
+    --secondary-colour-hover: map.get($secondary, base),
+    --secondary-colour-active: map.get($secondary, accent),
+
+    // Semantic colors
+    --success-colour: map.get($success, base),
+    --success-colour-light: map.get($success, light),
+    --success-colour-dark: map.get($success, dark),
+    --warning-colour: map.get($warning, base),
+    --warning-colour-light: map.get($warning, light),
+    --warning-colour-dark: map.get($warning, dark),
+    --error-colour: map.get($error, base),
+    --error-colour-light: map.get($error, light),
+    --error-colour-dark: map.get($error, dark),
+    --info-colour: map.get($info, base),
+    --info-colour-light: map.get($info, light),
+    --info-colour-dark: map.get($info, dark),
+
+    // Text colors
+    --text-colour: map.get($neutral, black),
+    --text-colour-muted: map.get($grey, 500),
+    --text-colour-inverse: map.get($neutral, white),
+
+    // Background colors
+    --background-colour: map.get($neutral, white),
+    --background-colour-alt: map.get($grey, 100),
+    --background-colour-elevated: map.get($neutral, white),
+    --background-colour-overlay: map.get($neutral, white-alpha-95),
+
+    // Surface colors
+    --surface-colour: map.get($neutral, white),
+    --surface-colour-hover: map.get($grey, 100),
+    --surface-colour-active: map.get($grey, 200),
+
+    // Border and divider colors
+    --border-colour: map.get($grey, 200),
+    --border-colour-strong: map.get($grey, 300),
+    --divider-colour: map.get($grey, 200),
+
+    // Utility colors
+    --foreground-colour: map.get($grey, 300),
+    --shadow-colour: map.get($neutral, black-alpha-08),
+    --shadow-colour-strong: map.get($neutral, black-alpha-15),
+    --focus-colour: map.get($primary, base),
+
+    // Legacy support (deprecated)
+    --light-grey: map.get($grey, 100),
+    --grey: map.get($grey, 200),
+    --dark-grey: map.get($grey, 300),
+  ),
+  dark: (
+    // Primary colors
+    --accent-colour: map.get($primary, light),
+    --accent-colour-hover: map.get($primary, base),
+    --accent-colour-active: map.get($primary, dark),
+
+    // Secondary colors
+    --secondary-colour: map.get($secondary, medium),
+    --secondary-colour-hover: map.get($secondary, base),
+    --secondary-colour-active: map.get($secondary, accent),
+
+    // Semantic colors
+    --success-colour: map.get($success, light),
+    --success-colour-light: map.get($success, base),
+    --success-colour-dark: map.get($success, dark),
+    --warning-colour: map.get($warning, light),
+    --warning-colour-light: map.get($warning, base),
+    --warning-colour-dark: map.get($warning, dark),
+    --error-colour: map.get($error, light),
+    --error-colour-light: map.get($error, base),
+    --error-colour-dark: map.get($error, dark),
+    --info-colour: map.get($info, light),
+    --info-colour-light: map.get($info, base),
+    --info-colour-dark: map.get($info, dark),
+
+    // Text colors
+    --text-colour: map.get($neutral, white),
+    --text-colour-muted: map.get($grey, 300),
+    --text-colour-inverse: map.get($neutral, black),
+
+    // Background colors
+    --background-colour: map.get($grey, 600),
+    --background-colour-alt: map.get($grey, 500),
+    --background-colour-elevated: map.get($grey, 500),
+    --background-colour-overlay: map.get($neutral, black-alpha-95),
+
+    // Surface colors
+    --surface-colour: map.get($grey, 500),
+    --surface-colour-hover: map.get($grey, 400),
+    --surface-colour-active: map.get($grey, 300),
+
+    // Border and divider colors
+    --border-colour: map.get($grey, 400),
+    --border-colour-strong: map.get($grey, 300),
+    --divider-colour: map.get($grey, 400),
+
+    // Utility colors
+    --foreground-colour: map.get($grey, 400),
+    --shadow-colour: map.get($neutral, black-alpha-25),
+    --shadow-colour-strong: map.get($neutral, black-alpha-40),
+    --focus-colour: map.get($primary, light),
+
+    // Legacy support (deprecated)
+    --light-grey: map.get($grey, 400),
+    --grey: map.get($grey, 500),
+    --dark-grey: map.get($grey, 600),
+  )
+);
+
+// Theme mixin
+@mixin theme($mode: light) {
+  $theme: map.get($theme-colors, $mode);
+
+  @if $theme {
+    @each $name, $value in $theme {
+      #{$name}: #{$value};
+    }
+  } @else {
+    @warn "Unsupported theme mode: #{$mode}";
+  }
+}
+
+// Font style mixin
+@mixin font-style($size: map.get($font-sizes, md), $weight: map.get($font-weights, medium), $color: var(--text-colour)) {
+  font: $weight $size $font-family;
+  color: $color;
+}
+
+// Size mixin
+@mixin size($width: auto, $height: auto) {
+  width: $width;
+  height: $height;
+}
+
+// Flexbox mixin
+@mixin flexbox($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-flow: $direction $wrap;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// Box shadow mixin
+@mixin box-shadow($x: map.get($spacing, 0), $y: map.get($spacing, '3xs'), $blur: map.get($spacing, '2xs'), $spread: map.get($spacing, '2xs'), $color: map.get($neutral, black), $inset: false) {
+  $shadow: $x $y $blur;
+
+  @if $spread != null {
+    $shadow: $shadow $spread;
+  }
+
+  box-shadow: if($inset, inset, null) $shadow $color;
+}
+
+// Transition mixin
+@mixin transition($properties...) {
+  $transitions: ();
+
+  @each $prop in $properties {
+    @if meta.type-of($prop) == 'list' {
+      $transitions: list.append($transitions, list.join($prop, ' '), comma);
+    } @else {
+      $transitions: list.append($transitions, $prop, comma);
+    }
+  }
+
+  transition: $transitions;
+}
+
+// Border radius mixin
+@mixin border-radius($radius: map.get($border, md)) {
+  border-radius: $radius;
+}
+
+// Transform mixin
+@mixin transform($scale: 1, $rotate: 0deg, $translate: null) {
+  $transforms: ();
+
+  @if $scale != 1 {
+    $transforms: list.append($transforms, scale($scale));
+  }
+
+  @if $rotate != 0deg {
+    $transforms: list.append($transforms, rotate($rotate));
+  }
+
+  @if $translate {
+    $transforms: list.append($transforms, translate($translate));
+  }
+
+  transform: if(list.length($transforms) > 0, list.join($transforms, ' '), none);
+}
+
+// Theme-aware surface mixin
+@mixin theme-aware-surface {
+  background-color: var(--surface-colour);
+  color: var(--text-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+
+  &:hover {
+    background-color: var(--surface-colour-hover);
+  }
+
+  &:active {
+    background-color: var(--surface-colour-active);
+  }
+}
+
+// Theme-aware focus mixin
+@mixin theme-aware-focus {
+  outline: map.get($border, xs) solid var(--focus-colour);
+  outline-offset: map.get($spacing, '3xs');
+}
+
+// Theme-aware elevation mixin
+@mixin theme-aware-elevation($level: 1) {
+  @if $level == 1 {
+    @include box-shadow(
+      map.get($spacing, 0),
+      map.get($spacing, '3xs'),
+      map.get($spacing, xs),
+      map.get($spacing, 0),
+      var(--shadow-colour)
+    );
+  } @else if $level == 2 {
+    @include box-shadow(
+      map.get($spacing, 0),
+      map.get($spacing, xs),
+      map.get($spacing, md),
+      map.get($spacing, 0),
+      var(--shadow-colour-strong)
+    );
+  }
+}
+
+// Absolute center mixin
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Text truncate mixin
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Responsive mixin (legacy support)
+@mixin responsive($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media screen and (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+// Theme preference mixins
+@mixin light-theme-only {
+  :root[data-theme="light"] & {
+    @content;
+  }
+}
+
+@mixin dark-theme-only {
+  :root[data-theme="dark"] & {
+    @content;
+  }
+}
+
+@mixin prefers-reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Enhanced typography mixin
+@mixin typography($size: md, $weight: regular, $height: normal, $color: var(--text-colour)) {
+  font-family: $font-family;
+  font-size: map.get($font-sizes, $size);
+  font-weight: map.get($font-weights, $weight);
+  line-height: map.get($font-heights, $height);
+  color: $color;
+}
+
+// Responsive typography mixin
+@mixin responsive-typography($mobile-size: md, $desktop-size: lg) {
+  @include typography($mobile-size);
+
+  @include breakpoint('desktop') {
+    font-size: map.get($font-sizes, $desktop-size);
+  }
+}
+
+// Enhanced transition with easing
+@mixin enhanced-transition($property, $duration: normal, $easing: smooth, $delay: 0s) {
+  transition: $property map.get($transition, $duration) map.get($easing, $easing) $delay;
+}
+
+// Semantic color utilities
+@mixin semantic-color($type: 'info', $variant: 'base') {
+  @if $type == 'success' {
+    color: map.get($success, $variant);
+  } @else if $type == 'warning' {
+    color: map.get($warning, $variant);
+  } @else if $type == 'error' {
+    color: map.get($error, $variant);
+  } @else if $type == 'info' {
+    color: map.get($info, $variant);
+  }
+}
+
+@mixin semantic-background($type: 'info', $variant: 'base') {
+  @if $type == 'success' {
+    background-color: map.get($success, $variant);
+  } @else if $type == 'warning' {
+    background-color: map.get($warning, $variant);
+  } @else if $type == 'error' {
+    background-color: map.get($error, $variant);
+  } @else if $type == 'info' {
+    background-color: map.get($info, $variant);
+  }
+}
+
+// CSS Logical Properties Helpers
+@mixin logical-padding($block-start: 0, $inline-end: 0, $block-end: 0, $inline-start: 0) {
+  padding-block-start: $block-start;
+  padding-inline-end: $inline-end;
+  padding-block-end: $block-end;
+  padding-inline-start: $inline-start;
+}
+
+@mixin logical-margin($block-start: 0, $inline-end: 0, $block-end: 0, $inline-start: 0) {
+  margin-block-start: $block-start;
+  margin-inline-end: $inline-end;
+  margin-block-end: $block-end;
+  margin-inline-start: $inline-start;
+}
+
+// Container Query Support (fallback to media query)
+@mixin container-query($size) {
+  @media (min-width: #{$size}) {
+    @content;
+  }
+}

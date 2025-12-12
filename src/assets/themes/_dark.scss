@@ -1,0 +1,59 @@
+// Themes - Dark
+// Dark theme CSS custom properties
+
+@use 'sass:map';
+@use '../abstracts/colours' as *;
+
+// Dark theme mixin
+@mixin dark-theme {
+  // Primary colors
+  --accent-colour: #{map.get($primary, light)};
+  --accent-colour-hover: #{map.get($primary, base)};
+  --accent-colour-active: #{map.get($primary, dark)};
+
+  // Secondary colors
+  --secondary-colour: #{map.get($secondary, medium)};
+  --secondary-colour-hover: #{map.get($secondary, base)};
+  --secondary-colour-active: #{map.get($secondary, accent)};
+
+  // Semantic colors
+  --success-colour: #{map.get($success, light)};
+  --success-colour-light: #{map.get($success, base)};
+  --success-colour-dark: #{map.get($success, dark)};
+  --warning-colour: #{map.get($warning, light)};
+  --warning-colour-light: #{map.get($warning, base)};
+  --warning-colour-dark: #{map.get($warning, dark)};
+  --error-colour: #{map.get($error, light)};
+  --error-colour-light: #{map.get($error, base)};
+  --error-colour-dark: #{map.get($error, dark)};
+  --info-colour: #{map.get($info, light)};
+  --info-colour-light: #{map.get($info, base)};
+  --info-colour-dark: #{map.get($info, dark)};
+
+  // Text colors
+  --text-colour: #{map.get($neutral, white)};
+  --text-colour-muted: #{map.get($grey, 300)};
+  --text-colour-inverse: #{map.get($neutral, black)};
+
+  // Background colors
+  --background-colour: #{map.get($grey, 600)};
+  --background-colour-alt: #{map.get($grey, 500)};
+  --background-colour-elevated: #{map.get($grey, 500)};
+  --background-colour-overlay: #{map.get($neutral, black-alpha-95)};
+
+  // Surface colors
+  --surface-colour: #{map.get($grey, 500)};
+  --surface-colour-hover: #{map.get($grey, 400)};
+  --surface-colour-active: #{map.get($grey, 300)};
+
+  // Border and divider colors
+  --border-colour: #{map.get($grey, 400)};
+  --border-colour-strong: #{map.get($grey, 300)};
+  --divider-colour: #{map.get($grey, 400)};
+
+  // Utility colors
+  --foreground-colour: #{map.get($grey, 400)};
+  --shadow-colour: #{map.get($neutral, black-alpha-25)};
+  --shadow-colour-strong: #{map.get($neutral, black-alpha-40)};
+  --focus-colour: #{map.get($primary, light)};
+}

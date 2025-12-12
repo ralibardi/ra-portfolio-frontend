@@ -1,0 +1,113 @@
+// Base - Typography
+// Base typography styles for HTML elements
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family;
+  font-weight: map.get($font-weights, bold);
+  line-height: map.get($font-heights, tight);
+  color: var(--text-colour);
+}
+
+h1 {
+  font-size: map.get($font-sizes, '5xl');
+  
+  @include breakpoint('tablet') {
+    font-size: map.get($font-sizes, '4xl');
+  }
+}
+
+h2 {
+  font-size: map.get($font-sizes, '4xl');
+  
+  @include breakpoint('tablet') {
+    font-size: map.get($font-sizes, '3xl');
+  }
+}
+
+h3 {
+  font-size: map.get($font-sizes, '3xl');
+  
+  @include breakpoint('tablet') {
+    font-size: map.get($font-sizes, '2xl');
+  }
+}
+
+h4 {
+  font-size: map.get($font-sizes, '2xl');
+}
+
+h5 {
+  font-size: map.get($font-sizes, xl);
+}
+
+h6 {
+  font-size: map.get($font-sizes, lg);
+}
+
+// Body text
+p {
+  font-size: map.get($font-sizes, md);
+  line-height: map.get($font-heights, normal);
+  color: var(--text-colour);
+}
+
+// Links
+a {
+  color: var(--accent-colour);
+  text-decoration: none;
+  @include transition(color map.get($transition, fast) ease);
+
+  &:hover {
+    color: var(--accent-colour-hover);
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+}
+
+// Small text
+small {
+  font-size: map.get($font-sizes, sm);
+  color: var(--text-colour-muted);
+}
+
+// Strong/Bold
+strong, b {
+  font-weight: map.get($font-weights, bold);
+}
+
+// Emphasis/Italic
+em, i {
+  font-style: italic;
+}
+
+// Code
+code, pre {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: map.get($font-sizes, sm);
+  background-color: var(--background-colour-alt);
+  @include border-radius(map.get($border, xs));
+}
+
+code {
+  padding: map.get($spacing, '3xs') map.get($spacing, '2xs');
+}
+
+pre {
+  padding: map.get($spacing, md);
+  overflow-x: auto;
+}
+
+// Blockquote
+blockquote {
+  border-left: map.get($border, md) solid var(--accent-colour);
+  padding-left: map.get($spacing, md);
+  margin: map.get($spacing, md) 0;
+  font-style: italic;
+  color: var(--text-colour-muted);
+}

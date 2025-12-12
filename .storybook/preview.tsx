@@ -1,5 +1,5 @@
 import React from 'react';
-import { Decorator, Preview } from '@storybook/react';
+import { Decorator, Preview } from '@storybook/react-vite';
 import { MemoryRouter } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../src/app/i18n/config';
@@ -23,7 +23,9 @@ const preview: Preview = {
       },
     },
   },
+
   decorators: [withProviders],
+  tags: ['autodocs']
 };
 
 export default preview;

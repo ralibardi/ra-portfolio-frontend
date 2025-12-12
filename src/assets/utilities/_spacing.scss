@@ -1,0 +1,97 @@
+// Utilities - Spacing
+// Margin, padding, and gap utility classes
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Padding utilities
+.p-0 { padding: map.get($spacing, 0); }
+.p-3xs { padding: map.get($spacing, '3xs'); }
+.p-2xs { padding: map.get($spacing, '2xs'); }
+.p-xs { padding: map.get($spacing, xs); }
+.p-sm { padding: map.get($spacing, sm); }
+.p-md { padding: map.get($spacing, md); }
+.p-lg { padding: map.get($spacing, lg); }
+.p-xl { padding: map.get($spacing, xl); }
+.p-2xl { padding: map.get($spacing, '2xl'); }
+.p-3xl { padding: map.get($spacing, '3xl'); }
+.p-4xl { padding: map.get($spacing, '4xl'); }
+
+// Padding X (horizontal)
+.px-0 { padding-left: map.get($spacing, 0); padding-right: map.get($spacing, 0); }
+.px-xs { padding-left: map.get($spacing, xs); padding-right: map.get($spacing, xs); }
+.px-sm { padding-left: map.get($spacing, sm); padding-right: map.get($spacing, sm); }
+.px-md { padding-left: map.get($spacing, md); padding-right: map.get($spacing, md); }
+.px-lg { padding-left: map.get($spacing, lg); padding-right: map.get($spacing, lg); }
+.px-xl { padding-left: map.get($spacing, xl); padding-right: map.get($spacing, xl); }
+.px-2xl { padding-left: map.get($spacing, '2xl'); padding-right: map.get($spacing, '2xl'); }
+
+// Padding Y (vertical)
+.py-0 { padding-top: map.get($spacing, 0); padding-bottom: map.get($spacing, 0); }
+.py-xs { padding-top: map.get($spacing, xs); padding-bottom: map.get($spacing, xs); }
+.py-sm { padding-top: map.get($spacing, sm); padding-bottom: map.get($spacing, sm); }
+.py-md { padding-top: map.get($spacing, md); padding-bottom: map.get($spacing, md); }
+.py-lg { padding-top: map.get($spacing, lg); padding-bottom: map.get($spacing, lg); }
+.py-xl { padding-top: map.get($spacing, xl); padding-bottom: map.get($spacing, xl); }
+.py-2xl { padding-top: map.get($spacing, '2xl'); padding-bottom: map.get($spacing, '2xl'); }
+
+// Margin utilities
+.m-0 { margin: map.get($spacing, 0); }
+.m-auto { margin: auto; }
+.m-3xs { margin: map.get($spacing, '3xs'); }
+.m-2xs { margin: map.get($spacing, '2xs'); }
+.m-xs { margin: map.get($spacing, xs); }
+.m-sm { margin: map.get($spacing, sm); }
+.m-md { margin: map.get($spacing, md); }
+.m-lg { margin: map.get($spacing, lg); }
+.m-xl { margin: map.get($spacing, xl); }
+.m-2xl { margin: map.get($spacing, '2xl'); }
+
+// Margin X (horizontal)
+.mx-0 { margin-left: map.get($spacing, 0); margin-right: map.get($spacing, 0); }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mx-xs { margin-left: map.get($spacing, xs); margin-right: map.get($spacing, xs); }
+.mx-sm { margin-left: map.get($spacing, sm); margin-right: map.get($spacing, sm); }
+.mx-md { margin-left: map.get($spacing, md); margin-right: map.get($spacing, md); }
+.mx-lg { margin-left: map.get($spacing, lg); margin-right: map.get($spacing, lg); }
+.mx-xl { margin-left: map.get($spacing, xl); margin-right: map.get($spacing, xl); }
+
+// Margin Y (vertical)
+.my-0 { margin-top: map.get($spacing, 0); margin-bottom: map.get($spacing, 0); }
+.my-auto { margin-top: auto; margin-bottom: auto; }
+.my-xs { margin-top: map.get($spacing, xs); margin-bottom: map.get($spacing, xs); }
+.my-sm { margin-top: map.get($spacing, sm); margin-bottom: map.get($spacing, sm); }
+.my-md { margin-top: map.get($spacing, md); margin-bottom: map.get($spacing, md); }
+.my-lg { margin-top: map.get($spacing, lg); margin-bottom: map.get($spacing, lg); }
+.my-xl { margin-top: map.get($spacing, xl); margin-bottom: map.get($spacing, xl); }
+
+// Margin top
+.mt-0 { margin-top: map.get($spacing, 0); }
+.mt-xs { margin-top: map.get($spacing, xs); }
+.mt-sm { margin-top: map.get($spacing, sm); }
+.mt-md { margin-top: map.get($spacing, md); }
+.mt-lg { margin-top: map.get($spacing, lg); }
+.mt-xl { margin-top: map.get($spacing, xl); }
+.mt-2xl { margin-top: map.get($spacing, '2xl'); }
+.mt-auto { margin-top: auto; }
+
+// Margin bottom
+.mb-0 { margin-bottom: map.get($spacing, 0); }
+.mb-xs { margin-bottom: map.get($spacing, xs); }
+.mb-sm { margin-bottom: map.get($spacing, sm); }
+.mb-md { margin-bottom: map.get($spacing, md); }
+.mb-lg { margin-bottom: map.get($spacing, lg); }
+.mb-xl { margin-bottom: map.get($spacing, xl); }
+.mb-2xl { margin-bottom: map.get($spacing, '2xl'); }
+.mb-auto { margin-bottom: auto; }
+
+// Gap utilities
+.gap-0 { gap: map.get($spacing, 0); }
+.gap-3xs { gap: map.get($spacing, '3xs'); }
+.gap-2xs { gap: map.get($spacing, '2xs'); }
+.gap-xs { gap: map.get($spacing, xs); }
+.gap-sm { gap: map.get($spacing, sm); }
+.gap-md { gap: map.get($spacing, md); }
+.gap-lg { gap: map.get($spacing, lg); }
+.gap-xl { gap: map.get($spacing, xl); }
+.gap-2xl { gap: map.get($spacing, '2xl'); }

@@ -1,9 +1,52 @@
 import { render, screen } from '@testing-library/react';
 import { act } from 'react';
+
+// Mock react-error-boundary before importing the component
+jest.mock('react-error-boundary', () => {
+  const React = require('react');
+
+  interface MockErrorBoundaryProps {
+    children: React.ReactNode;
+    // biome-ignore lint/style/useNamingConvention: Must match react-error-boundary API
+    FallbackComponent: React.ComponentType<{ error: Error }>;
+  }
+
+  interface MockErrorBoundaryState {
+    hasError: boolean;
+    error: Error | null;
+  }
+
+  class MockErrorBoundary extends React.Component<MockErrorBoundaryProps, MockErrorBoundaryState> {
+    constructor(props: MockErrorBoundaryProps) {
+      super(props);
+      this.state = { hasError: false, error: null };
+    }
+
+    static getDerivedStateFromError(error: Error) {
+      return { hasError: true, error };
+    }
+
+    render() {
+      if (this.state.hasError && this.state.error) {
+        const { FallbackComponent } = this.props;
+        return <FallbackComponent error={this.state.error} />;
+      }
+      return this.props.children;
+    }
+  }
+
+  return {
+    // biome-ignore lint/style/useNamingConvention: Required for Jest ES module mock
+    __esModule: true,
+    ErrorBoundary: MockErrorBoundary,
+  };
+});
+
 import ErrorBoundary from './error-boundary';
 
 describe('ErrorBoundary', () => {
   let consoleErrorSpy: jest.SpyInstance;
+
   beforeAll(() => {
     consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
       // Suppress console errors in tests
@@ -55,10 +98,6 @@ describe('ErrorBoundary', () => {
       throw new Error(errorMessage);
     };
 
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
-      // Suppress console.error during test
-    });
-
     render(
       <ErrorBoundary>
         <ErrorThrowingComponent />
@@ -71,7 +110,6 @@ describe('ErrorBoundary', () => {
     });
 
     expect(errorComponent).toBeInTheDocument();
-    consoleErrorSpy.mockRestore();
   });
 
   it('should renders back button when there is an error', async () => {
@@ -79,10 +117,6 @@ describe('ErrorBoundary', () => {
     const ErrorThrowingComponent = () => {
       throw new Error(errorMessage);
     };
-
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
-      // Suppress console.error during test
-    });
 
     render(
       <ErrorBoundary>
@@ -96,7 +130,6 @@ describe('ErrorBoundary', () => {
     });
 
     expect(button).toBeInTheDocument();
-    consoleErrorSpy.mockRestore();
   });
 
   it('should render error message when there is an error', async () => {
@@ -104,10 +137,6 @@ describe('ErrorBoundary', () => {
     const ErrorThrowingComponent = () => {
       throw new Error(errorMessage);
     };
-
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
-      // Suppress console.error during test
-    });
 
     render(
       <ErrorBoundary>
@@ -122,7 +151,6 @@ describe('ErrorBoundary', () => {
 
     expect(label).toBeInTheDocument();
     expect(label).toHaveTextContent('Oops... Something went wrong');
-    consoleErrorSpy.mockRestore();
   });
 
   it('should render error details when there is an error', async () => {
@@ -130,10 +158,6 @@ describe('ErrorBoundary', () => {
     const ErrorThrowingComponent = () => {
       throw new Error(errorMessage);
     };
-
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
-      // Suppress console.error during test
-    });
 
     render(
       <ErrorBoundary>
@@ -151,6 +175,5 @@ describe('ErrorBoundary', () => {
     expect(details).toBeInTheDocument();
     expect(message).toBeInTheDocument();
     expect(message).toHaveTextContent(errorMessage);
-    consoleErrorSpy.mockRestore();
   });
 });

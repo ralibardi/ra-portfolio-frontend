@@ -1,0 +1,10 @@
+// Abstracts Index - Design Token Hub
+// Forward all abstracts for easy importing in CSS Modules
+// Usage: @use '@assets/abstracts' as *;
+
+@forward 'variables';
+@forward 'colours';
+@forward 'typography';
+@forward 'mixins';
+@forward 'functions';
+@forward 'breakpoints';

@@ -1,0 +1,187 @@
+// Layout - Grid System
+// Global grid system with responsive variants
+// Requirements: 1.3, 5.1, 5.2
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// =============================================================================
+// Grid Container
+// =============================================================================
+
+.grid {
+  display: grid;
+  gap: map.get($spacing, md);
+}
+
+// =============================================================================
+// Grid Columns - Base
+// =============================================================================
+
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+
+// =============================================================================
+// Auto-fit and Auto-fill Grids
+// =============================================================================
+
+.grid-auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-auto-fit-sm {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.grid-auto-fit-lg {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.grid-auto-fill {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.grid-auto-fill-sm {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.grid-auto-fill-lg {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+// =============================================================================
+// Responsive Grid Columns - Tablet (md)
+// =============================================================================
+
+@include breakpoint('tablet') {
+  .md\:grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .md\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+// =============================================================================
+// Responsive Grid Columns - Desktop (lg)
+// =============================================================================
+
+@include breakpoint('desktop') {
+  .lg\:grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .lg\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .lg\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+// =============================================================================
+// Grid Gap Utilities
+// =============================================================================
+
+.gap-0 { gap: map.get($spacing, 0); }
+.gap-2xs { gap: map.get($spacing, '2xs'); }
+.gap-xs { gap: map.get($spacing, xs); }
+.gap-sm { gap: map.get($spacing, sm); }
+.gap-md { gap: map.get($spacing, md); }
+.gap-lg { gap: map.get($spacing, lg); }
+.gap-xl { gap: map.get($spacing, xl); }
+.gap-2xl { gap: map.get($spacing, '2xl'); }
+.gap-3xl { gap: map.get($spacing, '3xl'); }
+
+// Row and column gap utilities
+.gap-x-sm { column-gap: map.get($spacing, sm); }
+.gap-x-md { column-gap: map.get($spacing, md); }
+.gap-x-lg { column-gap: map.get($spacing, lg); }
+.gap-x-xl { column-gap: map.get($spacing, xl); }
+
+.gap-y-sm { row-gap: map.get($spacing, sm); }
+.gap-y-md { row-gap: map.get($spacing, md); }
+.gap-y-lg { row-gap: map.get($spacing, lg); }
+.gap-y-xl { row-gap: map.get($spacing, xl); }
+
+// =============================================================================
+// Grid Alignment
+// =============================================================================
+
+// Align items (cross-axis)
+.items-start { align-items: start; }
+.items-center { align-items: center; }
+.items-end { align-items: end; }
+.items-stretch { align-items: stretch; }
+.items-baseline { align-items: baseline; }
+
+// Justify items (main-axis)
+.justify-items-start { justify-items: start; }
+.justify-items-center { justify-items: center; }
+.justify-items-end { justify-items: end; }
+.justify-items-stretch { justify-items: stretch; }
+
+// Place items (shorthand)
+.place-items-center { place-items: center; }
+.place-items-start { place-items: start; }
+.place-items-end { place-items: end; }
+
+// Align content (multi-row)
+.content-start { align-content: start; }
+.content-center { align-content: center; }
+.content-end { align-content: end; }
+.content-between { align-content: space-between; }
+.content-around { align-content: space-around; }
+.content-evenly { align-content: space-evenly; }
+
+// =============================================================================
+// Grid Span Utilities
+// =============================================================================
+
+// Column spans
+.col-span-1 { grid-column: span 1 / span 1; }
+.col-span-2 { grid-column: span 2 / span 2; }
+.col-span-3 { grid-column: span 3 / span 3; }
+.col-span-4 { grid-column: span 4 / span 4; }
+.col-span-5 { grid-column: span 5 / span 5; }
+.col-span-6 { grid-column: span 6 / span 6; }
+.col-span-full { grid-column: 1 / -1; }
+
+// Row spans
+.row-span-1 { grid-row: span 1 / span 1; }
+.row-span-2 { grid-row: span 2 / span 2; }
+.row-span-3 { grid-row: span 3 / span 3; }
+.row-span-4 { grid-row: span 4 / span 4; }
+.row-span-full { grid-row: 1 / -1; }
+
+// =============================================================================
+// Responsive Span Utilities
+// =============================================================================
+
+@include breakpoint('tablet') {
+  .md\:col-span-1 { grid-column: span 1 / span 1; }
+  .md\:col-span-2 { grid-column: span 2 / span 2; }
+  .md\:col-span-3 { grid-column: span 3 / span 3; }
+  .md\:col-span-4 { grid-column: span 4 / span 4; }
+  .md\:col-span-6 { grid-column: span 6 / span 6; }
+  .md\:col-span-full { grid-column: 1 / -1; }
+}
+
+@include breakpoint('desktop') {
+  .lg\:col-span-1 { grid-column: span 1 / span 1; }
+  .lg\:col-span-2 { grid-column: span 2 / span 2; }
+  .lg\:col-span-3 { grid-column: span 3 / span 3; }
+  .lg\:col-span-4 { grid-column: span 4 / span 4; }
+  .lg\:col-span-6 { grid-column: span 6 / span 6; }
+  .lg\:col-span-full { grid-column: 1 / -1; }
+}
+
+// =============================================================================
+// Grid Flow Utilities
+// =============================================================================
+
+.grid-flow-row { grid-auto-flow: row; }
+.grid-flow-col { grid-auto-flow: column; }
+.grid-flow-dense { grid-auto-flow: dense; }
+.grid-flow-row-dense { grid-auto-flow: row dense; }
+.grid-flow-col-dense { grid-auto-flow: column dense; }

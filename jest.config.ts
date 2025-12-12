@@ -61,7 +61,7 @@ const config: Config = {
     '^@type(.*)$': '<rootDir>/src/type/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
   },
-  transformIgnorePatterns: ['/node_modules/(?!(react-ios-pwa-prompt)/)'],
+  transformIgnorePatterns: ['node_modules/(?!(.pnpm/(react-ios-pwa-prompt|react-error-boundary)))'],
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   coverageThreshold: {
     global: {

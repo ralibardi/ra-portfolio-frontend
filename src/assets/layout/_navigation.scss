@@ -1,0 +1,187 @@
+// Layout - Navigation
+// Global navigation layout styles
+// Requirements: 1.3, 5.1, 5.2
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Main navigation
+.main-nav {
+  @include flexbox(row, flex-start, center);
+  gap: map.get($spacing, xs);
+
+  @include breakpoint('tablet') {
+    gap: map.get($spacing, sm);
+  }
+}
+
+// Navigation list
+.nav-list {
+  @include flexbox(row, flex-start, center);
+  gap: map.get($spacing, '2xs');
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include breakpoint('tablet') {
+    gap: map.get($spacing, xs);
+  }
+}
+
+// Navigation item
+.nav-item {
+  position: relative;
+}
+
+// Navigation link
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: map.get($spacing, '2xs');
+  padding: map.get($spacing, xs) map.get($spacing, sm);
+  color: var(--text-colour);
+  font-size: map.get($font-sizes, sm);
+  font-weight: map.get($font-weights, medium);
+  @include border-radius(map.get($border, sm));
+  @include transition(
+    color map.get($transition, fast) ease,
+    background-color map.get($transition, fast) ease
+  );
+
+  &:hover {
+    color: var(--accent-colour);
+    background-color: var(--surface-colour-hover);
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  &.is-active {
+    color: var(--accent-colour);
+    background-color: var(--surface-colour-active);
+  }
+}
+
+// Mobile navigation
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: map.get($z-index, modal);
+  background-color: var(--background-colour-overlay);
+  backdrop-filter: blur(8px);
+  @include flexbox(column, center, center);
+  gap: map.get($spacing, md);
+  opacity: 0;
+  visibility: hidden;
+  @include transition(
+    opacity map.get($transition, normal) ease,
+    visibility map.get($transition, normal) ease
+  );
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Mobile navigation list
+.mobile-nav-list {
+  @include flexbox(column, center, center);
+  gap: map.get($spacing, md);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// Mobile navigation link
+.mobile-nav-link {
+  font-size: map.get($font-sizes, xl);
+  font-weight: map.get($font-weights, semi-bold);
+  color: var(--text-colour);
+  padding: map.get($spacing, sm) map.get($spacing, lg);
+  @include border-radius(map.get($border, md));
+  @include transition(
+    color map.get($transition, fast) ease,
+    background-color map.get($transition, fast) ease
+  );
+
+  &:hover {
+    color: var(--accent-colour);
+    background-color: var(--surface-colour-hover);
+  }
+
+  &.is-active {
+    color: var(--accent-colour);
+  }
+}
+
+// Menu toggle button
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  @include border-radius(map.get($border, sm));
+  @include transition(background-color map.get($transition, fast) ease);
+
+  &:hover {
+    background-color: var(--surface-colour-hover);
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  @include breakpoint('tablet') {
+    display: none;
+  }
+}
+
+// Hamburger icon
+.hamburger {
+  position: relative;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-colour);
+  @include transition(background-color map.get($transition, fast) ease);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-colour);
+    @include transition(transform map.get($transition, fast) ease);
+  }
+
+  &::before {
+    top: -8px;
+  }
+
+  &::after {
+    bottom: -8px;
+  }
+
+  .is-open & {
+    background-color: transparent;
+
+    &::before {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    &::after {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+}

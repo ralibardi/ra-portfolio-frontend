@@ -1,5 +1,5 @@
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import ToggleWithIcons from './toggle-with-icons';
 
 const meta: Meta<typeof ToggleWithIcons> = {

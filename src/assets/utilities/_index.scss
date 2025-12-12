@@ -1,0 +1,8 @@
+// Utilities Index - 7-1 Pattern
+// Forward all utility modules for easy importing
+// Usage: @use '@assets/utilities' as *;
+
+@forward 'spacing';
+@forward 'flexbox';
+@forward 'text';
+@forward 'animations';

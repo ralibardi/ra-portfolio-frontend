@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import ToggleWithLabel from './toggle-with-label';
 
 const meta: Meta<typeof ToggleWithLabel> = {

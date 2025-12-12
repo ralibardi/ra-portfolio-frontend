@@ -1,0 +1,113 @@
+// Themes - Theme Mixins
+// Theme-aware mixins for components
+
+@use 'sass:map';
+@use '../abstracts/variables' as *;
+@use '../abstracts/colours' as *;
+@use 'light' as *;
+@use 'dark' as *;
+
+// Apply theme based on mode
+@mixin apply-theme($mode: light) {
+  @if $mode == light {
+    @include light-theme;
+  } @else if $mode == dark {
+    @include dark-theme;
+  } @else {
+    @warn "Unknown theme mode: #{$mode}";
+  }
+}
+
+// Theme-aware surface styling
+@mixin theme-surface {
+  background-color: var(--surface-colour);
+  color: var(--text-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+}
+
+// Theme-aware surface with hover states
+@mixin theme-surface-interactive {
+  @include theme-surface;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    background-color: var(--surface-colour-hover);
+  }
+
+  &:active {
+    background-color: var(--surface-colour-active);
+  }
+}
+
+// Theme-aware elevation (shadows)
+@mixin theme-elevation($level: 1) {
+  @if $level == 1 {
+    box-shadow: 0 map.get($spacing, '3xs') map.get($spacing, xs) 0 var(--shadow-colour);
+  } @else if $level == 2 {
+    box-shadow: 0 map.get($spacing, xs) map.get($spacing, md) 0 var(--shadow-colour-strong);
+  } @else if $level == 3 {
+    box-shadow: 0 map.get($spacing, sm) map.get($spacing, lg) 0 var(--shadow-colour-strong);
+  }
+}
+
+// Theme-aware focus ring
+@mixin theme-focus {
+  outline: map.get($border, xs) solid var(--focus-colour);
+  outline-offset: map.get($spacing, '3xs');
+}
+
+// Theme-aware text
+@mixin theme-text($variant: default) {
+  @if $variant == default {
+    color: var(--text-colour);
+  } @else if $variant == muted {
+    color: var(--text-colour-muted);
+  } @else if $variant == inverse {
+    color: var(--text-colour-inverse);
+  } @else if $variant == accent {
+    color: var(--accent-colour);
+  }
+}
+
+// Theme-aware background
+@mixin theme-background($variant: default) {
+  @if $variant == default {
+    background-color: var(--background-colour);
+  } @else if $variant == alt {
+    background-color: var(--background-colour-alt);
+  } @else if $variant == elevated {
+    background-color: var(--background-colour-elevated);
+  } @else if $variant == overlay {
+    background-color: var(--background-colour-overlay);
+  }
+}
+
+// Theme-aware border
+@mixin theme-border($variant: default) {
+  @if $variant == default {
+    border-color: var(--border-colour);
+  } @else if $variant == strong {
+    border-color: var(--border-colour-strong);
+  }
+}
+
+// Semantic color mixins
+@mixin semantic-state($state: info) {
+  @if $state == success {
+    color: var(--success-colour);
+    background-color: var(--success-colour-light);
+    border-color: var(--success-colour);
+  } @else if $state == warning {
+    color: var(--warning-colour);
+    background-color: var(--warning-colour-light);
+    border-color: var(--warning-colour);
+  } @else if $state == error {
+    color: var(--error-colour);
+    background-color: var(--error-colour-light);
+    border-color: var(--error-colour);
+  } @else if $state == info {
+    color: var(--info-colour);
+    background-color: var(--info-colour-light);
+    border-color: var(--info-colour);
+  }
+}

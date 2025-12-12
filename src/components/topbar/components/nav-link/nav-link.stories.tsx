@@ -1,5 +1,5 @@
 import { faHome, faUser } from '@fortawesome/free-solid-svg-icons';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type IRoute from '@type/route';
 import NavLink from './nav-link';
 
