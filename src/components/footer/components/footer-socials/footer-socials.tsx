@@ -17,13 +17,17 @@ const FooterSocials: FunctionComponent<IFooterSocials> = ({ socialLinks }) => {
   );
 
   return (
-    <div className={styles.container} data-testid="test">
+    <nav
+      className={`${styles.container} footer-social`}
+      data-testid="test"
+      aria-label="Social links"
+    >
       <ComponentArray
         render={({ icon, link }) => <IconLink icon={icon} linkUrl={link} />}
         of={socialLinksSorted}
         keyExtractor={(item) => item.link}
       />
-    </div>
+    </nav>
   );
 };
 

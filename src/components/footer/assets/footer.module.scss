@@ -1,15 +1,59 @@
-@use "sass:map";
-@use '@assets/global' as *;
+// Footer Component CSS Module
+// Component-specific styles for the Footer
+// Uses global layout classes for structure
+// Requirements: 2.1, 2.2, 5.1, 5.2, 5.3, 5.4
 
+@use "sass:map";
+@use '@assets/abstracts' as *;
+
+// Main footer container - extends global site-footer layout
 .container {
   width: map.get($percentage, 100);
-  @include flexbox(column, center);
+  @include flexbox(column, center, center);
   margin-top: auto;
-  padding: map.get($spacing, lg);
-  background-color: var(--foreground-colour);
+  padding: map.get($spacing, xl) map.get($spacing, md);
+  background-color: var(--background-colour-alt);
+  border-top: map.get($border, xs) solid var(--border-colour);
+  @include transition(
+    background-color map.get($transition, fast) ease,
+    border-color map.get($transition, fast) ease
+  );
+
+  // Responsive: increase padding on larger screens
+  @include breakpoint('tablet') {
+    padding: map.get($spacing, '2xl') map.get($spacing, lg);
+  }
+
+  @include breakpoint('desktop') {
+    padding: map.get($spacing, '2xl') map.get($spacing, xl);
+  }
 }
 
+// Footer content wrapper
+.content {
+  max-width: 1280px;
+  width: map.get($percentage, 100);
+  @include flexbox(column, center, center);
+  gap: map.get($spacing, md);
+}
+
+// Copyright text
 .copyright {
-  padding-top: map.get($spacing, xs);
-  @include font-style(map.get($font-sizes, sm));
+  padding-top: map.get($spacing, sm);
+  @include font-style(
+    map.get($font-sizes, sm),
+    map.get($font-weights, regular),
+    var(--text-colour-muted)
+  );
+  text-align: center;
+  @include transition(color map.get($transition, fast) ease);
+
+  // Responsive: slightly larger text on desktop
+  @include breakpoint('desktop') {
+    @include font-style(
+      map.get($font-sizes, md),
+      map.get($font-weights, regular),
+      var(--text-colour-muted)
+    );
+  }
 }

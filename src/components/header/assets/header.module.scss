@@ -1,36 +1,63 @@
-@use "sass:map";
-@use '@assets/global' as *;
+// Header Component CSS Module
+// Component-specific styles for the Header
+// Uses global .site-header class for layout structure
+// Requirements: 2.1, 2.2, 5.1, 5.2, 5.3, 5.4
 
+@use "sass:map";
+@use '@assets/abstracts' as *;
+
+// Main header container - extends global site-header layout
 .container {
     position: sticky;
     top: 0;
     width: map.get($percentage, 100);
     @include flexbox(column, space-between, center);
     overflow: hidden;
-    z-index: map.get($z-index, top);
+    z-index: map.get($z-index, sticky);
     background-color: var(--background-colour);
-    @include box-shadow(map.get($spacing, 0), map.get($spacing, '3xs'), map.get($spacing, '2xs'), map.get($spacing, 0), map.get($neutral, black-alpha-08));
+    @include theme-aware-elevation(1);
+    @include transition(
+        background-color map.get($transition, fast) ease,
+        box-shadow map.get($transition, fast) ease
+    );
 
-    @include breakpoint(mobile-landscape) {
+    // Responsive: switch to row layout on larger screens
+    @include breakpoint('mobile-landscape') {
         @include flexbox(row, space-between, center);
     }
 }
 
+// Sub-container for theme toggle and company info
 .subContainer {
     @include flexbox(row, space-between, center);
     order: -1;
+    gap: map.get($spacing, xs);
 
-    @include breakpoint(tablet) {
+    // Responsive: reorder on tablet and above
+    @include breakpoint('tablet') {
         order: 2;
     }
 }
 
+// Shared padding for header sections
 .companyInfo,
 .topbar,
 .themeToggle {
     padding: map.get($spacing, lg);
 }
 
+// Company info section
+.companyInfo {
+    @include flexbox(row, center, center);
+}
+
+// Topbar navigation section
 .topbar {
     order: 1;
+    @include flexbox(row, center, center);
+}
+
+// Theme toggle section
+.themeToggle {
+    @include flexbox(row, center, center);
 }

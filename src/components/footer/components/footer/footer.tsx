@@ -11,11 +11,13 @@ const Footer: FunctionComponent = () => {
   const socialLinks = useMemo(() => GetSocialLinks(), []);
 
   return (
-    <footer className={styles.container} data-testid="footer">
-      <FooterSocials socialLinks={socialLinks} />
-      <span className={styles.copyright} data-testid="footer-copyright">
-        {t(FOOTER.COPYRIGHT)}
-      </span>
+    <footer className={`${styles.container} site-footer`} data-testid="footer">
+      <div className={styles.content}>
+        <FooterSocials socialLinks={socialLinks} />
+        <span className={styles.copyright} data-testid="footer-copyright">
+          {t(FOOTER.COPYRIGHT)}
+        </span>
+      </div>
     </footer>
   );
 };

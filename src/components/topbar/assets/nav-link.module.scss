@@ -1,48 +1,71 @@
-@use "sass:map";
-@use '@assets/global' as *;
+// NavLink Component CSS Module
+// Component-specific styles for navigation links within Topbar
+// Uses global navigation patterns from layout/_navigation.scss
+// Requirements: 2.1, 2.2, 5.1, 5.2, 5.3, 5.4
 
+@use "sass:map";
+@use '@assets/abstracts' as *;
+
+// Navigation link - extends global .nav-link pattern
 .link {
     @include flexbox(row, center, center);
     @include size(auto, map.get($spacing, xl));
     padding: map.get($spacing, '2xs') map.get($spacing, sm);
     text-decoration: none;
     color: var(--text-colour);
-
-    &:hover,
-    &.active {
-        @include border-radius(map.get($spacing, lg));
-        width: auto;
-    }
+    @include border-radius(map.get($border, md));
+    @include transition(
+        color map.get($transition, fast) ease,
+        background-color map.get($transition, fast) ease,
+        transform map.get($transition, fast) ease
+    );
 
     &:hover {
-        background-color: var(--grey);
+        background-color: var(--surface-colour-active);
+        color: var(--accent-colour);
     }
 
+    &:focus-visible {
+        @include theme-aware-focus;
+    }
+
+    &:active {
+        @include transform(0.98);
+    }
+
+    // Active state styling
     &.active {
         background-color: var(--background-colour);
+        color: var(--accent-colour);
     }
 }
 
+// Navigation icon
 .icon {
-    @include flexbox();
-    color: var(--text-colour);
+    @include flexbox(row, center, center);
+    color: inherit;
+    font-size: map.get($font-sizes, md);
+    @include transition(color map.get($transition, fast) ease);
 
     .active & {
-        @include font-style(map.get($font-sizes, md), map.get($font-weights, medium), var(--accent-colour));
+        color: var(--accent-colour);
     }
 }
 
+// Navigation label
 .label {
     @include flexbox(row, center, center);
-    @include font-style(map.get($font-sizes, md), map.get($font-weights, medium), var(--text-colour));
-    margin-left: map.get($spacing, xs);
+    @include font-style(map.get($font-sizes, sm), map.get($font-weights, medium), inherit);
+    margin-inline-start: map.get($spacing, xs);
     display: none;
+    @include transition(color map.get($transition, fast) ease);
 
     .active & {
         color: var(--accent-colour);
     }
 
-    @include breakpoint(laptop) {
+    // Show label on larger screens
+    @include breakpoint('laptop') {
         display: block;
     }
 }

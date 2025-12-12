@@ -1,12 +1,36 @@
-@use "sass:map";
-@use '@assets/global' as *;
+// Footer Socials Component CSS Module
+// Component-specific styles for the Footer social links
+// Uses global footer-social layout class for structure
+// Requirements: 2.1, 2.2, 5.1, 5.2, 5.3, 5.4
 
+@use "sass:map";
+@use '@assets/abstracts' as *;
+
+// Social links container - extends global footer-social layout
 .container {
+  @include flexbox(row, center, center);
   gap: map.get($spacing, md);
   padding: map.get($spacing, sm);
-  @include flexbox(row, center, center);
+  flex-wrap: wrap;
+
+  // Responsive: increase gap on larger screens
+  @include breakpoint('tablet') {
+    gap: map.get($spacing, lg);
+  }
 }
 
+// Social icon styling
 .socialIcon {
   @include size(map.get($spacing, xl), map.get($spacing, xl));
+  @include transition(transform map.get($transition, fast) ease);
+
+  // Hover effect for social icons
+  &:hover {
+    @include transform(1.1);
+  }
+
+  // Focus state for accessibility
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
 }

@@ -1,13 +1,37 @@
-@use "sass:map";
-@use '@assets/global' as *;
+// Topbar Component CSS Module
+// Component-specific styles for the Topbar navigation
+// Uses global navigation layout patterns from layout/_navigation.scss
+// Requirements: 2.1, 2.2, 5.1, 5.2, 5.3, 5.4
 
+@use "sass:map";
+@use '@assets/abstracts' as *;
+
+// Main navigation container
+// Extends global navigation patterns with component-specific styling
 .container {
   @include flexbox(row, space-between, center);
-  @include border-radius(map.get($spacing, lg));
+  @include border-radius(map.get($border, lg));
   gap: map.get($spacing, xs);
-  background-color: var(--light-grey);
+  background-color: var(--surface-colour-hover);
+  @include transition(
+    background-color map.get($transition, fast) ease
+  );
+
+  // Responsive: adjust gap on larger screens
+  @include breakpoint('tablet') {
+    gap: map.get($spacing, sm);
+  }
 }
 
+// Navigation content padding wrapper
 .padding {
+  @include flexbox(row, center, center);
   padding: map.get($spacing, '3xs') map.get($spacing, lg);
+  gap: map.get($spacing, '2xs');
+
+  // Responsive: adjust padding on larger screens
+  @include breakpoint('tablet') {
+    padding: map.get($spacing, '2xs') map.get($spacing, xl);
+    gap: map.get($spacing, xs);
+  }
 }
