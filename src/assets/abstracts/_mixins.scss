@@ -168,7 +168,11 @@ $theme-colors: (
     $shadow: $shadow $spread;
   }
 
-  box-shadow: if($inset, inset, null) $shadow $color;
+  @if $inset {
+    box-shadow: inset $shadow $color;
+  } @else {
+    box-shadow: $shadow $color;
+  }
 }
 
 // Transition mixin
@@ -207,7 +211,11 @@ $theme-colors: (
     $transforms: list.append($transforms, translate($translate));
   }
 
-  transform: if(list.length($transforms) > 0, list.join($transforms, ' '), none);
+  @if list.length($transforms) > 0 {
+    transform: list.join($transforms, ' ');
+  } @else {
+    transform: none;
+  }
 }
 
 // Theme-aware surface mixin

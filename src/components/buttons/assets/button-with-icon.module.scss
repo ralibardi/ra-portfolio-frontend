@@ -1,31 +1,99 @@
-@use "sass:map";
-@use '@assets/global' as *;
+// Import design tokens from abstracts
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// Button height calculation
+$button-height-sm: calc(map.get($spacing, lg) + map.get($spacing, '3xs'));
+$button-height-md: calc(map.get($spacing, xl) + map.get($spacing, '3xs'));
+$button-height-lg: calc(map.get($spacing, '2xl') + map.get($spacing, '3xs'));
 
 .button {
-  $button-height: calc(#{map.get($spacing, xl)} + #{map.get($spacing, '3xs')});
-  @include size(map.get($spacing, '3xl'), $button-height);
-  line-height: $button-height;
+  @include size(auto, $button-height-md);
+  min-width: map.get($spacing, '3xl');
+  line-height: $button-height-md;
   margin: map.get($spacing, md);
   padding: map.get($spacing, xs) map.get($spacing, md);
   background-color: var(--background-colour);
-  border: map.get($border, xs) solid var(--grey);
+  border: map.get($border, xs) solid var(--border-colour);
   cursor: pointer;
-  @include transition(border-color);
+  @include transition(border-color, box-shadow, background-color, transform);
   @include border-radius(map.get($border, '3xl'));
 
-  &:hover {
+  &:hover:not(:disabled) {
     border-color: var(--accent-colour);
-    @include box-shadow(map.get($spacing, 0), map.get($spacing, 0), map.get($spacing, lg), map.get($spacing, 0), var(--accent-colour));
+    @include box-shadow(
+      map.get($spacing, 0),
+      map.get($spacing, 0),
+      map.get($spacing, lg),
+      map.get($spacing, 0),
+      var(--accent-colour)
+    );
+  }
+
+  &:active:not(:disabled) {
+    @include transform(0.98);
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    border-color: var(--border-colour);
+  }
+}
+
+// Size variants
+.small {
+  @include size(auto, $button-height-sm);
+  min-width: map.get($spacing, '2xl');
+  line-height: $button-height-sm;
+  padding: map.get($spacing, '2xs') map.get($spacing, sm);
+
+  .label {
+    font-size: map.get($font-sizes, sm);
+  }
+
+  .icon {
+    font-size: map.get($font-sizes, sm);
+  }
+}
+
+.large {
+  @include size(auto, $button-height-lg);
+  min-width: map.get($spacing, '4xl');
+  line-height: $button-height-lg;
+  padding: map.get($spacing, sm) map.get($spacing, lg);
+
+  .label {
+    font-size: map.get($font-sizes, lg);
+  }
+
+  .icon {
+    font-size: map.get($font-sizes, lg);
   }
 }
 
 .label {
-  @include font-style(map.get($font-sizes, md), map.get($font-weights, semi-bold), var(--accent-colour));
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, semi-bold),
+    var(--accent-colour)
+  );
   font-family: $font-family;
   line-height: map.get($font-heights, normal);
+  margin-inline-start: map.get($spacing, xs);
+}
+
+.icon {
+  color: var(--accent-colour);
+  font-size: map.get($font-sizes, md);
 }
 
 .content {
-  @include flexbox(row, space-between, center);
+  @include flexbox(row, center, center);
   @include size(auto, map.get($percentage, 100));
+  gap: map.get($spacing, xs);
 }

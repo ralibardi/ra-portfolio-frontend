@@ -9,6 +9,8 @@ const meta: Meta<typeof ButtonWithIcon> = {
     icon: { control: 'object' },
     label: { control: 'text' },
     isLoading: { control: 'boolean' },
+    size: { control: 'select', options: ['small', 'medium', 'large'] },
+    disabled: { control: 'boolean' },
     onClick: { action: 'clicked' },
   },
 };
@@ -26,6 +28,25 @@ export const DefaultState: Story = {
   args: {
     icon: faArrowLeft,
     label: 'Testing',
+    size: 'medium',
+  },
+};
+
+export const Small: Story = {
+  ...Template,
+  args: {
+    icon: faArrowLeft,
+    label: 'Small',
+    size: 'small',
+  },
+};
+
+export const Large: Story = {
+  ...Template,
+  args: {
+    icon: faArrowLeft,
+    label: 'Large',
+    size: 'large',
   },
 };
 
@@ -45,5 +66,14 @@ export const LoadingState: Story = {
     ...DefaultState.args,
     isLoading: true,
     label: 'Loading',
+  },
+};
+
+export const Disabled: Story = {
+  ...Template,
+  args: {
+    ...DefaultState.args,
+    disabled: true,
+    label: 'Disabled',
   },
 };

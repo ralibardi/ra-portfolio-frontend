@@ -1,7 +1,7 @@
 import Loading from '@components/loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type React from 'react';
-import { memo, useCallback, useId } from 'react';
+import { memo, useCallback, useId, useMemo } from 'react';
 import styles from '../../assets/button-with-icon.module.scss';
 import type { IButtonWithIconProps } from '../../types/button-with-icon-props';
 
@@ -10,9 +10,20 @@ const ButtonWithIcon = memo(function ButtonWithIcon({
   onClick,
   label,
   isLoading,
+  size = 'medium',
+  className,
   ...props
 }: IButtonWithIconProps) {
   const buttonId = useId();
+
+  const buttonClasses = useMemo(() => {
+    const classes = [styles.button];
+    if (size === 'small') classes.push(styles.small);
+    if (size === 'large') classes.push(styles.large);
+    if (className) classes.push(className);
+    return classes.join(' ');
+  }, [size, className]);
+
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -25,13 +36,13 @@ const ButtonWithIcon = memo(function ButtonWithIcon({
 
   return (
     <button
-      className={styles.button}
+      className={buttonClasses}
       data-testid="button-with-icon-container"
       id={buttonId}
       type="button"
       {...props}
       onClick={handleClick}
-      disabled={isLoading}
+      disabled={isLoading || props.disabled}
     >
       {isLoading ? (
         <Loading size="auto" />

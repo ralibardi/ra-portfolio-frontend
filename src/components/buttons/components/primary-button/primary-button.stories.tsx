@@ -7,6 +7,8 @@ const meta: Meta<typeof PrimaryButton> = {
   argTypes: {
     label: { control: 'text' },
     isLoading: { control: 'boolean' },
+    size: { control: 'select', options: ['small', 'medium', 'large'] },
+    disabled: { control: 'boolean' },
     onClick: { action: 'clicked' },
   },
 };
@@ -23,6 +25,23 @@ export const Default = {
   ...Template,
   args: {
     label: 'Default',
+    size: 'medium',
+  },
+};
+
+export const Small = {
+  ...Template,
+  args: {
+    label: 'Small',
+    size: 'small',
+  },
+};
+
+export const Large = {
+  ...Template,
+  args: {
+    label: 'Large',
+    size: 'large',
   },
 };
 
@@ -42,5 +61,14 @@ export const Loading = {
     ...Default.args,
     isLoading: true,
     label: 'Loading',
+  },
+};
+
+export const Disabled = {
+  ...Template,
+  args: {
+    ...Default.args,
+    disabled: true,
+    label: 'Disabled',
   },
 };
