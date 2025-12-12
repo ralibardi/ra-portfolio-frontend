@@ -1,5 +1,9 @@
+// Toast Component CSS Module
+// Implements success, warning, error, and info variants using semantic color tokens
+// Requirements: 2.1, 2.2, 4.1, 4.2, 4.3
+
 @use "sass:map";
-@use '@assets/global' as *;
+@use '@assets/abstracts' as *;
 
 .container {
     position: fixed;
@@ -7,7 +11,7 @@
     bottom: map.get($spacing, xl);
     display: grid;
     gap: map.get($spacing, md);
-    z-index: map.get($z-index, top);
+    z-index: map.get($z-index, toast);
 }
 
 .toast {
@@ -18,19 +22,33 @@
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    @include box-shadow(map.get($spacing, 0), map.get($spacing, '3xs'), map.get($spacing, xs), map.get($spacing, 0), var(--shadow-colour));
+    @include box-shadow(
+        map.get($spacing, 0),
+        map.get($spacing, '3xs'),
+        map.get($spacing, xs),
+        map.get($spacing, 0),
+        var(--shadow-colour)
+    );
 }
 
+// Success variant - uses semantic success color token
 .toast[data-type="success"] {
     border-left: map.get($border, lg) solid var(--success-colour);
 }
 
+// Warning variant - uses semantic warning color token
+.toast[data-type="warning"] {
+    border-left: map.get($border, lg) solid var(--warning-colour);
+}
+
+// Error variant - uses semantic error color token
 .toast[data-type="error"] {
     border-left: map.get($border, lg) solid var(--error-colour);
 }
 
+// Info variant - uses semantic info color token (accent)
 .toast[data-type="info"] {
-    border-left: map.get($border, lg) solid var(--accent-colour);
+    border-left: map.get($border, lg) solid var(--info-colour);
 }
 
 .message {
@@ -44,4 +62,13 @@
     color: var(--text-colour);
     cursor: pointer;
     @include font-style(map.get($font-sizes, lg), map.get($font-weights, medium));
+    @include transition(color map.get($transition, fast) map.get($easing, ease));
+
+    &:hover {
+        color: var(--text-colour-muted);
+    }
+
+    &:focus-visible {
+        @include theme-aware-focus;
+    }
 }

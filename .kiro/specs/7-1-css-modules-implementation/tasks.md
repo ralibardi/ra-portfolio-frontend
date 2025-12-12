@@ -94,7 +94,7 @@ This implementation plan breaks down the 7-1 Pattern with CSS Modules feature in
   - Verify visual appearance matches original
   - _Requirements: 2.1, 2.2, 2.3, 4.1, 4.2, 4.3_
 
-- [ ] 7. Migrate Loading component to CSS Modules
+- [x] 7. Migrate Loading component to CSS Modules
 
   - Create loading.module.scss with design token imports
   - Replace hardcoded animation values with design tokens
@@ -102,7 +102,7 @@ This implementation plan breaks down the 7-1 Pattern with CSS Modules feature in
   - Verify animations work correctly in both themes
   - _Requirements: 2.1, 2.2, 4.1, 4.2, 4.3_
 
-- [ ] 8. Migrate Toast component to CSS Modules
+- [x] 8. Migrate Toast component to CSS Modules
 
   - Create toast.module.scss with design token imports
   - Replace hardcoded values with semantic color tokens
@@ -111,7 +111,7 @@ This implementation plan breaks down the 7-1 Pattern with CSS Modules feature in
   - Verify visual appearance matches original
   - _Requirements: 2.1, 2.2, 4.1, 4.2, 4.3_
 
-- [ ] 9. Checkpoint - Verify core components and run tests
+- [x] 9. Checkpoint - Verify core components and run tests
 
   - Ensure all tests pass, ask the user if questions arise.
 

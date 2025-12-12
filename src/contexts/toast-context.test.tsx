@@ -4,7 +4,7 @@ import { ToastProvider, useToast } from './toast-context';
 
 // Test component to interact with toast context
 const TestComponent: React.FC = () => {
-  const { showToast, success, error, info, remove, toasts } = useToast();
+  const { showToast, success, error, info, warning, remove, toasts } = useToast();
 
   return (
     <div>
@@ -29,6 +29,13 @@ const TestComponent: React.FC = () => {
       >
         Show Info Toast
       </button>
+      <button
+        type="button"
+        onClick={() => showToast('Warning message', { type: 'warning' })}
+        data-testid="show-warning"
+      >
+        Show Warning Toast
+      </button>
       <button type="button" onClick={() => success('Success helper')} data-testid="success-helper">
         Success Helper
       </button>
@@ -37,6 +44,9 @@ const TestComponent: React.FC = () => {
       </button>
       <button type="button" onClick={() => info('Info helper')} data-testid="info-helper">
         Info Helper
+      </button>
+      <button type="button" onClick={() => warning('Warning helper')} data-testid="warning-helper">
+        Warning Helper
       </button>
       <button
         type="button"
@@ -117,6 +127,19 @@ describe('ToastContext', () => {
     expect(screen.getByText('Info message - info')).toBeInTheDocument();
   });
 
+  it('should show warning toast', () => {
+    render(
+      <ToastProvider>
+        <TestComponent />
+      </ToastProvider>,
+    );
+
+    fireEvent.click(screen.getByTestId('show-warning'));
+
+    expect(screen.getByTestId('toast-count')).toHaveTextContent('1');
+    expect(screen.getByText('Warning message - warning')).toBeInTheDocument();
+  });
+
   it('should use success helper method', () => {
     render(
       <ToastProvider>
@@ -154,6 +177,19 @@ describe('ToastContext', () => {
 
     expect(screen.getByTestId('toast-count')).toHaveTextContent('1');
     expect(screen.getByText('Info helper - info')).toBeInTheDocument();
+  });
+
+  it('should use warning helper method', () => {
+    render(
+      <ToastProvider>
+        <TestComponent />
+      </ToastProvider>,
+    );
+
+    fireEvent.click(screen.getByTestId('warning-helper'));
+
+    expect(screen.getByTestId('toast-count')).toHaveTextContent('1');
+    expect(screen.getByText('Warning helper - warning')).toBeInTheDocument();
   });
 
   it('should show multiple toasts', () => {
@@ -325,7 +361,7 @@ describe('ToastContext', () => {
 
   it('should handle helper methods with custom duration', async () => {
     const TestComponentHelperDuration: React.FC = () => {
-      const { success, error, info, toasts } = useToast();
+      const { success, error, info, warning, toasts } = useToast();
 
       return (
         <div>
@@ -350,6 +386,13 @@ describe('ToastContext', () => {
           >
             Info with Duration
           </button>
+          <button
+            type="button"
+            onClick={() => warning('Warning with duration', 500)}
+            data-testid="warning-duration"
+          >
+            Warning with Duration
+          </button>
           <div data-testid="toast-count">{toasts.length}</div>
         </div>
       );
@@ -364,8 +407,9 @@ describe('ToastContext', () => {
     fireEvent.click(screen.getByTestId('success-duration'));
     fireEvent.click(screen.getByTestId('error-duration'));
     fireEvent.click(screen.getByTestId('info-duration'));
+    fireEvent.click(screen.getByTestId('warning-duration'));
 
-    expect(screen.getByTestId('toast-count')).toHaveTextContent('3');
+    expect(screen.getByTestId('toast-count')).toHaveTextContent('4');
 
     // Fast-forward time by custom duration
     act(() => {

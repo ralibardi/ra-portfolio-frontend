@@ -1,7 +1,7 @@
 import type React from 'react';
 import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
 
-export type ToastType = 'success' | 'error' | 'info';
+export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 export interface ToastItem {
   id: string;
@@ -20,6 +20,7 @@ interface ToastContextValue {
   success: (message: string, durationMs?: number) => void;
   error: (message: string, durationMs?: number) => void;
   info: (message: string, durationMs?: number) => void;
+  warning: (message: string, durationMs?: number) => void;
   toasts: readonly ToastItem[];
   remove: (id: string) => void;
 }
@@ -52,6 +53,7 @@ export const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) =
       success: (message, durationMs) => showToast(message, { type: 'success', durationMs }),
       error: (message, durationMs) => showToast(message, { type: 'error', durationMs }),
       info: (message, durationMs) => showToast(message, { type: 'info', durationMs }),
+      warning: (message, durationMs) => showToast(message, { type: 'warning', durationMs }),
       toasts,
       remove,
     }),

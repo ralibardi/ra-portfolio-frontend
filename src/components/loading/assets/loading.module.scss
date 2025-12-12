@@ -1,18 +1,36 @@
-@use "sass:map";
-@use '@assets/global' as *;
+// Loading Component CSS Module
+// Implements spinner animation with design tokens from 7-1 pattern
+// Requirements: 2.1, 2.2, 4.1, 4.2, 4.3
 
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// Container - centers the spinner
 .container {
   height: map.get($percentage, 100);
   @include flexbox(row, center, center);
 }
 
+// Spinner - animated loading indicator
 .spinner {
-  border: map.get($spacing, sm) var(--accent-colour) double;
+  // Border styling using design tokens
+  border: map.get($border, sm) var(--accent-colour) double;
   border-left-style: solid;
-  animation: spin map.get($transition, medium) infinite linear;
+
+  // Animation using design tokens for duration and easing
+  animation: spin map.get($transition, medium) infinite map.get($easing, linear);
+
+  // Circular shape
   @include border-radius(map.get($percentage, 50));
+
+  // Reduced motion support - respects user preferences
+  @include prefers-reduced-motion {
+    animation: none;
+    border-style: solid;
+  }
 }
 
+// Size variants using spacing design tokens
 .auto {
   @include size(auto, auto);
 }

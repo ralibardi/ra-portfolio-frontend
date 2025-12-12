@@ -4,7 +4,7 @@
  * These tests verify the correctness properties defined in the design document
  * for the 7-1 CSS Modules implementation.
  */
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import * as fc from 'fast-check';
 import styles from '../assets/card.module.scss';
 import Card from './card';

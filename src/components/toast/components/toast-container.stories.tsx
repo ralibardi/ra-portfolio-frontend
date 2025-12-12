@@ -13,12 +13,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const DemoButtons: React.FC = () => {
-  const { success, error, info } = useToast();
+  const { success, error, info, warning } = useToast();
   return (
     <div style={{ display: 'flex', gap: 12 }}>
-      <button onClick={() => success('Saved!')}>Success</button>
-      <button onClick={() => error('Something went wrong')}>Error</button>
-      <button onClick={() => info('Heads up!')}>Info</button>
+      <button type="button" onClick={() => success('Saved!')}>
+        Success
+      </button>
+      <button type="button" onClick={() => warning('Please review')}>
+        Warning
+      </button>
+      <button type="button" onClick={() => error('Something went wrong')}>
+        Error
+      </button>
+      <button type="button" onClick={() => info('Heads up!')}>
+        Info
+      </button>
     </div>
   );
 };
