@@ -1,5 +1,6 @@
+// Import design tokens from abstracts
 @use 'sass:map';
-@use '@assets/global' as *;
+@use '@assets/abstracts' as *;
 
 .grid {
   display: grid;
@@ -7,13 +8,29 @@
   gap: map.get($spacing, md);
   grid-template-columns: repeat(var(--columns, 2), minmax(0, 1fr));
 
+  // Gap variants using design tokens
+  &[data-gap='sm'] {
+    gap: map.get($spacing, sm);
+  }
+
+  &[data-gap='md'] {
+    gap: map.get($spacing, md);
+  }
+
+  &[data-gap='lg'] {
+    gap: map.get($spacing, lg);
+  }
+
+  &[data-gap='xl'] {
+    gap: map.get($spacing, xl);
+  }
+
+  // Responsive column layouts
   @include breakpoint(tablet) {
-    grid-template-columns: repeat(var(--columnsMd, var(--columns)),
-        minmax(0, 1fr));
+    grid-template-columns: repeat(var(--columnsMd, var(--columns)), minmax(0, 1fr));
   }
 
   @include breakpoint(laptop) {
-    grid-template-columns: repeat(var(--columnsLg, var(--columnsMd, var(--columns))),
-        minmax(0, 1fr));
+    grid-template-columns: repeat(var(--columnsLg, var(--columnsMd, var(--columns))), minmax(0, 1fr));
   }
 }

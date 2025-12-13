@@ -1,28 +1,29 @@
-@use "sass:map";
-@use '@assets/global' as *;
+// Import design tokens from abstracts
+@use 'sass:map';
+@use '@assets/abstracts' as *;
 
 .hDivider {
-    position: relative;
-    width: map.get($percentage, 100);
-    height: map.get($border, xs);
-    background-color: var(--foreground-colour);
-    @include border-radius(map.get($border, xs));
-    margin: map.get($spacing, lg) map.get($spacing, 0);
+  position: relative;
+  width: map.get($percentage, 100);
+  height: map.get($border, xs);
+  background-color: var(--foreground-colour);
+  @include border-radius(map.get($border, xs));
+  margin: map.get($spacing, lg) 0;
 }
 
 .label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--background-colour);
-    padding: map.get($spacing, 0) map.get($spacing, md);
-    @include font-style(map.get($font-sizes, sm), map.get($font-weights, medium), var(--foreground-colour));
+  position: absolute;
+  top: map.get($percentage, 50);
+  left: map.get($percentage, 50);
+  transform: translate(-50%, -50%);
+  background: var(--background-colour);
+  padding: 0 map.get($spacing, md);
+  @include font-style(map.get($font-sizes, sm), map.get($font-weights, medium), var(--foreground-colour));
 }
 
 .vDivider {
-    width: map.get($border, xs);
-    height: map.get($percentage, 100);
-    background-color: var(--foreground-colour);
-    @include border-radius(map.get($border, xs));
+  width: map.get($border, xs);
+  height: map.get($percentage, 100);
+  background-color: var(--foreground-colour);
+  @include border-radius(map.get($border, xs));
 }

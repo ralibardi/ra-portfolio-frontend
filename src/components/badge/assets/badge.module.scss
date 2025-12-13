@@ -1,5 +1,6 @@
+// Import design tokens from abstracts
 @use 'sass:map';
-@use '@assets/global' as *;
+@use '@assets/abstracts' as *;
 
 .badge {
   display: inline-flex;
@@ -10,22 +11,27 @@
   @include font-style(map.get($font-sizes, sm), map.get($font-weights, medium));
 }
 
+// Variant styles using theme-aware colors
 .primary {
   background: var(--accent-colour);
   color: var(--background-colour);
 }
+
 .secondary {
   background: var(--secondary-colour);
   color: var(--background-colour);
 }
+
 .neutral {
   background: var(--grey);
   color: var(--text-colour);
 }
 
+// Size variants using design tokens
 .sm {
   padding: map.get($spacing, '3xs') map.get($spacing, xs);
 }
+
 .md {
   padding: map.get($spacing, '2xs') map.get($spacing, sm);
 }

@@ -1,35 +1,59 @@
+// Section Component CSS Module
+// Provides consistent section layout with spacing variants and optional header
 @use 'sass:map';
-@use '@assets/global' as *;
+@use '@assets/abstracts' as *;
 
 .section {
   width: map.get($percentage, 100);
+  color: var(--text-colour);
 }
 
+// Spacing variants using design tokens
 .spacing-sm {
   padding-block: map.get($spacing, md);
+
+  @include breakpoint('tablet') {
+    padding-block: map.get($spacing, lg);
+  }
 }
 
 .spacing-md {
   padding-block: map.get($spacing, '2xl');
+
+  @include breakpoint('tablet') {
+    padding-block: map.get($spacing, '3xl');
+  }
 }
 
 .spacing-lg {
   padding-block: map.get($spacing, '3xl');
+
+  @include breakpoint('tablet') {
+    padding-block: map.get($spacing, '4xl');
+  }
 }
 
+// Section header with title and subtitle
 .header {
   @include flexbox(column, flex-start, flex-start);
   gap: map.get($spacing, xs);
-  margin-bottom: map.get($spacing, md);
+  margin-block-end: map.get($spacing, lg);
 }
 
+// Section title with responsive typography
 .title {
-  @include font-style(map.get($font-sizes, lg),
-    map.get($font-weights, semi-bold));
+  @include typography('2xl', semi-bold, tight, var(--text-colour));
+
+  @include breakpoint('tablet') {
+    font-size: map.get($font-sizes, '3xl');
+  }
 }
 
+// Section subtitle with muted color
 .subtitle {
-  @include font-style(map.get($font-sizes, md),
-    map.get($font-weights, regular),
-    var(--foreground-colour));
+  @include typography(md, regular, normal, var(--text-colour-muted));
+
+  @include breakpoint('tablet') {
+    font-size: map.get($font-sizes, lg);
+  }
 }

@@ -1,5 +1,13 @@
+// Container Component - CSS Module
+// Scoped container styles with design token integration
+// Requirements: 2.1, 2.2, 4.1, 4.2, 4.3
+
 @use 'sass:map';
-@use '@assets/global' as *;
+@use '@assets/abstracts' as *;
+
+// =============================================================================
+// Base Container
+// =============================================================================
 
 .container {
   margin-left: auto;
@@ -7,22 +15,42 @@
   width: map.get($percentage, 100);
 }
 
+// =============================================================================
+// Padding Variant
+// =============================================================================
+
 .padded {
-  padding: map.get($spacing, lg);
+  padding: map.get($spacing, md);
+
+  @include breakpoint('tablet') {
+    padding: map.get($spacing, lg);
+  }
+
+  @include breakpoint('desktop') {
+    padding: map.get($spacing, xl);
+  }
 }
 
+// =============================================================================
+// Size Variants (max-width breakpoints using design tokens)
+// =============================================================================
+
+// Small container - 640px (40rem)
 .sm {
-  max-width: 40rem;
+  max-width: map.get($spacing, '4xl') * 10; // 640px
 }
 
+// Medium container - 768px (48rem)
 .md {
-  max-width: 48rem;
+  max-width: map.get($spacing, '3xl') * 16; // 768px
 }
 
+// Large container - 1024px (64rem)
 .lg {
-  max-width: 64rem;
+  max-width: map.get($spacing, '4xl') * 16; // 1024px
 }
 
+// Extra large container - 1280px (80rem)
 .xl {
-  max-width: 80rem;
+  max-width: map.get($spacing, '4xl') * 20; // 1280px
 }
