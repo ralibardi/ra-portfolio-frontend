@@ -1,5 +1,5 @@
-@use "sass:map";
-@use '@assets/global' as *;
+@use 'sass:map';
+@use '@assets/abstracts' as *;
 
 .container {
   position: relative;
@@ -9,12 +9,22 @@
 
 .wrapper {
   @include flexbox(row, flex-start, center);
-  color: var(--background-colour);
+  color: var(--text-colour-inverse);
   font-weight: map.get($font-weights, bold);
   text-decoration: none;
   font-size: map.get($font-sizes, md);
   padding: map.get($spacing, 0) map.get($spacing, xs);
   gap: map.get($spacing, sm);
+  @include transition((opacity map.get($transition, fast) ease));
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+    @include border-radius(map.get($border, sm));
+  }
 }
 
 .imageSmall {
@@ -23,13 +33,18 @@
   overflow: hidden;
   object-fit: cover;
   @include border-radius(map.get($percentage, 50));
-  border: map.get($border, sm) solid var(--background-colour);
+  border: map.get($border, sm) solid var(--text-colour-inverse);
+  @include transition((transform map.get($transition, fast) ease));
+
+  .wrapper:hover & {
+    @include transform(1.05);
+  }
 }
 
 .label {
   white-space: nowrap;
   display: none;
-  @include font-style();
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, medium), var(--text-colour-inverse));
 
   @include breakpoint(laptop-only) {
     display: block;

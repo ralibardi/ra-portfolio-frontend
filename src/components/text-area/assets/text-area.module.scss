@@ -14,25 +14,46 @@
 .textarea {
     @include font-style(map.get($font-sizes, md), map.get($font-weights, regular), var(--text-colour));
     background: var(--background-colour);
-    border: map.get($border, xs) solid var(--foreground-colour);
+    border: map.get($border, xs) solid var(--border-colour);
     @include border-radius(map.get($border, sm));
     padding: map.get($spacing, sm) map.get($spacing, md);
     outline: none;
     resize: vertical;
-    @include transition((border-color map.get($transition, fast) ease), (box-shadow map.get($transition, fast) ease));
+    min-height: calc(map.get($spacing, '3xl') * 2);
+    @include transition((border-color map.get($transition, fast) ease), (box-shadow map.get($transition, fast) ease), (outline map.get($transition, fast) ease));
+
+    &::placeholder {
+        color: var(--text-colour-muted);
+    }
+
+    &:hover:not(:focus):not(:disabled) {
+        border-color: var(--border-colour-strong);
+    }
 
     &:focus {
-        border-color: var(--accent-colour);
-        @include box-shadow(0, map.get($spacing, '3xs'), map.get($spacing, '2xs'), 0, map.get($neutral, black-alpha-08));
+        border-color: var(--focus-colour);
+        @include theme-aware-focus;
+    }
+
+    &:disabled {
+        background: var(--background-colour-alt);
+        color: var(--text-colour-muted);
+        cursor: not-allowed;
+        resize: none;
     }
 }
 
 .textareaError {
     border-color: var(--error-colour);
+
+    &:focus {
+        border-color: var(--error-colour);
+        outline-color: var(--error-colour);
+    }
 }
 
 .helper {
-    @include font-style(map.get($font-sizes, sm), map.get($font-weights, regular), var(--foreground-colour));
+    @include font-style(map.get($font-sizes, sm), map.get($font-weights, regular), var(--text-colour-muted));
 }
 
 .error {

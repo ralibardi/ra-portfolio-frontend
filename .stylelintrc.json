@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json.schemastore.org/stylelintrc",
+  "extends": ["stylelint-config-standard-scss"],
+  "plugins": ["stylelint-scss", "stylelint-order"],
+  "ignoreFiles": [
+    "node_modules/**",
+    "dist/**",
+    "coverage/**",
+    "storybook-static/**",
+    "**/*.min.css",
+    "**/*.bundle.css"
+  ],
+  "rules": {
+    "color-no-hex": [
+      true,
+      {
+        "message": "Use design tokens from $primary, $secondary, $neutral, $grey, $success, $warning, $error, or $info maps instead of hex colors. Example: map.get($primary, base)",
+        "severity": "warning"
+      }
+    ],
+    "color-named": [
+      "never",
+      {
+        "message": "Use design tokens instead of named colors. Example: map.get($neutral, white)",
+        "severity": "warning",
+        "ignore": ["inside-function"]
+      }
+    ],
+    "declaration-property-value-disallowed-list": [
+      {
+        "/^margin/": ["/^\\d+px$/", "/^\\d+em$/"],
+        "/^padding/": ["/^\\d+px$/", "/^\\d+em$/"],
+        "/^gap/": ["/^\\d+px$/", "/^\\d+em$/"],
+        "font-size": ["/^\\d+px$/"],
+        "border-radius": ["/^\\d+px$/", "/^\\d+em$/"],
+        "z-index": ["/^\\d+$/"]
+      },
+      {
+        "message": "Use design tokens instead of hardcoded values. Use map.get($spacing, *) for spacing, map.get($font-sizes, *) for font-size, map.get($border, *) for border-radius, map.get($z-index, *) for z-index",
+        "severity": "warning"
+      }
+    ],
+    "function-disallowed-list": [
+      ["rgb", "rgba", "hsl", "hsla"],
+      {
+        "message": "Use design tokens from color maps instead of color functions. Example: map.get($primary, base) or var(--primary-colour)",
+        "severity": "warning"
+      }
+    ],
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9]*(__[a-z][a-zA-Z0-9]*)?(--[a-z][a-zA-Z0-9]*)?$|^[a-z][a-zA-Z0-9-]*$",
+      {
+        "message": "CSS class names should use camelCase, kebab-case, or BEM-like naming. Examples: .container, .card-header, .button__icon, .button--primary",
+        "severity": "warning"
+      }
+    ],
+    "scss/load-partial-extension": "never",
+    "scss/at-use-no-unnamespaced": null,
+    "scss/dollar-variable-pattern": [
+      "^[a-z][a-zA-Z0-9-]*$",
+      {
+        "message": "SCSS variables should use kebab-case or camelCase. Example: $spacing-base, $primaryColor"
+      }
+    ],
+    "scss/percent-placeholder-pattern": [
+      "^[a-z][a-zA-Z0-9-]*$",
+      {
+        "message": "SCSS placeholders should use kebab-case or camelCase"
+      }
+    ],
+    "scss/at-mixin-pattern": [
+      "^[a-z][a-zA-Z0-9-]*$",
+      {
+        "message": "SCSS mixins should use kebab-case or camelCase. Example: @mixin theme-aware-surface"
+      }
+    ],
+    "scss/at-function-pattern": [
+      "^[a-z][a-zA-Z0-9-]*$",
+      {
+        "message": "SCSS functions should use kebab-case or camelCase"
+      }
+    ],
+    "scss/dollar-variable-empty-line-before": null,
+    "scss/at-if-closing-brace-newline-after": null,
+    "scss/at-if-closing-brace-space-after": null,
+    "scss/at-else-empty-line-before": null,
+    "scss/at-else-closing-brace-newline-after": null,
+    "scss/at-else-closing-brace-space-after": null,
+    "scss/operator-no-unspaced": null,
+    "scss/at-if-no-null": null,
+    "scss/comment-no-empty": null,
+    "scss/at-extend-no-missing-placeholder": null,
+    "declaration-block-single-line-max-declarations": null,
+    "property-no-vendor-prefix": null,
+    "custom-property-pattern": null,
+    "selector-not-notation": null,
+    "order/properties-alphabetical-order": null,
+    "order/order": null,
+    "max-nesting-depth": [
+      4,
+      {
+        "message": "Maximum nesting depth of 4 exceeded. Consider flattening your selectors for better maintainability",
+        "severity": "warning",
+        "ignoreAtRules": ["media", "supports", "include", "if", "else", "each", "for"]
+      }
+    ],
+    "selector-max-compound-selectors": [
+      4,
+      {
+        "message": "Maximum of 4 compound selectors exceeded. Consider simplifying your selector",
+        "severity": "warning"
+      }
+    ],
+    "selector-max-id": [
+      0,
+      {
+        "message": "ID selectors are not allowed. Use class selectors instead for better specificity management",
+        "severity": "warning"
+      }
+    ],
+    "keyframes-name-pattern": null,
+    "no-descending-specificity": null,
+    "scss/no-global-function-names": null,
+    "scss/operator-no-newline-after": null,
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "tailwind",
+          "apply",
+          "variants",
+          "responsive",
+          "screen",
+          "use",
+          "forward",
+          "include",
+          "mixin",
+          "function",
+          "return",
+          "if",
+          "else",
+          "each",
+          "for",
+          "while",
+          "extend",
+          "at-root",
+          "debug",
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "at-rule-no-unknown": null,
+    "at-rule-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": ["container-type", "container-name"]
+      }
+    ],
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": [
+          "currentColor",
+          "inherit",
+          "initial",
+          "unset",
+          "optimizeLegibility",
+          "Montserrat"
+        ],
+        "ignoreFunctions": ["map-get", "map.get"]
+      }
+    ],
+    "unit-disallowed-list": [
+      ["cm", "mm", "in", "pt", "pc"],
+      {
+        "message": "Use rem, em, px, %, vw, vh, dvh, or svh units instead",
+        "severity": "error"
+      }
+    ],
+    "declaration-block-no-redundant-longhand-properties": null,
+    "shorthand-property-no-redundant-values": true,
+    "font-family-name-quotes": null,
+    "function-url-quotes": "always",
+    "selector-attribute-quotes": "always",
+    "alpha-value-notation": "number",
+    "color-function-notation": null,
+    "import-notation": null,
+    "rule-empty-line-before": null
+  },
+  "overrides": [
+    {
+      "files": ["**/*.module.scss"],
+      "rules": {
+        "selector-class-pattern": [
+          "^[a-z][a-zA-Z0-9-]*$|^is[A-Z][a-zA-Z0-9]*$",
+          {
+            "message": "CSS Module class names should use camelCase or kebab-case. Examples: .container, .cardHeader, .spacing-md, .isActive",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "**/abstracts/**/*.scss",
+        "**/themes/**/*.scss",
+        "**/_colours.scss",
+        "**/_variables.scss"
+      ],
+      "rules": {
+        "color-no-hex": null,
+        "function-disallowed-list": null,
+        "declaration-property-value-disallowed-list": null
+      }
+    },
+    {
+      "files": ["**/vendors/**/*.scss"],
+      "rules": {
+        "color-no-hex": null,
+        "function-disallowed-list": null,
+        "declaration-property-value-disallowed-list": null,
+        "selector-class-pattern": null,
+        "selector-max-id": null
+      }
+    },
+    {
+      "files": [
+        "**/base/**/*.scss",
+        "**/layout/**/*.scss",
+        "**/utilities/**/*.scss",
+        "**/index.scss",
+        "**/global.scss",
+        "**/main.scss"
+      ],
+      "rules": {
+        "selector-class-pattern": null,
+        "selector-max-id": null
+      }
+    }
+  ]
+}

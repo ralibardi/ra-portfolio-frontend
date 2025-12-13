@@ -3,18 +3,10 @@
 
 .container {
   @include flexbox(row, center, center);
-  @include size(map.get($percentage, 100), 100vh);
+  @include size(map.get($percentage, 100), map.get($viewport, full-height));
   background-color: var(--background-colour);
   @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
-  @include transition(background-color map.get($transition, medium));
-
-  @media (prefers-color-scheme: dark) {
-    @include theme(dark);
-  }
-
-  @media (prefers-color-scheme: light) {
-    @include theme(light);
-  }
+  @include transition(background-color map.get($transition, medium) ease);
 
   &:hover {
     animation: pulse map.get($transition, medium) ease-in-out;

@@ -1,20 +1,45 @@
-@use "sass:map";
-@use '@assets/global' as *;
+@use 'sass:map';
+@use '@assets/abstracts' as *;
 
 .container {
   text-decoration: none;
   @include flexbox(row, flex-start, center);
   @include size($height: map.get($spacing, lg));
+  @include transition((transform map.get($transition, fast) ease));
+
+  &:hover {
+    @include transform(1.02);
+
+    .icon {
+      color: var(--accent-colour-hover);
+    }
+  }
+
+  &:active {
+    @include transform(0.98);
+
+    .icon {
+      color: var(--accent-colour-active);
+    }
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+    @include border-radius(map.get($border, sm));
+  }
 }
 
 .icon {
-  margin-right: map.get($spacing, md);
+  margin-inline-end: map.get($spacing, md);
   color: var(--accent-colour);
   @include size(map.get($spacing, lg), map.get($spacing, lg));
-  @include transition((color map.get($transition, fast) ease), (box-shadow map.get($transition, fast) ease));
+  @include transition(
+    (color map.get($transition, fast) ease),
+    (transform map.get($transition, fast) ease)
+  );
 }
 
 .label {
-  margin-right: map.get($spacing, md);
+  margin-inline-end: map.get($spacing, md);
   @include font-style(map.get($font-sizes, md), map.get($font-weights, medium), var(--text-colour));
 }

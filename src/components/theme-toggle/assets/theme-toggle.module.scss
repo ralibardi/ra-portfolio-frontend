@@ -1,0 +1,16 @@
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+.container {
+  @include flexbox(row, center, center);
+  @include transition((opacity map.get($transition, fast) ease));
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.wrapper {
+  position: relative;
+  @include flexbox(row, center, center);
+}

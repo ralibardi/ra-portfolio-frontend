@@ -13,15 +13,47 @@
 
 .header {
   @include flexbox(row, center, center);
+  gap: map.get($spacing, md);
   margin-bottom: map.get($spacing, md);
 }
 
-.header__title {
-  @include font-style(map.get($font-sizes, lg), map.get($font-weights, bold));
+.heading {
+  @include font-style(map.get($font-sizes, '2xl'), map.get($font-weights, bold));
+  color: var(--text-colour);
 }
 
 .description {
   @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
   text-align: center;
   line-height: map.get($font-heights, normal);
+  max-width: map.get($max-width, '2xl');
+  width: map.get($percentage, 100);
+}
+
+.message {
+  @include font-style(map.get($font-sizes, md), map.get($font-weights, medium));
+  color: map.get($error, base);
+  cursor: pointer;
+  padding: map.get($spacing, sm);
+  @include border-radius(map.get($border, sm));
+  @include transition(background-color map.get($transition, fast) ease);
+
+  &:hover {
+    background-color: map.get($error, alpha-08);
+  }
+}
+
+.stack {
+  @include font-style(map.get($font-sizes, sm), map.get($font-weights, regular));
+  font-family: monospace;
+  background-color: var(--surface-colour);
+  color: var(--text-colour-muted);
+  padding: map.get($spacing, md);
+  @include border-radius(map.get($border, md));
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: map.get($spacing, sm);
+  max-height: map.get($spacing, '7xl');
+  overflow-y: auto;
 }

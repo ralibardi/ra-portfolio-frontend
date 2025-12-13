@@ -2,11 +2,11 @@
 @use '@assets/global' as *;
 
 .container {
-  @include flexbox(row);
+  @include flexbox(row, flex-start, center);
+  gap: map.get($spacing, sm);
 }
 
 .label {
-  margin-right: map.get($spacing, sm);
   @include font-style(map.get($font-sizes, md), map.get($font-weights, medium), var(--text-colour));
 }
 
@@ -14,14 +14,33 @@
   @include flexbox(row, flex-start, center);
   @include border-radius(map.get($spacing, '4xl'));
   @include size(map.get($spacing, '2xl'), map.get($spacing, lg));
-  background-color: var(--light-grey);
+  background-color: var(--border-colour);
   padding: map.get($spacing, '2xs');
   cursor: pointer;
   user-select: none;
+  border: none;
+  @include transition((background-color map.get($transition, fast) ease), (outline map.get($transition, fast) ease));
+
+  &:hover:not(:disabled) {
+    background-color: var(--border-colour-strong);
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
   &[data-ison='true'] {
     background-color: var(--accent-colour);
     justify-content: flex-end;
+
+    &:hover:not(:disabled) {
+      background-color: var(--accent-colour-hover);
+    }
   }
 }
 

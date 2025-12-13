@@ -33,7 +33,7 @@
   @include border-radius(map.get($border, sm));
   @include flexbox(column, center, center);
   background-color: var(--light-grey);
-  max-width: 64rem;
+  max-width: map.get($max-width, '5xl');
 }
 
 .constructionMessageTitle {
@@ -56,7 +56,7 @@
 
 .cards {
   width: map.get($percentage, 100);
-  max-width: 80rem;
+  max-width: map.get($max-width, '7xl');
   padding: map.get($spacing, xl);
   margin: map.get($spacing, 0) auto map.get($spacing, '2xl');
 }

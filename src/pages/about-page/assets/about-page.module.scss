@@ -15,7 +15,7 @@
 
 .content {
   @include flexbox(column, flex-start, center);
-  max-width: map.get($spacing, '4xl');
+  max-width: map.get($max-width, '5xl');
   width: map.get($percentage, 100);
   gap: map.get($spacing, lg);
 }

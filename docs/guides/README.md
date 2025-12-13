@@ -5,18 +5,53 @@ This folder contains step-by-step guides for common development tasks.
 ## 📖 What's Here?
 
 Practical how-to guides for:
+
 - Project setup and installation
 - Development workflow
+- Styling with 7-1 Pattern and CSS Modules
 - Testing procedures
 - Deployment processes
 - Troubleshooting common issues
 
+## 📚 Available Guides
+
+### [`STYLING_GUIDE.md`](STYLING_GUIDE.md) ✅
+
+**Purpose**: Complete guide to the styling system
+
+**Contents**:
+
+- 7-1 folder structure and purpose
+- CSS Modules integration
+- Design token usage patterns
+- Utility class system
+- Component migration guide
+- Best practices and quick reference
+
+---
+
+### [`CSS_MODULE_TEMPLATE.md`](CSS_MODULE_TEMPLATE.md) ✅
+
+**Purpose**: Templates for creating new component styles
+
+**Contents**:
+
+- Basic CSS Module template
+- Component TypeScript template
+- Specialized templates (Card, Button, Input, Toast)
+- Page component template
+- Checklist for new components
+
+---
+
 ## 📚 Planned Guides
 
 ### `SETUP.md` (Coming Soon)
+
 **Purpose**: Get the project running locally
 
 **Contents**:
+
 - Prerequisites (Node, pnpm, etc.)
 - Installation steps
 - Environment configuration
@@ -25,9 +60,11 @@ Practical how-to guides for:
 ---
 
 ### `DEVELOPMENT.md` (Coming Soon)
+
 **Purpose**: Daily development workflow
 
 **Contents**:
+
 - Running dev server
 - Creating components
 - Writing tests
@@ -37,9 +74,11 @@ Practical how-to guides for:
 ---
 
 ### `TESTING.md` (Coming Soon)
+
 **Purpose**: Testing guidelines and procedures
 
 **Contents**:
+
 - Running tests
 - Writing unit tests
 - Writing integration tests
@@ -49,9 +88,11 @@ Practical how-to guides for:
 ---
 
 ### `DEPLOYMENT.md` (Coming Soon)
+
 **Purpose**: Deploying to production
 
 **Contents**:
+
 - Build process
 - Deployment to Azure
 - Environment variables
@@ -61,9 +102,11 @@ Practical how-to guides for:
 ---
 
 ### `TROUBLESHOOTING.md` (Coming Soon)
+
 **Purpose**: Common issues and solutions
 
 **Contents**:
+
 - Build errors
 - Runtime errors
 - Dependency issues
@@ -73,9 +116,11 @@ Practical how-to guides for:
 ---
 
 ### `CONTRIBUTING.md` (Coming Soon)
+
 **Purpose**: Contributing to the project
 
 **Contents**:
+
 - Code standards
 - Commit conventions
 - PR process
@@ -86,17 +131,20 @@ Practical how-to guides for:
 ## 🎯 How to Use These Guides
 
 ### For New Developers
+
 1. Start with `SETUP.md`
 2. Read `DEVELOPMENT.md`
 3. Review `TESTING.md`
 4. Keep `TROUBLESHOOTING.md` handy
 
 ### For Experienced Developers
+
 - Quick reference for specific tasks
 - Refresh on project-specific conventions
 - Troubleshooting when issues arise
 
 ### For DevOps/Deployment
+
 - Focus on `DEPLOYMENT.md`
 - Review environment configuration
 - Understand rollback procedures
@@ -104,31 +152,38 @@ Practical how-to guides for:
 ## 📝 Guide Standards
 
 ### Structure
+
 ```markdown
 # Guide Title
 
 Brief description of what this guide covers.
 
 ## Prerequisites
+
 - List required knowledge/tools
 - Link to setup guides if needed
 
 ## Step-by-Step Instructions
+
 1. Clear, numbered steps
 2. Code examples where helpful
 3. Expected outcomes
 
 ## Troubleshooting
+
 Common issues and solutions
 
 ## Next Steps
+
 What to do after completing this guide
 
 ## Related Guides
+
 Links to related documentation
 ```
 
 ### Writing Style
+
 - **Clear and Concise**: Get to the point
 - **Step-by-Step**: Numbered instructions
 - **Examples**: Show, don't just tell
@@ -138,6 +193,7 @@ Links to related documentation
 ## 🔍 Finding the Right Guide
 
 ### By Task
+
 - **Getting Started**: `SETUP.md`
 - **Daily Development**: `DEVELOPMENT.md`
 - **Writing Tests**: `TESTING.md`
@@ -145,6 +201,7 @@ Links to related documentation
 - **Fixing Issues**: `TROUBLESHOOTING.md`
 
 ### By Experience Level
+
 - **Beginner**: Start with `SETUP.md`, then `DEVELOPMENT.md`
 - **Intermediate**: Focus on `TESTING.md` and `CONTRIBUTING.md`
 - **Advanced**: `DEPLOYMENT.md` and architecture docs
@@ -152,18 +209,21 @@ Links to related documentation
 ## 🎓 Learning Path
 
 ### Week 1: Setup and Basics
+
 1. Complete `SETUP.md`
 2. Read `DEVELOPMENT.md`
 3. Build your first component
 4. Run tests
 
 ### Week 2: Testing and Quality
+
 1. Study `TESTING.md`
 2. Write tests for components
 3. Review code standards
 4. Use Storybook
 
 ### Week 3: Advanced Topics
+
 1. Review architecture docs
 2. Understand deployment process
 3. Contribute improvements
@@ -172,12 +232,14 @@ Links to related documentation
 ## 🔄 Maintenance
 
 ### When to Update
+
 - Code changes affect workflow
 - New tools or processes added
 - Common issues discovered
 - Feedback from developers
 
 ### How to Update
+
 1. Make changes to guide
 2. Test instructions work
 3. Update related guides

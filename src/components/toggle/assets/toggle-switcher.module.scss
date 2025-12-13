@@ -10,14 +10,19 @@
   @include size(calc(map.get($spacing, xl) + map.get($spacing, xs)));
   @include border-radius(map.get($spacing, xl));
   @include flexbox(row, center, center);
+  @include transition(outline map.get($transition, fast) ease);
+
+  &:focus-within {
+    @include theme-aware-focus;
+  }
 }
 
 .light {
-  background-color: map.get($neutral, black);
+  background-color: var(--text-colour);
 }
 
 .dark {
-  background-color: map.get($neutral, white);
+  background-color: var(--text-colour-inverse);
 }
 
 .container input {
@@ -31,7 +36,7 @@
       -#{map.get($spacing, xs)},
       0,
       0,
-      map.get($neutral, white),
+      var(--text-colour-inverse),
       true);
     @include size(calc(map.get($spacing, md) + map.get($spacing, '2xs')));
     @include border-radius(map.get($percentage, 50));
@@ -60,14 +65,14 @@
       top: map.get($percentage, 50);
       left: map.get($percentage, 50);
 
-      box-shadow: 0 -#{map.get($spacing, sm)} 0 map.get($neutral, black),
-      0 map.get($spacing, sm) 0 map.get($neutral, black),
-      map.get($spacing, sm) 0 0 map.get($neutral, black),
-      -#{map.get($spacing, sm)} 0 0 map.get($neutral, black),
-      map.get($spacing, xs) map.get($spacing, xs) 0 map.get($neutral, black),
-      -#{map.get($spacing, xs)} map.get($spacing, xs) 0 map.get($neutral, black),
-      map.get($spacing, xs) -#{map.get($spacing, xs)} 0 map.get($neutral, black),
-      -#{map.get($spacing, xs)} -#{map.get($spacing, xs)} 0 map.get($neutral, black);
+      box-shadow: 0 -#{map.get($spacing, sm)} 0 var(--text-colour),
+      0 map.get($spacing, sm) 0 var(--text-colour),
+      map.get($spacing, sm) 0 0 var(--text-colour),
+      -#{map.get($spacing, sm)} 0 0 var(--text-colour),
+      map.get($spacing, xs) map.get($spacing, xs) 0 var(--text-colour),
+      -#{map.get($spacing, xs)} map.get($spacing, xs) 0 var(--text-colour),
+      map.get($spacing, xs) -#{map.get($spacing, xs)} 0 var(--text-colour),
+      -#{map.get($spacing, xs)} -#{map.get($spacing, xs)} 0 var(--text-colour);
 
       @include transform(0);
       @include size(map.get($spacing, '2xs'));
@@ -82,11 +87,11 @@
       -#{map.get($spacing, xl)},
       0,
       0,
-      map.get($neutral, black),
+      var(--text-colour),
       true);
 
     &::before {
-      background: map.get($neutral, black);
+      background: var(--text-colour);
       @include transition(background map.get($transition, fast) ease map.get($transition, 0));
     }
 

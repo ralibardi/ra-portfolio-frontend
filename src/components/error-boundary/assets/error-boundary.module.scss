@@ -1,0 +1,27 @@
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// ErrorBoundary CSS Module
+// Note: The ErrorBoundary component is a wrapper that uses react-error-boundary
+// and renders ErrorPage as the fallback. This module provides styles for any
+// future wrapper-level styling needs.
+
+.wrapper {
+  // Full viewport wrapper for error boundary
+  @include size(map.get($percentage, 100), auto);
+  min-height: 100dvh;
+}
+
+// Animation for error state transitions
+.errorTransition {
+  animation: fadeIn map.get($transition, medium) ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

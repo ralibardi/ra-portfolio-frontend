@@ -4,7 +4,7 @@
 .container {
   @include flexbox(row, center, center);
   @include size(calc(map.get($spacing, xl) + map.get($spacing, xs)));
-  @include box-shadow(map.get($spacing, 0), map.get($spacing, 0), map.get($spacing, sm), map.get($spacing, '3xs'), var(--text-colour));
+  @include box-shadow(map.get($spacing, 0), map.get($spacing, 0), map.get($spacing, sm), map.get($spacing, '3xs'), var(--shadow-colour));
   @include border-radius(map.get($spacing, xl));
   position: relative;
   margin-left: map.get($spacing, md);
@@ -12,9 +12,34 @@
   cursor: pointer;
 }
 
-.toggle[data-ison='true'] {
-  background-color: var(--accent-colour);
-  justify-content: flex-end;
+.toggle {
+  @include flexbox(row, center, center);
+  background-color: var(--surface-colour);
+  border: none;
+  cursor: pointer;
+  @include transition((background-color map.get($transition, fast) ease), (outline map.get($transition, fast) ease));
+
+  &:hover:not(:disabled) {
+    background-color: var(--surface-colour-hover);
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &[data-ison='true'] {
+    background-color: var(--accent-colour);
+    justify-content: flex-end;
+
+    &:hover:not(:disabled) {
+      background-color: var(--accent-colour-hover);
+    }
+  }
 }
 
 .switch {
@@ -26,18 +51,18 @@
 .icon {
   @include size(map.get($spacing, lg));
   padding-right: map.get($spacing, sm);
+}
 
-  &Left {
-    @extend .icon;
-    color: var(--grey);
-  }
+.iconLeft {
+  @extend .icon;
+  color: var(--text-colour-muted);
+}
 
-  &Right {
-    @extend .icon;
-    color: var(--accent-colour);
-    padding-right: map.get($spacing, 0);
-    padding-left: map.get($spacing, sm);
-  }
+.iconRight {
+  @extend .icon;
+  color: var(--accent-colour);
+  padding-right: map.get($spacing, 0);
+  padding-left: map.get($spacing, sm);
 }
 
 .disabled {
