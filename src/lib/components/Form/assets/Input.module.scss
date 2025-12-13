@@ -1,0 +1,152 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Input Container
+// ============================================================================
+
+.container {
+  @include flexbox(column, flex-start, stretch);
+  gap: map.get($spacing, '2xs');
+  width: 100%;
+}
+
+.container--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// ============================================================================
+// Label Styles
+// ============================================================================
+
+.label {
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, medium),
+    var(--text-colour)
+  );
+  line-height: map.get($font-heights, normal);
+  cursor: pointer;
+
+  .container--disabled & {
+    cursor: not-allowed;
+  }
+}
+
+.required {
+  color: var(--error-colour);
+  margin-left: map.get($spacing, '3xs');
+}
+
+// ============================================================================
+// Input Field Styles
+// ============================================================================
+
+.input {
+  // Reset
+  appearance: none;
+  background: none;
+  font-family: $font-family;
+
+  // Layout
+  width: 100%;
+  padding: map.get($spacing, xs) map.get($spacing, sm);
+  box-sizing: border-box;
+
+  // Typography
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, regular),
+    var(--text-colour)
+  );
+  line-height: map.get($font-heights, normal);
+
+  // Appearance
+  background-color: var(--surface-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+  @include border-radius(map.get($border, md));
+
+  // Transitions
+  @include transition(
+    (border-color map.get($transition, fast) ease),
+    (box-shadow map.get($transition, fast) ease),
+    (background-color map.get($transition, fast) ease)
+  );
+
+  // Placeholder
+  &::placeholder {
+    color: var(--text-colour-muted);
+    opacity: 1;
+  }
+
+  // Focus state
+  &:focus {
+    outline: none;
+    border-color: var(--accent-colour);
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  // Hover state
+  &:hover:not(:disabled):not(:focus) {
+    border-color: var(--border-colour-strong);
+  }
+
+  // Disabled state
+  &:disabled {
+    cursor: not-allowed;
+    background-color: var(--background-colour-alt);
+  }
+
+  // Reduced motion
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// Error state
+.input--error {
+  border-color: var(--error-colour);
+
+  &:focus {
+    border-color: var(--error-colour);
+  }
+
+  &:hover:not(:disabled):not(:focus) {
+    border-color: var(--error-colour-dark);
+  }
+}
+
+// Disabled state
+.input--disabled {
+  cursor: not-allowed;
+  background-color: var(--background-colour-alt);
+}
+
+// ============================================================================
+// Helper Text and Error Message
+// ============================================================================
+
+.helperText {
+  @include font-style(
+    map.get($font-sizes, sm),
+    map.get($font-weights, regular),
+    var(--text-colour-muted)
+  );
+  line-height: map.get($font-heights, normal);
+}
+
+.error {
+  @include font-style(
+    map.get($font-sizes, sm),
+    map.get($font-weights, medium),
+    var(--error-colour)
+  );
+  line-height: map.get($font-heights, normal);
+}

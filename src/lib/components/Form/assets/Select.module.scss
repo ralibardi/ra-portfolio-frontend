@@ -1,0 +1,265 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Select Container
+// ============================================================================
+
+.container {
+  @include flexbox(column, flex-start, stretch);
+  gap: map.get($spacing, '2xs');
+  width: 100%;
+  position: relative;
+}
+
+.container--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// ============================================================================
+// Label Styles
+// ============================================================================
+
+.label {
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, medium),
+    var(--text-colour)
+  );
+  line-height: map.get($font-heights, normal);
+  cursor: pointer;
+
+  .container--disabled & {
+    cursor: not-allowed;
+  }
+}
+
+.required {
+  color: var(--error-colour);
+  margin-left: map.get($spacing, '3xs');
+}
+
+// ============================================================================
+// Trigger Button Styles
+// ============================================================================
+
+.trigger {
+  // Reset
+  appearance: none;
+  background: none;
+  font-family: $font-family;
+  cursor: pointer;
+  text-align: left;
+
+  // Layout
+  @include flexbox(row, space-between, center);
+  width: 100%;
+  padding: map.get($spacing, xs) map.get($spacing, sm);
+  box-sizing: border-box;
+
+  // Typography
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, regular),
+    var(--text-colour)
+  );
+  line-height: map.get($font-heights, normal);
+
+  // Appearance
+  background-color: var(--surface-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+  @include border-radius(map.get($border, md));
+
+  // Transitions
+  @include transition(
+    (border-color map.get($transition, fast) ease),
+    (box-shadow map.get($transition, fast) ease),
+    (background-color map.get($transition, fast) ease)
+  );
+
+  // Focus state
+  &:focus {
+    outline: none;
+    border-color: var(--accent-colour);
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  // Hover state
+  &:hover:not(:disabled) {
+    border-color: var(--border-colour-strong);
+  }
+
+  // Disabled state
+  &:disabled {
+    cursor: not-allowed;
+    background-color: var(--background-colour-alt);
+  }
+
+  // Reduced motion
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// Open state
+.trigger--open {
+  border-color: var(--accent-colour);
+
+  .arrow {
+    transform: rotate(180deg);
+  }
+}
+
+// Error state
+.trigger--error {
+  border-color: var(--error-colour);
+
+  &:focus {
+    border-color: var(--error-colour);
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--error-colour-dark);
+  }
+}
+
+// Disabled state
+.trigger--disabled {
+  cursor: not-allowed;
+  background-color: var(--background-colour-alt);
+}
+
+// Placeholder state
+.trigger--placeholder {
+  .value {
+    color: var(--text-colour-muted);
+  }
+}
+
+// ============================================================================
+// Value and Arrow
+// ============================================================================
+
+.value {
+  flex: 1;
+  @include truncate;
+}
+
+.arrow {
+  @include flexbox(row, center, center);
+  flex-shrink: 0;
+  margin-left: map.get($spacing, xs);
+  color: var(--text-colour-muted);
+
+  @include transition((transform map.get($transition, fast) ease));
+
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// ============================================================================
+// Listbox Dropdown
+// ============================================================================
+
+.listbox {
+  // Reset
+  list-style: none;
+  margin: 0;
+  padding: map.get($spacing, '2xs') 0;
+
+  // Position
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: map.get($z-index, top);
+  margin-top: map.get($spacing, '2xs');
+
+  // Appearance
+  background-color: var(--surface-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+  @include border-radius(map.get($border, md));
+  @include theme-aware-elevation(2);
+
+  // Scrolling
+  max-height: 15rem;
+  overflow-y: auto;
+}
+
+// ============================================================================
+// Option Styles
+// ============================================================================
+
+.option {
+  padding: map.get($spacing, xs) map.get($spacing, sm);
+  cursor: pointer;
+
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, regular),
+    var(--text-colour)
+  );
+  line-height: map.get($font-heights, normal);
+
+  @include transition((background-color map.get($transition, fast) ease));
+
+  &:hover:not(.option--disabled) {
+    background-color: var(--surface-colour-hover);
+  }
+
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// Focused state (keyboard navigation)
+.option--focused {
+  background-color: var(--surface-colour-hover);
+}
+
+// Selected state
+.option--selected {
+  background-color: map.get($primary, alpha-08);
+  color: var(--accent-colour);
+  font-weight: map.get($font-weights, medium);
+
+  &:hover:not(.option--disabled) {
+    background-color: map.get($primary, alpha-08);
+  }
+}
+
+// Disabled state
+.option--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// ============================================================================
+// Helper Text and Error Message
+// ============================================================================
+
+.helperText {
+  @include font-style(
+    map.get($font-sizes, sm),
+    map.get($font-weights, regular),
+    var(--text-colour-muted)
+  );
+  line-height: map.get($font-heights, normal);
+}
+
+.error {
+  @include font-style(
+    map.get($font-sizes, sm),
+    map.get($font-weights, medium),
+    var(--error-colour)
+  );
+  line-height: map.get($font-heights, normal);
+}

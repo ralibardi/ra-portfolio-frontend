@@ -1,0 +1,185 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Radio Wrapper
+// ============================================================================
+
+.wrapper {
+  @include flexbox(row, flex-start, center);
+  gap: map.get($spacing, xs);
+  cursor: pointer;
+}
+
+.wrapper--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// ============================================================================
+// Hidden Input
+// ============================================================================
+
+.input {
+  // Visually hidden but accessible
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+
+  // Focus state applied to visual radio
+  &:focus-visible + .radio {
+    @include theme-aware-focus;
+  }
+}
+
+// ============================================================================
+// Visual Radio
+// ============================================================================
+
+.radio {
+  @include flexbox(row, center, center);
+  @include size(1.25rem, 1.25rem);
+  flex-shrink: 0;
+
+  // Appearance
+  background-color: var(--surface-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+  border-radius: 50%;
+
+  // Transitions
+  @include transition(
+    (background-color map.get($transition, fast) ease),
+    (border-color map.get($transition, fast) ease),
+    (box-shadow map.get($transition, fast) ease)
+  );
+
+  // Hover state
+  .wrapper:hover &:not(.radio--disabled) {
+    border-color: var(--border-colour-strong);
+  }
+
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// Checked state
+.radio--checked {
+  border-color: var(--accent-colour);
+
+  .wrapper:hover &:not(.radio--disabled) {
+    border-color: var(--accent-colour-hover);
+  }
+}
+
+// Disabled state
+.radio--disabled {
+  background-color: var(--background-colour-alt);
+  cursor: not-allowed;
+}
+
+// ============================================================================
+// Radio Dot
+// ============================================================================
+
+.dot {
+  @include size(0.625rem, 0.625rem);
+  background-color: var(--accent-colour);
+  border-radius: 50%;
+
+  @include transition((transform map.get($transition, fast) ease));
+
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// ============================================================================
+// Label Styles
+// ============================================================================
+
+.label {
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, regular),
+    var(--text-colour)
+  );
+  line-height: map.get($font-heights, normal);
+  user-select: none;
+}
+
+// ============================================================================
+// RadioGroup Styles
+// ============================================================================
+
+.group {
+  // Reset fieldset
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  @include flexbox(column, flex-start, flex-start);
+  gap: map.get($spacing, xs);
+}
+
+.group--error {
+  .radio {
+    border-color: var(--error-colour);
+  }
+}
+
+.groupLabel {
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, medium),
+    var(--text-colour)
+  );
+  line-height: map.get($font-heights, normal);
+  margin-bottom: map.get($spacing, '2xs');
+}
+
+.required {
+  color: var(--error-colour);
+  margin-left: map.get($spacing, '3xs');
+}
+
+// ============================================================================
+// Options Layout
+// ============================================================================
+
+.options {
+  @include flexbox(column, flex-start, flex-start);
+  gap: map.get($spacing, xs);
+}
+
+.options--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: map.get($spacing, md);
+}
+
+.options--vertical {
+  flex-direction: column;
+}
+
+// ============================================================================
+// Error Message
+// ============================================================================
+
+.error {
+  @include font-style(
+    map.get($font-sizes, sm),
+    map.get($font-weights, medium),
+    var(--error-colour)
+  );
+  line-height: map.get($font-heights, normal);
+}

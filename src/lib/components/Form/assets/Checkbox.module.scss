@@ -1,0 +1,167 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Checkbox Container
+// ============================================================================
+
+.container {
+  @include flexbox(column, flex-start, flex-start);
+  gap: map.get($spacing, '2xs');
+}
+
+.container--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// ============================================================================
+// Wrapper (Label + Checkbox)
+// ============================================================================
+
+.wrapper {
+  @include flexbox(row, flex-start, center);
+  gap: map.get($spacing, xs);
+  cursor: pointer;
+
+  .container--disabled & {
+    cursor: not-allowed;
+  }
+}
+
+// ============================================================================
+// Hidden Input
+// ============================================================================
+
+.input {
+  // Visually hidden but accessible
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+
+  // Focus state applied to visual checkbox
+  &:focus-visible + .checkbox {
+    @include theme-aware-focus;
+  }
+}
+
+// ============================================================================
+// Visual Checkbox
+// ============================================================================
+
+.checkbox {
+  @include flexbox(row, center, center);
+  @include size(1.25rem, 1.25rem);
+  flex-shrink: 0;
+
+  // Appearance
+  background-color: var(--surface-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+  @include border-radius(map.get($border, sm));
+
+  // Transitions
+  @include transition(
+    (background-color map.get($transition, fast) ease),
+    (border-color map.get($transition, fast) ease),
+    (box-shadow map.get($transition, fast) ease)
+  );
+
+  // Hover state
+  .wrapper:hover &:not(.checkbox--disabled) {
+    border-color: var(--border-colour-strong);
+  }
+
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// Checked state
+.checkbox--checked {
+  background-color: var(--accent-colour);
+  border-color: var(--accent-colour);
+  color: var(--text-colour-inverse);
+
+  .wrapper:hover &:not(.checkbox--disabled) {
+    background-color: var(--accent-colour-hover);
+    border-color: var(--accent-colour-hover);
+  }
+}
+
+// Indeterminate state
+.checkbox--indeterminate {
+  background-color: var(--accent-colour);
+  border-color: var(--accent-colour);
+  color: var(--text-colour-inverse);
+
+  .wrapper:hover &:not(.checkbox--disabled) {
+    background-color: var(--accent-colour-hover);
+    border-color: var(--accent-colour-hover);
+  }
+}
+
+// Error state
+.checkbox--error {
+  border-color: var(--error-colour);
+
+  .wrapper:hover &:not(.checkbox--disabled) {
+    border-color: var(--error-colour-dark);
+  }
+}
+
+// Disabled state
+.checkbox--disabled {
+  background-color: var(--background-colour-alt);
+  cursor: not-allowed;
+}
+
+// ============================================================================
+// Icons
+// ============================================================================
+
+.checkIcon,
+.indeterminateIcon {
+  @include size(0.75rem, 0.75rem);
+}
+
+// ============================================================================
+// Label Styles
+// ============================================================================
+
+.label {
+  @include font-style(
+    map.get($font-sizes, md),
+    map.get($font-weights, regular),
+    var(--text-colour)
+  );
+  line-height: map.get($font-heights, normal);
+  user-select: none;
+}
+
+.required {
+  color: var(--error-colour);
+  margin-left: map.get($spacing, '3xs');
+}
+
+// ============================================================================
+// Error Message
+// ============================================================================
+
+.error {
+  @include font-style(
+    map.get($font-sizes, sm),
+    map.get($font-weights, medium),
+    var(--error-colour)
+  );
+  line-height: map.get($font-heights, normal);
+  margin-left: calc(1.25rem + map.get($spacing, xs)); // Align with label
+}

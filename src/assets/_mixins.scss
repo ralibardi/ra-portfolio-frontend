@@ -58,6 +58,10 @@ $themes: (
         --shadow-colour-strong: map.get($neutral, black-alpha-15),
         --focus-colour: map.get($primary, base),
 
+        // Skeleton colors
+        --skeleton-base-colour: map.get($grey, 200),
+        --skeleton-wave-colour: map.get($neutral, white-alpha-30),
+
         // Legacy support (deprecated - use semantic names above)
         --light-grey: map.get($grey, 100),
         --grey: map.get($grey, 200),
@@ -113,6 +117,10 @@ $themes: (
         --shadow-colour: map.get($neutral, black-alpha-25),
         --shadow-colour-strong: map.get($neutral, black-alpha-40),
         --focus-colour: map.get($primary, light),
+
+        // Skeleton colors
+        --skeleton-base-colour: map.get($grey, 400),
+        --skeleton-wave-colour: map.get($neutral, white-alpha-10),
 
         // Legacy support (deprecated - use semantic names above)
         --light-grey: map.get($grey, 400),

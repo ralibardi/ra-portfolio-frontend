@@ -1,0 +1,349 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Button Base Styles
+// ============================================================================
+
+.button {
+  // Reset
+  appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: $font-family;
+
+  // Layout
+  @include flexbox(row, center, center);
+  position: relative;
+  box-sizing: border-box;
+
+  // Typography
+  font-weight: map.get($font-weights, semi-bold);
+  text-decoration: none;
+  white-space: nowrap;
+
+  // Transitions
+  @include transition(
+    (background-color map.get($transition, fast) ease),
+    (color map.get($transition, fast) ease),
+    (border-color map.get($transition, fast) ease),
+    (box-shadow map.get($transition, fast) ease),
+    (transform map.get($transition, fast) ease),
+    (opacity map.get($transition, fast) ease)
+  );
+
+  // Focus styles
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  // Reduced motion
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// ============================================================================
+// Size Variants
+// ============================================================================
+
+.button--small {
+  padding: map.get($spacing, '2xs') map.get($spacing, sm);
+  font-size: map.get($font-sizes, sm);
+  @include border-radius(map.get($border, sm));
+  min-height: 2rem; // 32px
+}
+
+.button--medium {
+  padding: map.get($spacing, xs) map.get($spacing, md);
+  font-size: map.get($font-sizes, md);
+  @include border-radius(map.get($border, md));
+  min-height: 2.5rem; // 40px
+}
+
+.button--large {
+  padding: map.get($spacing, sm) map.get($spacing, lg);
+  font-size: map.get($font-sizes, lg);
+  @include border-radius(map.get($border, md));
+  min-height: 3rem; // 48px
+}
+
+// ============================================================================
+// Variant Styles
+// ============================================================================
+
+// Primary variant
+.button--primary {
+  background-color: var(--accent-colour);
+  color: var(--text-colour-inverse);
+  border: map.get($border, xs) solid var(--accent-colour);
+
+  &:hover:not(:disabled) {
+    background-color: var(--accent-colour-hover);
+    border-color: var(--accent-colour-hover);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--accent-colour-active);
+    border-color: var(--accent-colour-active);
+    @include transform(0.98);
+  }
+}
+
+// Secondary variant
+.button--secondary {
+  background-color: transparent;
+  color: var(--accent-colour);
+  border: map.get($border, xs) solid var(--accent-colour);
+
+  &:hover:not(:disabled) {
+    background-color: map.get($primary, alpha-08);
+    color: var(--accent-colour-hover);
+    border-color: var(--accent-colour-hover);
+  }
+
+  &:active:not(:disabled) {
+    background-color: map.get($primary, alpha-08);
+    color: var(--accent-colour-active);
+    border-color: var(--accent-colour-active);
+    @include transform(0.98);
+  }
+}
+
+// Tertiary variant
+.button--tertiary {
+  background-color: var(--surface-colour);
+  color: var(--text-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+
+  &:hover:not(:disabled) {
+    background-color: var(--surface-colour-hover);
+    border-color: var(--border-colour-strong);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--surface-colour-active);
+    @include transform(0.98);
+  }
+}
+
+// Danger variant
+.button--danger {
+  background-color: var(--error-colour);
+  color: map.get($neutral, white);
+  border: map.get($border, xs) solid var(--error-colour);
+
+  &:hover:not(:disabled) {
+    background-color: var(--error-colour-dark);
+    border-color: var(--error-colour-dark);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--error-colour-dark);
+    border-color: var(--error-colour-dark);
+    @include transform(0.98);
+  }
+}
+
+// Ghost variant
+.button--ghost {
+  background-color: transparent;
+  color: var(--text-colour);
+  border: map.get($border, xs) solid transparent;
+
+  &:hover:not(:disabled) {
+    background-color: var(--surface-colour-hover);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--surface-colour-active);
+    @include transform(0.98);
+  }
+}
+
+// ============================================================================
+// State Modifiers
+// ============================================================================
+
+.button--fullWidth {
+  width: 100%;
+}
+
+.button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.button--loading {
+  cursor: wait;
+  pointer-events: none;
+}
+
+.button--iconOnly {
+  padding: map.get($spacing, xs);
+
+  &.button--small {
+    padding: map.get($spacing, '2xs');
+    min-width: 2rem;
+  }
+
+  &.button--medium {
+    padding: map.get($spacing, xs);
+    min-width: 2.5rem;
+  }
+
+  &.button--large {
+    padding: map.get($spacing, sm);
+    min-width: 3rem;
+  }
+}
+
+// ============================================================================
+// Content Layout
+// ============================================================================
+
+.content {
+  @include flexbox(row, center, center);
+  gap: map.get($spacing, xs);
+}
+
+.label {
+  @include flexbox(row, center, center);
+}
+
+// ============================================================================
+// Icon Styles
+// ============================================================================
+
+.icon {
+  @include flexbox(row, center, center);
+  flex-shrink: 0;
+
+  // Icon sizing based on button size
+  .button--small & {
+    @include size(1rem, 1rem);
+
+    svg {
+      @include size(1rem, 1rem);
+    }
+  }
+
+  .button--medium & {
+    @include size(1.25rem, 1.25rem);
+
+    svg {
+      @include size(1.25rem, 1.25rem);
+    }
+  }
+
+  .button--large & {
+    @include size(1.5rem, 1.5rem);
+
+    svg {
+      @include size(1.5rem, 1.5rem);
+    }
+  }
+}
+
+.icon--left {
+  margin-right: map.get($spacing, '2xs');
+}
+
+.icon--right {
+  margin-left: map.get($spacing, '2xs');
+}
+
+// ============================================================================
+// Spinner Styles
+// ============================================================================
+
+.spinner {
+  @include flexbox(row, center, center);
+  animation: spin 1s linear infinite;
+
+  &::after {
+    content: '';
+    display: block;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: currentColor;
+    border-top-color: transparent;
+  }
+
+  @include prefers-reduced-motion {
+    animation: none;
+
+    &::after {
+      border-top-color: currentColor;
+      opacity: 0.5;
+    }
+  }
+}
+
+// Spinner sizes
+.spinner--small {
+  &::after {
+    @include size(0.875rem, 0.875rem);
+    border-width: 2px;
+  }
+}
+
+.spinner--medium {
+  &::after {
+    @include size(1rem, 1rem);
+    border-width: 2px;
+  }
+}
+
+.spinner--large {
+  &::after {
+    @include size(1.25rem, 1.25rem);
+    border-width: 3px;
+  }
+}
+
+// Icon-only spinner matches icon size
+.spinner--iconSize {
+  .button--small & {
+    &::after {
+      @include size(1rem, 1rem);
+      border-width: 2px;
+    }
+  }
+
+  .button--medium & {
+    &::after {
+      @include size(1.25rem, 1.25rem);
+      border-width: 2px;
+    }
+  }
+
+  .button--large & {
+    &::after {
+      @include size(1.5rem, 1.5rem);
+      border-width: 3px;
+    }
+  }
+}
+
+// ============================================================================
+// Animations
+// ============================================================================
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

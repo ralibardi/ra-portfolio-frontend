@@ -55,6 +55,12 @@ const config: Config = {
     '^@config/(.*)$': '<rootDir>/src/config/$1',
     '^@features/(.*)$': '<rootDir>/src/features/$1',
     '^@hooks/(.*)$': '<rootDir>/src/hooks/$1',
+    // Component library testing utilities
+    '^@lib/testing$': '<rootDir>/src/lib/testing/index.ts',
+    '^@lib/testing/(.*)$': '<rootDir>/src/lib/testing/$1',
+    // Component library components
+    '^@lib/components$': '<rootDir>/src/lib/components/index.ts',
+    '^@lib/components/(.*)$': '<rootDir>/src/lib/components/$1',
     '^@lib/(.*)$': '<rootDir>/src/lib/$1',
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@tests/(.*)$': '<rootDir>/src/tests/$1',

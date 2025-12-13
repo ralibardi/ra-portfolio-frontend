@@ -1,0 +1,131 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Skeleton Base Styles
+// ============================================================================
+
+.skeleton {
+  display: block;
+  background-color: var(--skeleton-base-colour);
+  position: relative;
+  overflow: hidden;
+
+  // Default dimensions for text variant
+  width: 100%;
+  height: 1em;
+}
+
+// ============================================================================
+// Variant Styles
+// ============================================================================
+
+.skeleton--text {
+  @include border-radius(map.get($border, xs));
+  height: 1em;
+  margin-bottom: map.get($spacing, '2xs');
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.skeleton--circle {
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+}
+
+.skeleton--rectangle {
+  @include border-radius(map.get($border, sm));
+  width: 100%;
+  height: 6rem;
+}
+
+// ============================================================================
+// Animation Styles
+// ============================================================================
+
+.skeleton--pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+
+  @include prefers-reduced-motion {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+.skeleton--wave {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--skeleton-wave-colour),
+      transparent
+    );
+    animation: wave 1.5s linear infinite;
+  }
+
+  @include prefers-reduced-motion {
+    &::after {
+      animation: none;
+      display: none;
+    }
+
+    opacity: 0.7;
+  }
+}
+
+.skeleton--none {
+  animation: none;
+}
+
+// ============================================================================
+// Multi-line Container
+// ============================================================================
+
+.skeletonLines {
+  @include flexbox(column, flex-start, stretch);
+  gap: map.get($spacing, '2xs');
+  width: 100%;
+}
+
+// Last line in multi-line skeleton is shorter
+.skeleton--lastLine {
+  width: 80%;
+}
+
+// ============================================================================
+// Animations
+// ============================================================================
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
