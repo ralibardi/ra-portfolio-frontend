@@ -1,0 +1,157 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Pagination Container
+// ============================================================================
+
+.pagination {
+  @include flexbox(row, center, center);
+  gap: map.get($spacing, '2xs');
+  font-family: $font-family;
+}
+
+.pagination--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+// ============================================================================
+// Page Numbers Container
+// ============================================================================
+
+.pages {
+  @include flexbox(row, center, center);
+  gap: map.get($spacing, '2xs');
+}
+
+// ============================================================================
+// Button Base Styles
+// ============================================================================
+
+.button {
+  // Reset
+  appearance: none;
+  background: none;
+  cursor: pointer;
+  font-family: $font-family;
+
+  // Layout
+  @include flexbox(row, center, center);
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: map.get($spacing, '2xs') map.get($spacing, sm);
+
+  // Typography
+  font-size: map.get($font-sizes, md);
+  font-weight: map.get($font-weights, medium);
+  color: var(--text-colour);
+
+  // Background and border
+  background-color: transparent;
+  border: map.get($border, xs) solid var(--border-colour);
+  @include border-radius(map.get($border, sm));
+
+  // Transitions
+  @include transition(
+    (background-color map.get($transition, fast) ease),
+    (color map.get($transition, fast) ease),
+    (border-color map.get($transition, fast) ease),
+    (transform map.get($transition, fast) ease)
+  );
+
+  // Hover state
+  &:hover:not(:disabled) {
+    background-color: var(--surface-colour-hover);
+    border-color: var(--accent-colour);
+    color: var(--accent-colour);
+  }
+
+  // Active state
+  &:active:not(:disabled) {
+    background-color: var(--surface-colour-active);
+    @include transform(0.98);
+  }
+
+  // Focus styles
+  &:focus-visible {
+    @include theme-aware-focus;
+    z-index: 1;
+    position: relative;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  // Disabled state
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  // Reduced motion
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// ============================================================================
+// Navigation Buttons (Previous/Next)
+// ============================================================================
+
+.button--nav {
+  gap: map.get($spacing, '2xs');
+  padding: map.get($spacing, '2xs') map.get($spacing, md);
+}
+
+.navIcon {
+  font-size: map.get($font-sizes, lg);
+  line-height: 1;
+}
+
+.navLabel {
+  // Hide on small screens
+  @media (width <= 30rem) {
+    @include visually-hidden;
+  }
+}
+
+// ============================================================================
+// Page Number Buttons
+// ============================================================================
+
+.button--page {
+  min-width: 2.5rem;
+  padding: map.get($spacing, '2xs');
+}
+
+.button--current {
+  background-color: var(--accent-colour);
+  border-color: var(--accent-colour);
+  color: var(--background-colour);
+  font-weight: map.get($font-weights, semi-bold);
+
+  &:hover:not(:disabled) {
+    background-color: var(--accent-colour);
+    border-color: var(--accent-colour);
+    color: var(--background-colour);
+  }
+}
+
+// ============================================================================
+// Ellipsis
+// ============================================================================
+
+.ellipsis {
+  @include flexbox(row, center, center);
+  min-width: 2.5rem;
+  height: 2.5rem;
+  font-size: map.get($font-sizes, md);
+  color: var(--text-colour-muted);
+  user-select: none;
+}

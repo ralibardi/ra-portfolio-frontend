@@ -1,0 +1,140 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Breadcrumb Base Styles
+// ============================================================================
+
+.breadcrumb {
+  width: 100%;
+}
+
+// ============================================================================
+// Breadcrumb List
+// ============================================================================
+
+.list {
+  // Reset list styles
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  // Layout
+  @include flexbox(row, flex-start, center);
+  flex-wrap: wrap;
+  gap: map.get($spacing, xs);
+}
+
+// ============================================================================
+// Breadcrumb Item
+// ============================================================================
+
+.item {
+  @include flexbox(row, flex-start, center);
+}
+
+// ============================================================================
+// Separator
+// ============================================================================
+
+.separatorItem {
+  @include flexbox(row, center, center);
+  user-select: none;
+}
+
+.separator {
+  color: var(--text-colour-muted);
+  font-size: map.get($font-sizes, sm);
+  padding: 0 map.get($spacing, '2xs');
+}
+
+// ============================================================================
+// Ellipsis (for truncation)
+// ============================================================================
+
+.ellipsisItem {
+  @include flexbox(row, center, center);
+}
+
+.ellipsis {
+  color: var(--text-colour-muted);
+  font-size: map.get($font-sizes, md);
+  padding: 0 map.get($spacing, '2xs');
+  letter-spacing: 0.1em;
+}
+
+// ============================================================================
+// Link Styles
+// ============================================================================
+
+.link {
+  // Typography
+  font-family: $font-family;
+  font-size: map.get($font-sizes, md);
+  font-weight: map.get($font-weights, regular);
+  line-height: map.get($font-heights, normal);
+  color: var(--text-colour);
+  text-decoration: none;
+
+  // Padding for better click target
+  padding: map.get($spacing, '2xs') map.get($spacing, xs);
+  @include border-radius(map.get($border, sm));
+
+  // Transitions
+  @include transition(
+    (color map.get($transition, fast) ease),
+    (background-color map.get($transition, fast) ease)
+  );
+
+  // Hover state (for clickable items)
+  &:hover:not(.link--current) {
+    color: var(--accent-colour);
+    background-color: var(--surface-colour-hover);
+  }
+
+  // Focus styles
+  &:focus-visible {
+    @include theme-aware-focus;
+    outline-offset: 2px;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  // Reduced motion
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+// Current page styling (last item)
+.link--current {
+  color: var(--text-colour-muted);
+  font-weight: map.get($font-weights, semi-bold);
+  cursor: default;
+
+  // No hover effect for current page
+  &:hover {
+    color: var(--text-colour-muted);
+    background-color: transparent;
+  }
+}
+
+// Button-style link (for onClick without href)
+.link--button {
+  // Reset button styles
+  appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  // Inherit link styles
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}

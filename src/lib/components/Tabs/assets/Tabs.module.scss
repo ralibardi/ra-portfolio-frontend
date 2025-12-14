@@ -1,0 +1,218 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Tabs Container
+// ============================================================================
+
+.tabs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs--horizontal {
+  flex-direction: column;
+}
+
+.tabs--vertical {
+  flex-direction: row;
+}
+
+// ============================================================================
+// Tab List
+// ============================================================================
+
+.tabList {
+  display: flex;
+  border-bottom: map.get($border, xs) solid var(--border-colour);
+  gap: map.get($spacing, '2xs');
+}
+
+.tabList--horizontal {
+  flex-direction: row;
+  border-bottom: map.get($border, xs) solid var(--border-colour);
+  border-right: none;
+}
+
+.tabList--vertical {
+  flex-direction: column;
+  border-bottom: none;
+  border-right: map.get($border, xs) solid var(--border-colour);
+  min-width: 10rem;
+}
+
+// ============================================================================
+// Tab Button
+// ============================================================================
+
+.tab {
+  // Reset
+  appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: $font-family;
+  text-align: left;
+
+  // Layout
+  @include flexbox(row, center, center);
+  padding: map.get($spacing, sm) map.get($spacing, md);
+  position: relative;
+
+  // Typography
+  font-size: map.get($font-sizes, md);
+  font-weight: map.get($font-weights, medium);
+  color: var(--text-colour-muted);
+  white-space: nowrap;
+
+  // Background
+  background-color: transparent;
+
+  // Border radius for top corners (horizontal) or left corners (vertical)
+  @include border-radius(map.get($border, sm) map.get($border, sm) 0 0);
+
+  // Transitions
+  @include transition(
+    (background-color map.get($transition, fast) ease),
+    (color map.get($transition, fast) ease),
+    (border-color map.get($transition, fast) ease)
+  );
+
+  // Bottom border indicator (horizontal)
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: map.get($border, sm);
+    background-color: transparent;
+    @include transition(
+      (background-color map.get($transition, fast) ease)
+    );
+  }
+
+  // Hover state
+  &:hover:not(:disabled) {
+    background-color: var(--surface-colour-hover);
+    color: var(--text-colour);
+  }
+
+  // Active state
+  &:active:not(:disabled) {
+    background-color: var(--surface-colour-active);
+  }
+
+  // Focus styles
+  &:focus-visible {
+    @include theme-aware-focus;
+    z-index: 1;
+    position: relative;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  // Reduced motion
+  @include prefers-reduced-motion {
+    transition: none;
+
+    &::after {
+      transition: none;
+    }
+  }
+}
+
+// Selected tab
+.tab--selected {
+  color: var(--accent-colour);
+  font-weight: map.get($font-weights, semi-bold);
+
+  &::after {
+    background-color: var(--accent-colour);
+  }
+
+  &:hover:not(:disabled) {
+    color: var(--accent-colour);
+  }
+}
+
+// Disabled tab
+.tab--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+// Vertical orientation adjustments
+.tabList--vertical .tab {
+  @include border-radius(map.get($border, sm) 0 0 map.get($border, sm));
+  text-align: left;
+  justify-content: flex-start;
+
+  // Right border indicator instead of bottom
+  &::after {
+    bottom: 0;
+    top: 0;
+    left: auto;
+    right: 0;
+    height: auto;
+    width: map.get($border, sm);
+  }
+}
+
+// ============================================================================
+// Tab Panels Container
+// ============================================================================
+
+.panels {
+  flex: 1;
+  min-height: 0;
+}
+
+// ============================================================================
+// Tab Panel
+// ============================================================================
+
+.panel {
+  padding: map.get($spacing, md);
+  color: var(--text-colour);
+  font-size: map.get($font-sizes, md);
+  line-height: map.get($font-heights, normal);
+
+  // Focus styles for keyboard navigation
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.panel--selected {
+  // Animation for panel appearance
+  animation: fadeIn map.get($transition, fast) ease;
+
+  @include prefers-reduced-motion {
+    animation: none;
+  }
+}
+
+// ============================================================================
+// Animations
+// ============================================================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

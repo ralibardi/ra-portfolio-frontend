@@ -1,0 +1,188 @@
+@use 'sass:map';
+@use '@assets/colours' as *;
+@use '@assets/variables' as *;
+@use '@assets/fonts' as *;
+@use '@assets/mixins' as *;
+
+// ============================================================================
+// Accordion Base Styles
+// ============================================================================
+
+.accordion {
+  width: 100%;
+  @include border-radius(map.get($border, md));
+  overflow: hidden;
+  border: map.get($border, xs) solid var(--border-colour);
+}
+
+// ============================================================================
+// Accordion Item
+// ============================================================================
+
+.item {
+  border-bottom: map.get($border, xs) solid var(--border-colour);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.item--expanded {
+  // Expanded state styling
+}
+
+.item--disabled {
+  opacity: 0.5;
+}
+
+// ============================================================================
+// Header Button
+// ============================================================================
+
+.header {
+  // Reset
+  appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: $font-family;
+  text-align: left;
+
+  // Layout
+  @include flexbox(row, space-between, center);
+  width: 100%;
+  padding: map.get($spacing, md) map.get($spacing, lg);
+  gap: map.get($spacing, md);
+
+  // Typography
+  font-size: map.get($font-sizes, md);
+  font-weight: map.get($font-weights, semi-bold);
+  color: var(--text-colour);
+
+  // Background
+  background-color: var(--surface-colour);
+
+  // Transitions
+  @include transition(
+    (background-color map.get($transition, fast) ease),
+    (color map.get($transition, fast) ease)
+  );
+
+  // Hover state
+  &:hover:not(:disabled) {
+    background-color: var(--surface-colour-hover);
+  }
+
+  // Active state
+  &:active:not(:disabled) {
+    background-color: var(--surface-colour-active);
+  }
+
+  // Focus styles
+  &:focus-visible {
+    @include theme-aware-focus;
+    z-index: 1;
+    position: relative;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  // Reduced motion
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+.header--expanded {
+  background-color: var(--surface-colour-hover);
+}
+
+.header--disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.headerContent {
+  flex: 1;
+  @include truncate;
+}
+
+// ============================================================================
+// Chevron Icon
+// ============================================================================
+
+.icon {
+  @include flexbox(row, center, center);
+  @include size(1.25rem, 1.25rem);
+  flex-shrink: 0;
+  color: var(--text-colour-muted);
+
+  // Transition for rotation
+  @include transition(
+    (transform map.get($transition, fast) ease)
+  );
+
+  svg {
+    @include size(100%, 100%);
+  }
+
+  // Reduced motion
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+.icon--expanded {
+  transform: rotate(180deg);
+}
+
+// ============================================================================
+// Content Panel
+// ============================================================================
+
+.panel {
+  // Hidden by default
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+
+  // Transition for smooth height animation
+  @include transition(
+    (grid-template-rows map.get($transition, medium) ease)
+  );
+
+  // Reduced motion - instant transition
+  @include prefers-reduced-motion {
+    transition: none;
+  }
+}
+
+.panel--expanded {
+  grid-template-rows: 1fr;
+}
+
+.panelContent {
+  min-height: 0;
+  padding: 0 map.get($spacing, lg) map.get($spacing, md);
+  color: var(--text-colour);
+  font-size: map.get($font-sizes, md);
+  line-height: map.get($font-heights, normal);
+
+  // Smooth opacity transition
+  opacity: 0;
+  @include transition(
+    (opacity map.get($transition, fast) ease)
+  );
+
+  .panel--expanded & {
+    opacity: 1;
+  }
+
+  // Reduced motion
+  @include prefers-reduced-motion {
+    transition: none;
+    opacity: 1;
+  }
+}

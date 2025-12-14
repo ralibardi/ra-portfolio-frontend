@@ -8,17 +8,16 @@
  * @module lib/components
  */
 
+// Layout Components
+export * from './Accordion';
+export * from './Breadcrumb';
 // Foundation Components
 export * from './Button';
 // Form Components
 export * from './Form';
 export * from './Loading';
-
-// Layout Components
-// export * from './Accordion';
-// export * from './Breadcrumb';
-// export * from './Tabs';
-// export * from './Pagination';
+export * from './Pagination';
+export * from './Tabs';
 
 // Overlay Components
 // export * from './Modal';
