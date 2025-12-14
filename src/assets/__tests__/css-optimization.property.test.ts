@@ -244,7 +244,7 @@ describe('Property 10: CSS Optimization', () => {
     it('should have organized asset output paths', () => {
       // CSS should go to static/css folder
       expect(viteConfigContent).toContain('assetFileNames');
-      expect(viteConfigContent).toContain('static/${extType}/[name]-[hash][extname]');
+      expect(viteConfigContent).toContain(`static/\${extType}/[name]-[hash][extname]`);
     });
 
     it('should have JS chunks in static/js folder', () => {

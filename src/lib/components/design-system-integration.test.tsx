@@ -162,7 +162,9 @@ describe('Design System Integration Properties', () => {
         fc.string({ minLength: 1, maxLength: 20 }).filter((s) => s.trim().length > 0),
         fc.string({ minLength: 0, maxLength: 50 }),
         (label, value) => {
-          const { container } = render(<Input label={label} value={value} onChange={() => {}} />);
+          const { container } = render(<Input label={label} value={value} onChange={() => {
+            // Intentionally empty - test mock
+          }} />);
 
           const input = container.querySelector('input');
           const labelElement = container.querySelector('label');

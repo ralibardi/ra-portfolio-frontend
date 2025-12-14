@@ -237,7 +237,7 @@ const Tooltip = memo(function Tooltip({
   );
 
   // Clone child element and add event handlers
-  const childElement = children as ReactElement<any>;
+  const childElement = children as ReactElement<Record<string, unknown>>;
   const trigger = cloneElement(childElement, {
     ref: triggerRef,
     onMouseEnter: (e: React.MouseEvent) => {

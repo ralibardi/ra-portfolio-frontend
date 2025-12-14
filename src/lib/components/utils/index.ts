@@ -49,7 +49,7 @@ export const NOTIFICATION_POSITIONS = [
  * Check if a value is a valid component size
  */
 export const isValidSize = (value: string): value is 'small' | 'medium' | 'large' => {
-  return COMPONENT_SIZES.includes(value as any);
+  return COMPONENT_SIZES.includes(value as 'small' | 'medium' | 'large');
 };
 
 /**
@@ -58,7 +58,7 @@ export const isValidSize = (value: string): value is 'small' | 'medium' | 'large
 export const isValidButtonVariant = (
   value: string,
 ): value is 'primary' | 'secondary' | 'tertiary' | 'danger' | 'ghost' => {
-  return BUTTON_VARIANTS.includes(value as any);
+  return BUTTON_VARIANTS.includes(value as 'primary' | 'secondary' | 'tertiary' | 'danger' | 'ghost');
 };
 
 /**
@@ -67,14 +67,14 @@ export const isValidButtonVariant = (
 export const isValidSeverity = (
   value: string,
 ): value is 'info' | 'success' | 'warning' | 'error' => {
-  return SEVERITY_LEVELS.includes(value as any);
+  return SEVERITY_LEVELS.includes(value as 'info' | 'success' | 'warning' | 'error');
 };
 
 /**
  * Check if a value is a valid placement option
  */
 export const isValidPlacement = (value: string): value is 'top' | 'bottom' | 'left' | 'right' => {
-  return PLACEMENT_OPTIONS.includes(value as any);
+  return PLACEMENT_OPTIONS.includes(value as 'top' | 'bottom' | 'left' | 'right');
 };
 
 /**
@@ -97,7 +97,7 @@ export const combineClassNames = (...classes: (string | undefined | null | false
  * Debounce function for performance optimization
  * Useful for search inputs and other high-frequency events
  */
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: never[]) => unknown>(
   func: T,
   wait: number,
 ): ((...args: Parameters<T>) => void) => {
@@ -112,7 +112,7 @@ export const debounce = <T extends (...args: any[]) => any>(
  * Throttle function for performance optimization
  * Useful for scroll events and other continuous events
  */
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: never[]) => unknown>(
   func: T,
   limit: number,
 ): ((...args: Parameters<T>) => void) => {
@@ -121,7 +121,9 @@ export const throttle = <T extends (...args: any[]) => any>(
     if (!inThrottle) {
       func(...args);
       inThrottle = true;
-      setTimeout(() => (inThrottle = false), limit);
+      setTimeout(() => {
+        inThrottle = false;
+      }, limit);
     }
   };
 };

@@ -286,7 +286,7 @@ const Popover = memo(function Popover({
     [position.top, position.left],
   );
 
-  const childElement = children as ReactElement<any>;
+  const childElement = children as ReactElement<Record<string, unknown>>;
 
   if (trigger === 'click') {
     triggerHandlers.onClick = (e: React.SyntheticEvent) => {

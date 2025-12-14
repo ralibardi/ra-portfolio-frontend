@@ -9,6 +9,7 @@
 
 import '@testing-library/jest-dom';
 import * as fc from 'fast-check';
+import { useId } from 'react';
 import { labelTextArb, PBT_CONFIG } from '../../testing/property-testing';
 import { act, fireEvent, renderComponent, screen, waitFor } from '../../testing/render-utils';
 import { Dialog, Modal } from './index';
@@ -346,16 +347,30 @@ describe('Modal Component Property Tests', () => {
     test('Modal should have proper ARIA attributes', () => {
       fc.assert(
         fc.property(labelTextArb, (content) => {
+          const TestModalContent = () => {
+            const titleId = useId();
+            const descriptionId = useId();
+            
+            return (
+              <>
+                <h2 id={titleId}>Title</h2>
+                <p id={descriptionId}>{content}</p>
+              </>
+            );
+          };
+
           const handleClose = jest.fn();
+          const titleId = 'modal-title-test';
+          const descriptionId = 'modal-description-test';
+          
           const { unmount } = renderComponent(
             <Modal
               isOpen={true}
               onClose={handleClose}
-              aria-labelledby="modal-title"
-              aria-describedby="modal-description"
+              aria-labelledby={titleId}
+              aria-describedby={descriptionId}
             >
-              <h2 id="modal-title">Title</h2>
-              <p id="modal-description">{content}</p>
+              <TestModalContent />
             </Modal>,
           );
 
@@ -364,8 +379,8 @@ describe('Modal Component Property Tests', () => {
           // Check ARIA attributes
           expect(modal).toHaveAttribute('role', 'dialog');
           expect(modal).toHaveAttribute('aria-modal', 'true');
-          expect(modal).toHaveAttribute('aria-labelledby', 'modal-title');
-          expect(modal).toHaveAttribute('aria-describedby', 'modal-description');
+          expect(modal).toHaveAttribute('aria-labelledby', titleId);
+          expect(modal).toHaveAttribute('aria-describedby', descriptionId);
 
           unmount();
         }),
