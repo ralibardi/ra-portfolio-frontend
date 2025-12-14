@@ -8,17 +8,46 @@ import { Skeleton } from './index';
 /**
  * The Skeleton component displays a placeholder with pulsing animation
  * while content is loading. It supports multiple variants for different
- * content types.
+ * content types and respects user motion preferences.
  *
  * ## Features
  * - **3 Variants**: text, circle, rectangle
  * - **3 Animations**: pulse, wave, none
  * - **Custom Dimensions**: Width and height customization
  * - **Multi-line Support**: Multiple text lines for paragraphs
- * - **Accessibility**: Hidden from screen readers
+ * - **Accessibility**: Hidden from screen readers with `aria-hidden`
+ * - **Motion Sensitivity**: Respects `prefers-reduced-motion`
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Text skeleton for loading paragraphs
+ * <Skeleton variant="text" lines={3} />
+ *
+ * // Circle skeleton for avatars
+ * <Skeleton variant="circle" width={40} height={40} />
+ *
+ * // Rectangle skeleton for images
+ * <Skeleton variant="rectangle" width={200} height={120} />
+ *
+ * // Custom dimensions
+ * <Skeleton width="100%" height="2rem" />
+ * ```
+ *
+ * ## Accessibility Features
+ * - `aria-hidden="true"` hides from screen readers
+ * - Respects `prefers-reduced-motion` setting
+ * - Provides visual loading feedback for sighted users
+ * - Should be replaced with actual content when loaded
+ *
+ * ## Best Practices
+ * - Match skeleton dimensions to actual content
+ * - Use appropriate variant for content type
+ * - Replace with real content as soon as available
+ * - Consider using multiple skeletons for complex layouts
+ * - Provide alternative loading indicators for screen readers
  */
 const skeletonMeta: Meta<typeof Skeleton> = {
-  title: 'Components/Loading/Skeleton',
+  title: 'Foundation/Loading/Skeleton',
   component: Skeleton,
   parameters: {
     layout: 'centered',

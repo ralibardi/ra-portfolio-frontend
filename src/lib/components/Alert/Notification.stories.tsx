@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../Button';
 import {
   Notification,
@@ -21,7 +21,7 @@ import {
  * - **Positioning**: Four corner positions available
  */
 const meta: Meta<typeof Notification> = {
-  title: 'Components/Notification',
+  title: 'Overlay/Notification',
   component: Notification,
   parameters: {
     layout: 'centered',

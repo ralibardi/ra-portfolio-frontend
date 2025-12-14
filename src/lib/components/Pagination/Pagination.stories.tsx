@@ -4,8 +4,8 @@ import { Pagination } from './index';
 
 /**
  * The Pagination component provides navigation controls for large datasets.
- * It supports smart page number display with ellipsis, keyboard navigation,
- * and configurable sibling/boundary counts.
+ * It intelligently displays page numbers with ellipsis and provides
+ * accessible navigation for users browsing paginated content.
  *
  * ## Features
  * - **Smart Display**: Automatically shows ellipsis for large page counts
@@ -13,9 +13,70 @@ import { Pagination } from './index';
  * - **Boundary Handling**: Previous/Next buttons disabled at boundaries
  * - **Customizable**: Configure sibling and boundary counts
  * - **Accessibility**: Full ARIA support with proper labels
+ * - **Responsive**: Adapts to different screen sizes
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic pagination
+ * <Pagination
+ *   currentPage={currentPage}
+ *   totalPages={totalPages}
+ *   onPageChange={setCurrentPage}
+ * />
+ *
+ * // Customized pagination
+ * <Pagination
+ *   currentPage={page}
+ *   totalPages={100}
+ *   onPageChange={handlePageChange}
+ *   siblingCount={2}
+ *   boundaryCount={2}
+ *   previousLabel="← Previous"
+ *   nextLabel="Next →"
+ * />
+ *
+ * // With custom aria-label
+ * <Pagination
+ *   currentPage={page}
+ *   totalPages={pages}
+ *   onPageChange={onChange}
+ *   aria-label="Search results pagination"
+ * />
+ * ```
+ *
+ * ## Keyboard Navigation
+ * - **Tab**: Moves focus between pagination controls
+ * - **Space/Enter**: Activates focused page button
+ * - **Arrow Left**: Moves to previous page (when focused)
+ * - **Arrow Right**: Moves to next page (when focused)
+ * - **Home**: Moves to first page
+ * - **End**: Moves to last page
+ *
+ * ## Accessibility Features
+ * - `role="navigation"` with descriptive `aria-label`
+ * - `aria-current="page"` for current page button
+ * - `aria-label` for Previous/Next buttons
+ * - `aria-disabled` for disabled boundary buttons
+ * - Focus indicators that meet WCAG standards
+ * - Screen reader friendly page announcements
+ *
+ * ## Algorithm Details
+ * The pagination algorithm intelligently displays:
+ * - First and last pages (boundary count)
+ * - Pages around current page (sibling count)
+ * - Ellipsis (...) for gaps between ranges
+ * - Previous/Next navigation buttons
+ *
+ * ## Best Practices
+ * - Use for datasets with more than 25-50 items
+ * - Keep sibling count reasonable (1-2) for mobile
+ * - Provide clear indication of current page
+ * - Consider infinite scroll for better UX when appropriate
+ * - Include total count information when helpful
+ * - Test with screen readers for accessibility
  */
 const meta: Meta<typeof Pagination> = {
-  title: 'Components/Pagination',
+  title: 'Layout/Pagination',
   component: Pagination,
   parameters: {
     layout: 'centered',

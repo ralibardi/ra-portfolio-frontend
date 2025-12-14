@@ -1,0 +1,178 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# Reusable Component Library
+
+Welcome to the Reusable Component Library! This collection provides a comprehensive set of accessible, well-tested UI components built with React and TypeScript.
+
+## 🎯 Purpose
+
+This component library serves as the foundation for building consistent, accessible user interfaces. Each component follows:
+
+- **Design System Integration**: Consistent colors, spacing, typography, and interactions
+- **Accessibility Standards**: WCAG 2.1 AA compliance with full keyboard navigation
+- **TypeScript Support**: Complete type safety and excellent developer experience
+- **Testing Coverage**: Comprehensive unit and property-based testing
+- **Storybook Documentation**: Interactive examples and usage guidelines
+
+## 📚 Component Categories
+
+### Foundation Components
+Essential building blocks for any application:
+- **Button**: Unified button with variants, sizes, and async handling
+- **Loading**: Skeleton and Spinner components for loading states
+
+### Form Components
+Accessible form inputs with validation support:
+- **Input**: Text input with label, helper text, and error states
+- **Select**: Dropdown with keyboard navigation
+- **Checkbox**: Checkbox with indeterminate state support
+- **RadioGroup**: Radio button group with exclusive selection
+
+### Layout Components
+Components for organizing and structuring content:
+- **Accordion**: Collapsible content sections
+- **Breadcrumb**: Navigation hierarchy display
+- **Tabs**: Switchable content panels
+- **Pagination**: Navigation for large datasets
+
+### Overlay Components
+Components that appear above other content:
+- **Modal**: Flexible overlay with focus trapping
+- **Dialog**: Structured modal with header/body/footer
+- **Alert**: Feedback messages with severity levels
+- **Notification**: Toast-style notifications
+- **Tooltip**: Contextual information on hover/focus
+- **Popover**: Rich content overlays
+
+## 🚀 Getting Started
+
+### Installation
+
+```bash
+# Install the component library
+npm install @your-org/component-library
+
+# Install peer dependencies
+npm install react react-dom
+```
+
+### Basic Usage
+
+```tsx
+import { Button, Input, Modal } from '@your-org/component-library';
+import '@your-org/component-library/styles.css';
+
+function App() {
+  return (
+    <div>
+      <Button variant="primary" onClick={() => console.log('clicked')}>
+        Click me
+      </Button>
+      
+      <Input
+        label="Email"
+        type="email"
+        placeholder="Enter your email"
+      />
+    </div>
+  );
+}
+```
+
+### Theme Integration
+
+The components integrate with your design system through CSS custom properties:
+
+```css
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --error-color: #dc3545;
+  --info-color: #17a2b8;
+}
+```
+
+## 🎨 Design Principles
+
+### Consistency
+All components follow the same design patterns, naming conventions, and interaction behaviors.
+
+### Accessibility
+Every component is built with accessibility in mind:
+- Semantic HTML elements
+- Proper ARIA attributes
+- Keyboard navigation support
+- Screen reader compatibility
+- Focus management
+- Color contrast compliance
+
+### Performance
+Components are optimized for performance:
+- Tree-shakeable exports
+- Minimal bundle size
+- Efficient re-renders
+- CSS-in-JS optimization
+
+### Developer Experience
+Built for developers by developers:
+- TypeScript support
+- Comprehensive documentation
+- Interactive examples
+- Clear error messages
+- Intuitive APIs
+
+## 📖 Usage Guidelines
+
+### Component Selection
+Choose the right component for your use case:
+- Use **Button** for actions and navigation
+- Use **Input** for text data collection
+- Use **Modal** for important information that requires user attention
+- Use **Alert** for feedback messages
+- Use **Tooltip** for supplementary information
+
+### Accessibility Best Practices
+- Always provide meaningful labels
+- Use semantic HTML elements
+- Test with keyboard navigation
+- Verify screen reader compatibility
+- Ensure sufficient color contrast
+- Respect user motion preferences
+
+### Performance Best Practices
+- Import only the components you need
+- Use the provided TypeScript types
+- Follow the recommended usage patterns
+- Test with realistic data volumes
+
+## 🧪 Testing
+
+All components include comprehensive test coverage:
+- **Unit Tests**: Component behavior and props
+- **Property-Based Tests**: Edge cases and invariants
+- **Accessibility Tests**: ARIA attributes and keyboard navigation
+- **Visual Regression Tests**: Consistent appearance across browsers
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our contributing guidelines for:
+- Code style and conventions
+- Testing requirements
+- Documentation standards
+- Pull request process
+
+## 📞 Support
+
+Need help? Here are your options:
+- Check the component documentation in this Storybook
+- Review the accessibility guidelines
+- Look at the code examples
+- File an issue on GitHub
+
+---
+
+**Happy building!** 🎉

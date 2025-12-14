@@ -12,9 +12,40 @@ import { Button } from './index';
  * - **Icon Support**: Left or right positioned icons
  * - **Async Handling**: Automatic loading state for async onClick handlers
  * - **Accessibility**: Full keyboard navigation and ARIA support
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic button
+ * <Button onClick={() => console.log('clicked')}>
+ *   Click me
+ * </Button>
+ *
+ * // Button with icon
+ * <Button icon={<PlusIcon />} iconPosition="left">
+ *   Add Item
+ * </Button>
+ *
+ * // Async button (automatic loading state)
+ * <Button onClick={async () => {
+ *   await saveData();
+ * }}>
+ *   Save
+ * </Button>
+ * ```
+ *
+ * ## Keyboard Navigation
+ * - **Space/Enter**: Activates the button
+ * - **Tab**: Moves focus to/from the button
+ *
+ * ## Accessibility Features
+ * - Proper semantic `<button>` element
+ * - ARIA attributes for loading states
+ * - Focus indicators that meet WCAG standards
+ * - Screen reader announcements for state changes
+ * - Respects `prefers-reduced-motion` for animations
  */
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: 'Foundation/Button',
   component: Button,
   parameters: {
     layout: 'centered',

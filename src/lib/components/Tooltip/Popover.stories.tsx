@@ -14,7 +14,7 @@ import { Popover } from './index';
  * - **Click Outside**: Optionally close when clicking outside
  */
 const meta: Meta<typeof Popover> = {
-  title: 'Components/Popover',
+  title: 'Overlay/Popover',
   component: Popover,
   parameters: {
     layout: 'centered',

@@ -4,16 +4,63 @@ import { Alert } from './index';
 
 /**
  * The Alert component displays feedback messages with appropriate severity levels.
- * It supports dismissible alerts with close buttons and custom icons.
+ * It supports dismissible alerts with close buttons and follows accessibility
+ * best practices for user notifications.
  *
  * ## Features
  * - **Severity Levels**: info, success, warning, error
  * - **Dismissible**: Optional close button with onClose callback
  * - **Custom Icons**: Override default severity icons
  * - **Accessible**: Proper ARIA roles and live regions
+ * - **Semantic Colors**: Color-coded by severity level
+ * - **Title Support**: Optional title with proper heading structure
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic alert
+ * <Alert severity="success">
+ *   Your changes have been saved successfully.
+ * </Alert>
+ *
+ * // Alert with title and dismiss
+ * <Alert
+ *   severity="warning"
+ *   title="Warning"
+ *   onClose={() => setShowAlert(false)}
+ * >
+ *   Please review your input before submitting.
+ * </Alert>
+ *
+ * // Error alert with custom icon
+ * <Alert
+ *   severity="error"
+ *   icon={<CustomErrorIcon />}
+ * >
+ *   An error occurred while processing your request.
+ * </Alert>
+ * ```
+ *
+ * ## Keyboard Navigation
+ * - **Tab**: Moves focus to close button (if present)
+ * - **Space/Enter**: Activates close button
+ * - **Escape**: Closes dismissible alerts
+ *
+ * ## Accessibility Features
+ * - `role="alert"` for urgent messages (error/warning)
+ * - `role="status"` for informational messages (info/success)
+ * - `aria-live` regions for screen reader announcements
+ * - Proper heading structure when title is provided
+ * - Focus management for dismissible alerts
+ * - Color is not the only indicator (icons + text)
+ *
+ * ## Severity Guidelines
+ * - **Error**: System errors, validation failures, critical issues
+ * - **Warning**: Important information, potential issues
+ * - **Success**: Successful operations, confirmations
+ * - **Info**: General information, tips, neutral updates
  */
 const meta: Meta<typeof Alert> = {
-  title: 'Components/Alert',
+  title: 'Overlay/Alert',
   component: Alert,
   parameters: {
     layout: 'centered',

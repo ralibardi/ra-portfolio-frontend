@@ -8,4 +8,5 @@
  * @module lib/components/Accordion
  */
 
+export type { AccordionItem, AccordionProps } from '../types';
 export { default as Accordion } from './components/Accordion';

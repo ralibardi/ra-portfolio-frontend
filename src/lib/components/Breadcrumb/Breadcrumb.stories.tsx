@@ -4,8 +4,8 @@ import { Breadcrumb } from './index';
 
 /**
  * The Breadcrumb component displays the current page location within a
- * hierarchical structure. It supports custom separators, responsive truncation,
- * and keyboard navigation.
+ * hierarchical structure. It helps users understand their location and
+ * navigate back through the site hierarchy.
  *
  * ## Features
  * - **Navigation Hierarchy**: Shows the path from root to current page
@@ -13,9 +13,60 @@ import { Breadcrumb } from './index';
  * - **Responsive Truncation**: Collapse middle items when space is limited
  * - **Keyboard Navigation**: Tab through breadcrumb links
  * - **Accessibility**: Wrapped in nav element with proper ARIA attributes
+ * - **Current Page**: Last item is styled as current (non-clickable)
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic breadcrumb
+ * <Breadcrumb
+ *   items={[
+ *     { label: 'Home', href: '/' },
+ *     { label: 'Products', href: '/products' },
+ *     { label: 'Laptops', href: '/products/laptops' },
+ *     { label: 'MacBook Pro' } // Current page (no href)
+ *   ]}
+ * />
+ *
+ * // Custom separator and truncation
+ * <Breadcrumb
+ *   items={longBreadcrumbItems}
+ *   separator=">"
+ *   maxItems={4}
+ *   aria-label="Product navigation"
+ * />
+ *
+ * // With onClick handlers
+ * <Breadcrumb
+ *   items={[
+ *     { label: 'Dashboard', onClick: () => navigate('/dashboard') },
+ *     { label: 'Settings', onClick: () => navigate('/settings') },
+ *     { label: 'Profile' }
+ *   ]}
+ * />
+ * ```
+ *
+ * ## Keyboard Navigation
+ * - **Tab**: Moves focus to next breadcrumb link
+ * - **Shift+Tab**: Moves focus to previous breadcrumb link
+ * - **Space/Enter**: Activates focused breadcrumb link
+ *
+ * ## Accessibility Features
+ * - Wrapped in `<nav>` element with `aria-label`
+ * - Current page marked with `aria-current="page"`
+ * - Proper link semantics for navigation items
+ * - Focus indicators that meet WCAG standards
+ * - Screen reader friendly truncation with ellipsis
+ *
+ * ## Best Practices
+ * - Keep breadcrumb labels concise but descriptive
+ * - Don't include the current page as a link
+ * - Use consistent separator throughout the site
+ * - Consider truncation for deep hierarchies
+ * - Place breadcrumbs near the top of the page
+ * - Ensure breadcrumbs reflect the actual site structure
  */
 const meta: Meta<typeof Breadcrumb> = {
-  title: 'Components/Breadcrumb',
+  title: 'Layout/Breadcrumb',
   component: Breadcrumb,
   parameters: {
     layout: 'centered',

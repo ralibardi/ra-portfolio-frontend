@@ -6,7 +6,7 @@ import { Accordion } from './index';
 /**
  * The Accordion component allows users to expand and collapse content sections.
  * It supports single or multiple expansion modes, keyboard navigation, and
- * smooth animations.
+ * smooth animations following WAI-ARIA accordion patterns.
  *
  * ## Features
  * - **Single/Multiple Expansion**: Control whether one or multiple sections can be open
@@ -14,9 +14,54 @@ import { Accordion } from './index';
  * - **Smooth Animations**: CSS-based height animations with reduced motion support
  * - **Accessibility**: Full ARIA support with proper roles and states
  * - **Disabled Items**: Individual items can be disabled
+ * - **Default State**: Configure initially expanded sections
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic accordion
+ * <Accordion
+ *   items={[
+ *     {
+ *       id: '1',
+ *       header: 'Section 1',
+ *       content: <p>Content for section 1</p>
+ *     },
+ *     {
+ *       id: '2',
+ *       header: 'Section 2',
+ *       content: <p>Content for section 2</p>
+ *     }
+ *   ]}
+ * />
+ *
+ * // Multiple expansion allowed
+ * <Accordion
+ *   items={items}
+ *   allowMultiple={true}
+ *   defaultExpanded={['1', '3']}
+ * />
+ * ```
+ *
+ * ## Keyboard Navigation
+ * - **Tab**: Moves focus to next accordion header
+ * - **Shift+Tab**: Moves focus to previous accordion header
+ * - **Space/Enter**: Toggles expansion of focused section
+ * - **Arrow Down**: Moves focus to next accordion header
+ * - **Arrow Up**: Moves focus to previous accordion header
+ * - **Home**: Moves focus to first accordion header
+ * - **End**: Moves focus to last accordion header
+ *
+ * ## Accessibility Features
+ * - Proper heading structure with `<h3>` elements
+ * - `aria-expanded` indicates section state
+ * - `aria-controls` links headers to content panels
+ * - `aria-disabled` for disabled sections
+ * - Focus indicators that meet WCAG standards
+ * - Respects `prefers-reduced-motion` for animations
+ * - Screen reader announcements for state changes
  */
 const meta: Meta<typeof Accordion> = {
-  title: 'Components/Accordion',
+  title: 'Layout/Accordion',
   component: Accordion,
   parameters: {
     layout: 'centered',

@@ -1,36 +1,11 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import type { NotificationPosition, Severity } from '../../types';
-
-/**
- * Internal notification type with unique ID
- */
-export interface NotificationItem {
-  id: string;
-  title?: string;
-  message: string;
-  severity: Severity;
-  duration?: number;
-}
-
-/**
- * Options for adding a notification
- */
-export interface AddNotificationOptions {
-  title?: string;
-  message: string;
-  severity: Severity;
-  duration?: number;
-}
-
-/**
- * Notification context value
- */
-export interface NotificationContextValue {
-  notifications: NotificationItem[];
-  addNotification: (options: AddNotificationOptions) => string;
-  removeNotification: (id: string) => void;
-  clearAll: () => void;
-}
+import { createContext, memo, useCallback, useContext, useMemo, useState } from 'react';
+import type {
+  AddNotificationOptions,
+  NotificationContextValue,
+  NotificationItem,
+  NotificationPosition,
+  NotificationProviderProps,
+} from '../../types';
 
 /**
  * Notification container context value
@@ -53,15 +28,6 @@ const generateId = (): string => {
 };
 
 /**
- * NotificationProvider Props
- */
-export interface NotificationProviderProps {
-  children: React.ReactNode;
-  position?: NotificationPosition;
-  maxNotifications?: number;
-}
-
-/**
  * NotificationProvider Component
  *
  * Provides notification context for managing toast notifications globally.
@@ -73,7 +39,7 @@ export interface NotificationProviderProps {
  * </NotificationProvider>
  * ```
  */
-export function NotificationProvider({
+export const NotificationProvider = memo(function NotificationProvider({
   children,
   position = 'top-right',
   maxNotifications = 5,
@@ -135,7 +101,9 @@ export function NotificationProvider({
       </NotificationContainerContext.Provider>
     </NotificationContext.Provider>
   );
-}
+});
+
+NotificationProvider.displayName = 'NotificationProvider';
 
 /**
  * Hook to access notification context

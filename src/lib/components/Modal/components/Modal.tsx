@@ -56,38 +56,51 @@ const Modal = memo(function Modal({
   }, [getFocusableElements]);
 
   // Handle escape key press
-  const handleKeyDown = useCallback(
+  const handleEscapeKey = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === 'Escape' && closeOnEscape) {
         event.preventDefault();
         onClose();
+      }
+    },
+    [closeOnEscape, onClose],
+  );
+
+  // Handle tab key for focus trapping
+  const handleTabKey = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') return;
+
+      updateFocusableRefs();
+      const focusableElements = getFocusableElements();
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
         return;
       }
 
-      // Handle focus trapping with Tab key
-      if (event.key === 'Tab') {
-        updateFocusableRefs();
-        const focusableElements = getFocusableElements();
-
-        if (focusableElements.length === 0) {
+      if (event.shiftKey) {
+        // Shift + Tab: move focus backwards
+        if (document.activeElement === firstFocusableRef.current) {
           event.preventDefault();
-          return;
+          lastFocusableRef.current?.focus();
         }
-
-        if (event.shiftKey) {
-          // Shift + Tab: move focus backwards
-          if (document.activeElement === firstFocusableRef.current) {
-            event.preventDefault();
-            lastFocusableRef.current?.focus();
-          }
-        } else if (document.activeElement === lastFocusableRef.current) {
-          // Tab: move focus forwards - wrap to first element
-          event.preventDefault();
-          firstFocusableRef.current?.focus();
-        }
+      } else if (document.activeElement === lastFocusableRef.current) {
+        // Tab: move focus forwards - wrap to first element
+        event.preventDefault();
+        firstFocusableRef.current?.focus();
       }
     },
-    [closeOnEscape, onClose, getFocusableElements, updateFocusableRefs],
+    [getFocusableElements, updateFocusableRefs],
+  );
+
+  // Handle keyboard events
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      handleEscapeKey(event);
+      handleTabKey(event);
+    },
+    [handleEscapeKey, handleTabKey],
   );
 
   // Handle overlay click
@@ -148,6 +161,9 @@ const Modal = memo(function Modal({
         }
       };
     }
+
+    // Return undefined when modal is not open
+    return undefined;
   }, [isOpen, handleKeyDown, updateFocusableRefs]);
 
   // Don't render if not open

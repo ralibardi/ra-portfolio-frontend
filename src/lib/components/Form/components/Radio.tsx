@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { memo, useId, useMemo } from 'react';
+import { memo, useCallback, useId, useMemo } from 'react';
 import type { RadioProps } from '../../types';
 import styles from '../assets/Radio.module.scss';
 
@@ -46,11 +46,11 @@ const Radio = memo(function Radio({
     });
   }, [disabled]);
 
-  const handleChange = () => {
+  const handleChange = useCallback(() => {
     if (!disabled) {
       onChange(value);
     }
-  };
+  }, [disabled, onChange, value]);
 
   return (
     <label className={wrapperClasses} data-testid="radio-wrapper">

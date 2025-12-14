@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { memo, useId, useMemo } from 'react';
+import { memo, useCallback, useId, useMemo } from 'react';
 import type { InputProps } from '../../types';
 import styles from '../assets/Input.module.scss';
 
@@ -73,9 +73,12 @@ const Input = memo(function Input({
     });
   }, [error, disabled]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
-  };
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(event.target.value);
+    },
+    [onChange],
+  );
 
   return (
     <div className={containerClasses} data-testid="input-container">

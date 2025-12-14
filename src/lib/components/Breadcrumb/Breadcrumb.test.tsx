@@ -51,11 +51,15 @@ describe('Breadcrumb Component Property Tests', () => {
           // When there's only 1 item, there should be no separators
           const expectedSeparatorCount = items.length - 1;
           if (expectedSeparatorCount > 0) {
-            const separators = screen.getAllByText('/');
+            // Look for separators by their CSS class to avoid counting "/" in labels
+            const container = screen.getByTestId('breadcrumb');
+            const separators = container.querySelectorAll('.separatorItem');
             expect(separators.length).toBe(expectedSeparatorCount);
           } else {
             // No separators expected for single item
-            expect(screen.queryAllByText('/')).toHaveLength(0);
+            const container = screen.getByTestId('breadcrumb');
+            const separators = container.querySelectorAll('.separatorItem');
+            expect(separators).toHaveLength(0);
           }
 
           unmount();

@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import 'jest-axe/extend-expect';
 import { TextDecoder, TextEncoder } from 'node:util';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';

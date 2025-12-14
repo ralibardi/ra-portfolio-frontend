@@ -4,13 +4,72 @@ import { Checkbox, Input, RadioGroup, Select } from './index';
 
 /**
  * Form components provide accessible, consistent form inputs with validation
- * and error handling support.
+ * and error handling support. All components follow WCAG 2.1 AA standards
+ * and integrate seamlessly with form libraries.
  *
  * ## Components
  * - **Input**: Text input with label, helper text, and error states
  * - **Select**: Dropdown with keyboard navigation
  * - **Checkbox**: Checkbox with indeterminate state support
  * - **RadioGroup**: Radio button group with exclusive selection
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic input
+ * <Input
+ *   label="Email"
+ *   type="email"
+ *   value={email}
+ *   onChange={setEmail}
+ *   placeholder="Enter your email"
+ * />
+ *
+ * // Input with validation
+ * <Input
+ *   label="Password"
+ *   type="password"
+ *   value={password}
+ *   onChange={setPassword}
+ *   error={passwordError}
+ *   required
+ * />
+ *
+ * // Select with options
+ * <Select
+ *   label="Country"
+ *   value={country}
+ *   onChange={setCountry}
+ *   options={countryOptions}
+ * />
+ * ```
+ *
+ * ## Keyboard Navigation
+ * ### Input
+ * - **Tab**: Moves focus to/from the input
+ * - **Arrow keys**: Move cursor within text
+ *
+ * ### Select
+ * - **Tab**: Moves focus to/from the select
+ * - **Space/Enter**: Opens dropdown
+ * - **Arrow keys**: Navigate options
+ * - **Escape**: Closes dropdown
+ *
+ * ### Checkbox
+ * - **Tab**: Moves focus to/from the checkbox
+ * - **Space**: Toggles checked state
+ *
+ * ### RadioGroup
+ * - **Tab**: Moves focus to selected radio or first radio
+ * - **Arrow keys**: Navigate between radio options
+ * - **Space**: Selects focused radio
+ *
+ * ## Accessibility Features
+ * - Proper label association with `htmlFor` and `id`
+ * - ARIA attributes for states and descriptions
+ * - Error announcements for screen readers
+ * - Focus indicators that meet WCAG standards
+ * - Required field indicators
+ * - Keyboard navigation following WAI-ARIA patterns
  */
 
 // ============================================================================
@@ -18,7 +77,7 @@ import { Checkbox, Input, RadioGroup, Select } from './index';
 // ============================================================================
 
 const inputMeta: Meta<typeof Input> = {
-  title: 'Components/Form/Input',
+  title: 'Form/Input',
   component: Input,
   parameters: {
     layout: 'centered',

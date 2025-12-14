@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { memo, useEffect, useId, useMemo, useRef } from 'react';
+import { memo, useCallback, useEffect, useId, useMemo, useRef } from 'react';
 import type { CheckboxProps } from '../../types';
 import styles from '../assets/Checkbox.module.scss';
 
@@ -76,9 +76,12 @@ const Checkbox = memo(function Checkbox({
     });
   }, [checked, indeterminate, error, disabled]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.checked);
-  };
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(event.target.checked);
+    },
+    [onChange],
+  );
 
   return (
     <div className={containerClasses} data-testid="checkbox-container">

@@ -6,16 +6,52 @@ import { Modal } from './index';
 /**
  * The Modal component provides a flexible overlay for displaying content
  * that requires user attention. It includes focus trapping, scroll prevention,
- * and accessibility features.
+ * and accessibility features following WAI-ARIA dialog patterns.
  *
  * ## Features
  * - **Focus Trapping**: Tab navigation stays within the modal
+ * - **Focus Restoration**: Returns focus to trigger element on close
  * - **Scroll Prevention**: Background scroll is disabled when open
  * - **Keyboard Support**: Escape key closes the modal
  * - **Accessibility**: Proper ARIA attributes and focus management
+ * - **Portal Rendering**: Renders outside normal DOM hierarchy
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic modal
+ * <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+ *   <h2>Modal Title</h2>
+ *   <p>Modal content goes here.</p>
+ *   <Button onClick={() => setIsOpen(false)}>Close</Button>
+ * </Modal>
+ *
+ * // Modal with custom close behavior
+ * <Modal
+ *   isOpen={isOpen}
+ *   onClose={() => setIsOpen(false)}
+ *   closeOnOverlayClick={false}
+ *   closeOnEscape={false}
+ * >
+ *   <ConfirmationDialog />
+ * </Modal>
+ * ```
+ *
+ * ## Keyboard Navigation
+ * - **Escape**: Closes the modal (if enabled)
+ * - **Tab**: Cycles through focusable elements within modal
+ * - **Shift+Tab**: Cycles backwards through focusable elements
+ *
+ * ## Accessibility Features
+ * - `role="dialog"` and `aria-modal="true"`
+ * - Focus trapping within modal content
+ * - Focus restoration to trigger element
+ * - Proper heading structure for screen readers
+ * - Background content hidden from screen readers
+ * - Overlay click and escape key handling
+ * - ARIA labels and descriptions support
  */
 const meta: Meta<typeof Modal> = {
-  title: 'Components/Modal',
+  title: 'Overlay/Modal',
   component: Modal,
   parameters: {
     layout: 'centered',

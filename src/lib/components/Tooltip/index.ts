@@ -7,5 +7,11 @@
  * @module lib/components/Tooltip
  */
 
+export type {
+  Placement,
+  PopoverProps,
+  PopoverTrigger,
+  TooltipProps,
+} from '../types';
 export { default as Popover } from './components/Popover';
 export { default as Tooltip } from './components/Tooltip';

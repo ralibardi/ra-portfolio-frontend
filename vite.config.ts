@@ -218,8 +218,12 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           moduleSideEffects: false,
           propertyReadSideEffects: false,
           tryCatchDeoptimization: false,
-          // Additional optimizations
+          // Additional optimizations for better tree shaking
           preset: 'smallest',
+          // Ensure unused exports are removed
+          unknownGlobalSideEffects: false,
+          // More aggressive tree shaking for libraries
+          manualPureFunctions: ['console.log', 'console.warn', 'console.info'],
         },
       },
       // Modern performance optimizations
@@ -263,6 +267,14 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       force: false, // Only re-optimize when dependencies change
       esbuildOptions: {
         target: 'es2020', // Modern target for better optimization
+        // Enable tree shaking for dependencies
+        treeShaking: true,
+        // Remove unused imports
+        ignoreAnnotations: false,
+        // Better minification
+        minifyIdentifiers: isProd,
+        minifySyntax: isProd,
+        minifyWhitespace: isProd,
       },
     },
   });

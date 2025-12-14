@@ -8,4 +8,5 @@
  * @module lib/components/Breadcrumb
  */
 
+export type { BreadcrumbItem, BreadcrumbProps } from '../types';
 export { default as Breadcrumb } from './components/Breadcrumb';

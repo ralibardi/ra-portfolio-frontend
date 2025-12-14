@@ -2,8 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Spinner } from './index';
 
 /**
- * The Spinner component displays a rotating loading indicator.
- * It supports multiple sizes and custom colors.
+ * The Spinner component displays a rotating loading indicator for
+ * active loading states. It provides clear visual feedback that
+ * an operation is in progress.
  *
  * ## Features
  * - **3 Preset Sizes**: small, medium, large
@@ -11,9 +12,40 @@ import { Spinner } from './index';
  * - **Custom Color**: Any valid CSS color
  * - **Accessibility**: Proper ARIA attributes for screen readers
  * - **Reduced Motion**: Respects prefers-reduced-motion
+ * - **Semantic Role**: Uses `status` role for screen readers
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic spinner
+ * <Spinner />
+ *
+ * // Custom size and color
+ * <Spinner size="large" color="#007bff" />
+ *
+ * // Custom pixel size
+ * <Spinner size={32} />
+ *
+ * // With custom aria-label
+ * <Spinner aria-label="Saving your changes" />
+ * ```
+ *
+ * ## Accessibility Features
+ * - `role="status"` announces loading state to screen readers
+ * - `aria-label` provides context about what's loading
+ * - `aria-live="polite"` for non-intrusive announcements
+ * - Respects `prefers-reduced-motion` setting
+ * - Visible focus indicator when focusable
+ *
+ * ## Best Practices
+ * - Use for active loading states (not placeholders)
+ * - Provide meaningful aria-label describing what's loading
+ * - Consider timeout for long operations
+ * - Pair with loading text for better UX
+ * - Use appropriate size for context
+ * - Don't overuse - can be distracting
  */
 const meta: Meta<typeof Spinner> = {
-  title: 'Components/Loading/Spinner',
+  title: 'Foundation/Loading/Spinner',
   component: Spinner,
   parameters: {
     layout: 'centered',

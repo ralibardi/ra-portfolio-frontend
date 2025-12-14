@@ -6,6 +6,7 @@ import {
   useCallback,
   useEffect,
   useId,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -276,27 +277,38 @@ const Popover = memo(function Popover({
   // Build event handlers based on trigger type
   const triggerHandlers: Record<string, (e: React.SyntheticEvent) => void> = {};
 
+  // Memoize popover position styles to prevent re-renders
+  const popoverStyles = useMemo(
+    () => ({
+      top: position.top,
+      left: position.left,
+    }),
+    [position.top, position.left],
+  );
+
+  const childElement = children as ReactElement<any>;
+
   if (trigger === 'click') {
     triggerHandlers.onClick = (e: React.SyntheticEvent) => {
       togglePopover();
-      const originalHandler = (children as ReactElement).props.onClick;
+      const originalHandler = childElement.props?.onClick;
       if (originalHandler) originalHandler(e);
     };
   } else if (trigger === 'hover') {
     triggerHandlers.onMouseEnter = (e: React.SyntheticEvent) => {
       showPopover();
-      const originalHandler = (children as ReactElement).props.onMouseEnter;
+      const originalHandler = childElement.props?.onMouseEnter;
       if (originalHandler) originalHandler(e);
     };
     triggerHandlers.onMouseLeave = (e: React.SyntheticEvent) => {
       hidePopover();
-      const originalHandler = (children as ReactElement).props.onMouseLeave;
+      const originalHandler = childElement.props?.onMouseLeave;
       if (originalHandler) originalHandler(e);
     };
   }
 
   // Clone child element and add event handlers
-  const triggerElement = cloneElement(children as ReactElement, {
+  const triggerElement = cloneElement(childElement, {
     ref: triggerRef,
     ...triggerHandlers,
     'aria-expanded': isOpen,
@@ -310,10 +322,7 @@ const Popover = memo(function Popover({
       id={popoverId}
       role="dialog"
       className={cn(styles.popover, styles[`popover--${actualPlacement}`])}
-      style={{
-        top: position.top,
-        left: position.left,
-      }}
+      style={popoverStyles}
       data-testid="popover"
       data-placement={actualPlacement}
       onMouseEnter={trigger === 'hover' ? showPopover : undefined}

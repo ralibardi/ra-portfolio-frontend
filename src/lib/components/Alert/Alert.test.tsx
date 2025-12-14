@@ -9,13 +9,8 @@
 
 import '@testing-library/jest-dom';
 import * as fc from 'fast-check';
-import {
-  alertSeverityArb,
-  labelTextArb,
-  notificationDurationArb,
-  PBT_CONFIG,
-} from '../../testing/property-testing';
-import { act, fireEvent, renderComponent, screen, waitFor } from '../../testing/render-utils';
+import { alertSeverityArb, labelTextArb, PBT_CONFIG } from '../../testing/property-testing';
+import { fireEvent, renderComponent, screen } from '../../testing/render-utils';
 import { Alert } from './index';
 
 describe('Alert Component Property Tests', () => {

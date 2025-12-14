@@ -4,9 +4,9 @@ import type { TabItem } from '../types';
 import { Tabs } from './index';
 
 /**
- * The Tabs component organizes related content into switchable panels.
- * It supports controlled and uncontrolled modes, keyboard navigation,
- * horizontal and vertical orientations, and disabled tabs.
+ * The Tabs component organizes related content into switchable panels
+ * following WAI-ARIA tabpanel patterns. It provides an intuitive way
+ * to present multiple views of related information.
  *
  * ## Features
  * - **Controlled/Uncontrolled**: Use with or without external state management
@@ -14,9 +14,71 @@ import { Tabs } from './index';
  * - **Orientations**: Horizontal (default) and vertical layouts
  * - **Disabled Tabs**: Individual tabs can be disabled
  * - **Accessibility**: Full ARIA support with proper roles and states
+ * - **Focus Management**: Proper focus handling and visual indicators
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic tabs (uncontrolled)
+ * <Tabs
+ *   items={[
+ *     {
+ *       id: 'tab1',
+ *       label: 'Overview',
+ *       content: <div>Overview content</div>
+ *     },
+ *     {
+ *       id: 'tab2',
+ *       label: 'Details',
+ *       content: <div>Details content</div>
+ *     }
+ *   ]}
+ * />
+ *
+ * // Controlled tabs with state
+ * <Tabs
+ *   items={tabItems}
+ *   selectedIndex={activeTab}
+ *   onChange={setActiveTab}
+ *   orientation="vertical"
+ * />
+ *
+ * // Tabs with disabled items
+ * <Tabs
+ *   items={[
+ *     { id: '1', label: 'Active', content: <Content1 /> },
+ *     { id: '2', label: 'Disabled', content: <Content2 />, disabled: true }
+ *   ]}
+ * />
+ * ```
+ *
+ * ## Keyboard Navigation
+ * - **Tab**: Moves focus into/out of tab list
+ * - **Arrow Left/Right**: Navigate between tabs (horizontal orientation)
+ * - **Arrow Up/Down**: Navigate between tabs (vertical orientation)
+ * - **Home**: Moves to first tab
+ * - **End**: Moves to last tab
+ * - **Space/Enter**: Activates focused tab
+ *
+ * ## Accessibility Features
+ * - `role="tablist"` for the tab container
+ * - `role="tab"` for individual tab buttons
+ * - `role="tabpanel"` for content panels
+ * - `aria-selected` indicates active tab
+ * - `aria-controls` links tabs to their panels
+ * - `aria-labelledby` links panels to their tabs
+ * - `tabindex` management for keyboard navigation
+ * - Focus indicators that meet WCAG standards
+ *
+ * ## Best Practices
+ * - Use tabs for related content that users might want to compare
+ * - Keep tab labels short and descriptive
+ * - Don't use too many tabs (5-7 maximum recommended)
+ * - Consider vertical orientation for narrow layouts
+ * - Ensure content is meaningful when JavaScript is disabled
+ * - Use consistent content structure across panels
  */
 const meta: Meta<typeof Tabs> = {
-  title: 'Components/Tabs',
+  title: 'Layout/Tabs',
   component: Tabs,
   parameters: {
     layout: 'centered',

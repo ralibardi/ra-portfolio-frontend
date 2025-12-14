@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Button } from '../Button';
 import { Dialog } from './index';
 
@@ -14,7 +14,7 @@ import { Dialog } from './index';
  * - **All Modal Features**: Focus trapping, scroll prevention, keyboard support
  */
 const meta: Meta<typeof Dialog> = {
-  title: 'Components/Dialog',
+  title: 'Overlay/Dialog',
   component: Dialog,
   parameters: {
     layout: 'centered',
@@ -214,6 +214,8 @@ export const Medium: Story = {
  */
 const LargeDialogTemplate = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const titleId = useId();
+  const descriptionId = useId();
 
   return (
     <>
@@ -243,22 +245,22 @@ const LargeDialogTemplate = () => {
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div>
-            <label htmlFor="title" style={{ display: 'block', marginBottom: '0.5rem' }}>
+            <label htmlFor={titleId} style={{ display: 'block', marginBottom: '0.5rem' }}>
               Title
             </label>
             <input
-              id="title"
+              id={titleId}
               type="text"
               placeholder="Enter title"
               style={{ width: '100%', padding: '0.5rem' }}
             />
           </div>
           <div>
-            <label htmlFor="description" style={{ display: 'block', marginBottom: '0.5rem' }}>
+            <label htmlFor={descriptionId} style={{ display: 'block', marginBottom: '0.5rem' }}>
               Description
             </label>
             <textarea
-              id="description"
+              id={descriptionId}
               placeholder="Enter description"
               rows={4}
               style={{ width: '100%', padding: '0.5rem' }}

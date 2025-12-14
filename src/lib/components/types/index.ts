@@ -9,6 +9,41 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 // ============================================================================
+// Utility Types
+// ============================================================================
+
+/**
+ * Extract component props from a component type
+ * Useful for extending component props or creating wrapper components
+ */
+export type ComponentProps<T> = T extends React.ComponentType<infer P> ? P : never;
+
+/**
+ * Make certain properties optional
+ * Useful for creating component variants with different required props
+ */
+export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+/**
+ * Make certain properties required
+ * Useful for creating stricter component variants
+ */
+export type RequiredBy<T, K extends keyof T> = T & Required<Pick<T, K>>;
+
+/**
+ * Extract the value type from an array type
+ */
+export type ArrayElement<T> = T extends readonly (infer U)[] ? U : never;
+
+/**
+ * Common event handler types for components
+ */
+export type ClickHandler = (event: React.MouseEvent<HTMLElement>) => void;
+export type AsyncClickHandler = (event: React.MouseEvent<HTMLElement>) => void | Promise<void>;
+export type ChangeHandler<T = string> = (value: T) => void;
+export type KeyboardHandler = (event: React.KeyboardEvent<HTMLElement>) => void;
+
+// ============================================================================
 // Common Types
 // ============================================================================
 
@@ -360,6 +395,46 @@ export interface AlertProps {
 }
 
 /**
+ * Internal notification type with unique ID
+ */
+export interface NotificationItem {
+  id: string;
+  title?: string;
+  message: string;
+  severity: Severity;
+  duration?: number;
+}
+
+/**
+ * Options for adding a notification
+ */
+export interface AddNotificationOptions {
+  title?: string;
+  message: string;
+  severity: Severity;
+  duration?: number;
+}
+
+/**
+ * Notification context value
+ */
+export interface NotificationContextValue {
+  notifications: NotificationItem[];
+  addNotification: (options: AddNotificationOptions) => string;
+  removeNotification: (id: string) => void;
+  clearAll: () => void;
+}
+
+/**
+ * Notification provider props
+ */
+export interface NotificationProviderProps {
+  children: ReactNode;
+  position?: NotificationPosition;
+  maxNotifications?: number;
+}
+
+/**
  * Notification position options
  */
 export type NotificationPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
@@ -505,4 +580,83 @@ export interface PaginationProps {
   disabled?: boolean;
   /** ARIA label */
   'aria-label'?: string;
+}
+
+// ============================================================================
+// Component Variant Types
+// ============================================================================
+
+/**
+ * All available component sizes
+ * Useful for creating size-aware utilities or styling
+ */
+export type ComponentSize = Size;
+
+/**
+ * All available component variants
+ * Union of all variant types across components
+ */
+export type ComponentVariant = ButtonVariant;
+
+/**
+ * All available severity levels
+ * Useful for theming and styling utilities
+ */
+export type ComponentSeverity = Severity;
+
+/**
+ * All available placement options
+ * Useful for positioning utilities
+ */
+export type ComponentPlacement = Placement;
+
+// ============================================================================
+// Form Field Types
+// ============================================================================
+
+/**
+ * Generic form field value type
+ */
+export type FormFieldValue = string | number | boolean | string[];
+
+/**
+ * Form field validation result
+ */
+export interface ValidationResult {
+  isValid: boolean;
+  error?: string;
+}
+
+/**
+ * Form field validator function
+ */
+export type FieldValidator<T = FormFieldValue> = (value: T) => ValidationResult;
+
+// ============================================================================
+// Component State Types
+// ============================================================================
+
+/**
+ * Loading state for async operations
+ */
+export interface LoadingState {
+  isLoading: boolean;
+  error?: Error;
+}
+
+/**
+ * Expandable component state
+ */
+export interface ExpandableState {
+  isExpanded: boolean;
+  toggle: () => void;
+}
+
+/**
+ * Selectable component state
+ */
+export interface SelectableState<T = string> {
+  selected: T | null;
+  select: (value: T) => void;
+  deselect: () => void;
 }

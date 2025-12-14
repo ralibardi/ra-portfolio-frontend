@@ -1,0 +1,282 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design System" />
+
+# Design System
+
+The component library follows a comprehensive design system that ensures consistency, accessibility, and maintainability across all components.
+
+## 🎨 Color System
+
+### Color Families
+
+Colors are organized by **family** rather than by type, creating logical groupings:
+
+#### Primary Colors
+- **Base**: `#4a90e2` - Main primary color for buttons, links, and key actions
+- **Light**: `#357abd` - Lighter variant for hover states
+- **Dark**: `#2a5d9e` - Darker variant for active states
+- **Alpha**: `rgba(74, 144, 226, 0.08)` - Transparent variant for backgrounds
+
+#### Secondary Colors
+- **Base**: `#e67e22` - Main secondary color for accents
+- **Medium**: `#d35400` - Medium variant
+- **Accent**: `#f1c40f` - Accent variant for highlights
+
+#### Semantic Colors
+- **Success**: `#10b981` - For success messages and positive actions
+- **Warning**: `#f59e0b` - For warnings and caution states
+- **Error**: `#ef4444` - For errors and destructive actions
+- **Info**: `#3b82f6` - For informational messages
+
+#### Neutral Colors
+- **White**: `#fdfdfd` - Light backgrounds and text
+- **Black**: `#2c3e50` - Dark text and backgrounds
+- **Grey Scale**: `#ecf0f1` to `#2c3e50` - Various grey tones
+
+### Usage Guidelines
+
+```scss
+// Use semantic names within families
+background: map.get($primary, base);
+color: map.get($success, light);
+border: 1px solid map.get($error, dark);
+```
+
+## 📏 Spacing System
+
+### Spacing Scale
+
+Based on `1rem` (16px) with consistent ratios:
+
+- **3xs**: `0.125rem` (2px) - Minimal spacing
+- **2xs**: `0.25rem` (4px) - Very small spacing
+- **xs**: `0.5rem` (8px) - Small spacing
+- **sm**: `0.75rem` (12px) - Small-medium spacing
+- **md**: `1rem` (16px) - Base spacing unit
+- **lg**: `1.5rem` (24px) - Large spacing
+- **xl**: `2rem` (32px) - Extra large spacing
+- **2xl**: `4rem` (64px) - Very large spacing
+- **3xl**: `8rem` (128px) - Maximum spacing
+
+### Usage Examples
+
+```scss
+// Component spacing
+padding: map.get($spacing, md);
+margin: map.get($spacing, lg) map.get($spacing, xs);
+gap: map.get($spacing, sm);
+```
+
+## 🔤 Typography System
+
+### Font Configuration
+
+- **Font Family**: `'Montserrat', sans-serif`
+- **Base Size**: `1rem` (16px)
+- **Line Height**: `1.5` (normal)
+
+### Font Sizes
+
+- **xs**: `0.75rem` (12px) - Small text, captions
+- **sm**: `0.875rem` (14px) - Secondary text
+- **md**: `1rem` (16px) - Body text (base)
+- **lg**: `1.125rem` (18px) - Emphasized text
+- **xl**: `1.25rem` (20px) - Small headings
+- **2xl**: `1.5rem` (24px) - Medium headings
+- **3xl**: `1.875rem` (30px) - Large headings
+- **4xl**: `2.25rem` (36px) - Extra large headings
+- **5xl**: `3rem` (48px) - Display text
+
+### Font Weights
+
+- **Light**: `300` - Light text
+- **Regular**: `400` - Normal body text
+- **Medium**: `500` - Emphasized text
+- **Semi-bold**: `600` - Headings
+- **Bold**: `700` - Strong emphasis
+
+## 🔲 Border System
+
+### Border Widths
+
+- **xs**: `0.0625rem` (1px) - Thin borders
+- **sm**: `0.125rem` (2px) - Medium borders
+- **md**: `0.25rem` (4px) - Base border radius
+- **lg**: `0.5rem` (8px) - Large border radius
+- **xl**: `0.75rem` (12px) - Extra large radius
+- **2xl**: `1rem` (16px) - Very large radius
+- **3xl**: `1.5rem` (24px) - Pill shapes
+- **4xl**: `2rem` (32px) - Maximum radius
+
+### Usage
+
+```scss
+border: map.get($border, xs) solid var(--border-color);
+border-radius: map.get($border, md);
+```
+
+## 🎭 Interactive States
+
+### State Colors
+
+All interactive elements follow consistent state patterns:
+
+- **Default**: Base component appearance
+- **Hover**: Subtle color shift and optional transform
+- **Active**: Pressed/clicked appearance
+- **Focus**: Visible focus indicator for keyboard users
+- **Disabled**: Reduced opacity and no interaction
+
+### Focus Indicators
+
+All focusable elements include:
+- Visible outline or border change
+- Sufficient color contrast (3:1 minimum)
+- Consistent styling across components
+- Respect for user preferences
+
+## 🎬 Animation System
+
+### Easing Curves
+
+- **Linear**: `cubic-bezier(0, 0, 1, 1)` - Constant speed
+- **Ease**: `cubic-bezier(0.25, 0.1, 0.25, 1)` - Natural easing
+- **Smooth**: `cubic-bezier(0.4, 0, 0.2, 1)` - Material Design
+- **Snappy**: `cubic-bezier(0.4, 0, 0.6, 1)` - Quick response
+- **Bounce**: `cubic-bezier(0.68, -0.55, 0.265, 1.55)` - Playful bounce
+
+### Duration Scale
+
+- **Fast**: `150ms` - Quick interactions
+- **Normal**: `250ms` - Standard transitions
+- **Slow**: `400ms` - Complex animations
+- **Slower**: `600ms` - Page transitions
+
+### Motion Sensitivity
+
+All animations respect `prefers-reduced-motion`:
+
+```scss
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+```
+
+## 📱 Responsive Design
+
+### Breakpoint System
+
+- **Mobile**: `< 768px` - Phone devices
+- **Tablet**: `768px - 1024px` - Tablet devices
+- **Desktop**: `> 1024px` - Desktop and laptop screens
+
+### Mobile-First Approach
+
+All components are designed mobile-first:
+
+```scss
+.component {
+  // Mobile styles (default)
+  padding: map.get($spacing, sm);
+  
+  @include breakpoint('tablet') {
+    // Tablet styles
+    padding: map.get($spacing, md);
+  }
+  
+  @include breakpoint('desktop') {
+    // Desktop styles
+    padding: map.get($spacing, lg);
+  }
+}
+```
+
+## ♿ Accessibility Standards
+
+### WCAG 2.1 AA Compliance
+
+All components meet or exceed WCAG 2.1 AA standards:
+
+- **Color Contrast**: 4.5:1 for normal text, 3:1 for large text
+- **Keyboard Navigation**: Full keyboard accessibility
+- **Screen Readers**: Proper ARIA attributes and semantic HTML
+- **Focus Management**: Visible focus indicators
+- **Motion**: Respect for motion preferences
+
+### Semantic HTML
+
+Components use appropriate HTML elements:
+- `<button>` for actions
+- `<nav>` for navigation
+- `<main>` for main content
+- `<section>` for content sections
+- `<h1>-<h6>` for headings
+
+### ARIA Patterns
+
+Following WAI-ARIA authoring practices:
+- **Buttons**: `role="button"`, `aria-pressed`
+- **Modals**: `role="dialog"`, `aria-modal`
+- **Tabs**: `role="tablist"`, `role="tab"`, `role="tabpanel"`
+- **Accordions**: `aria-expanded`, `aria-controls`
+
+## 🔧 Implementation
+
+### CSS Custom Properties
+
+The design system uses CSS custom properties for theming:
+
+```css
+:root {
+  --primary-color: #4a90e2;
+  --text-color: #2c3e50;
+  --background-color: #fdfdfd;
+  --border-color: #ecf0f1;
+  --spacing-md: 1rem;
+  --font-size-md: 1rem;
+  --border-radius-md: 0.25rem;
+}
+```
+
+### SCSS Integration
+
+Components use SCSS maps for consistent values:
+
+```scss
+@use 'sass:map';
+@use '@assets/global' as *;
+
+.component {
+  color: map.get($primary, base);
+  padding: map.get($spacing, md);
+  font-size: map.get($font-sizes, md);
+  border-radius: map.get($border, md);
+}
+```
+
+## 🎯 Best Practices
+
+### Component Development
+
+1. **Start with accessibility** - Use semantic HTML first
+2. **Follow the spacing scale** - Don't use arbitrary values
+3. **Use semantic colors** - Choose colors based on meaning
+4. **Test with keyboard** - Ensure full keyboard navigation
+5. **Respect user preferences** - Support reduced motion and high contrast
+6. **Document thoroughly** - Include usage examples and guidelines
+
+### Design Consistency
+
+1. **Use the design tokens** - Don't hardcode values
+2. **Follow established patterns** - Maintain consistency
+3. **Test across devices** - Ensure responsive behavior
+4. **Validate accessibility** - Use automated and manual testing
+5. **Consider edge cases** - Test with long content and small screens
+
+---
+
+This design system ensures that all components work together harmoniously while maintaining the highest standards of accessibility and user experience.

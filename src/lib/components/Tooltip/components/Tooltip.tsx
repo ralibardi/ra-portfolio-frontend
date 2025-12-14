@@ -6,6 +6,7 @@ import {
   useCallback,
   useEffect,
   useId,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -226,28 +227,38 @@ const Tooltip = memo(function Tooltip({
     };
   }, []);
 
+  // Memoize tooltip position styles to prevent re-renders
+  const tooltipStyles = useMemo(
+    () => ({
+      top: position.top,
+      left: position.left,
+    }),
+    [position.top, position.left],
+  );
+
   // Clone child element and add event handlers
-  const trigger = cloneElement(children as ReactElement, {
+  const childElement = children as ReactElement<any>;
+  const trigger = cloneElement(childElement, {
     ref: triggerRef,
     onMouseEnter: (e: React.MouseEvent) => {
       showTooltip();
       // Call original handler if exists
-      const originalHandler = (children as ReactElement).props.onMouseEnter;
+      const originalHandler = childElement.props?.onMouseEnter;
       if (originalHandler) originalHandler(e);
     },
     onMouseLeave: (e: React.MouseEvent) => {
       hideTooltip();
-      const originalHandler = (children as ReactElement).props.onMouseLeave;
+      const originalHandler = childElement.props?.onMouseLeave;
       if (originalHandler) originalHandler(e);
     },
     onFocus: (e: React.FocusEvent) => {
       showTooltip();
-      const originalHandler = (children as ReactElement).props.onFocus;
+      const originalHandler = childElement.props?.onFocus;
       if (originalHandler) originalHandler(e);
     },
     onBlur: (e: React.FocusEvent) => {
       hideTooltip();
-      const originalHandler = (children as ReactElement).props.onBlur;
+      const originalHandler = childElement.props?.onBlur;
       if (originalHandler) originalHandler(e);
     },
     'aria-describedby': isVisible ? tooltipId : undefined,
@@ -260,10 +271,7 @@ const Tooltip = memo(function Tooltip({
       role="tooltip"
       aria-label={ariaLabel}
       className={cn(styles.tooltip, styles[`tooltip--${actualPlacement}`])}
-      style={{
-        top: position.top,
-        left: position.left,
-      }}
+      style={tooltipStyles}
       data-testid="tooltip"
       data-placement={actualPlacement}
     >

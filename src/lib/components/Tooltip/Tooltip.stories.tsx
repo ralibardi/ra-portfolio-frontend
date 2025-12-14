@@ -4,16 +4,56 @@ import { Tooltip } from './index';
 
 /**
  * The Tooltip component displays contextual information on hover or focus.
- * It supports multiple placements with automatic collision detection.
+ * It supports multiple placements with automatic collision detection and
+ * follows accessibility best practices for supplementary content.
  *
  * ## Features
  * - **Multiple Placements**: Top, bottom, left, right positioning
  * - **Collision Detection**: Automatically adjusts position to stay in viewport
  * - **Keyboard Accessible**: Shows on focus, hides on Escape
  * - **Configurable Delay**: Control show/hide timing
+ * - **Portal Rendering**: Renders outside normal DOM hierarchy
+ * - **Hover/Focus Triggers**: Works with both mouse and keyboard interaction
+ *
+ * ## Usage Examples
+ * ```tsx
+ * // Basic tooltip
+ * <Tooltip content="This is helpful information">
+ *   <Button>Hover me</Button>
+ * </Tooltip>
+ *
+ * // Tooltip with custom placement and delay
+ * <Tooltip
+ *   content="Detailed explanation of this feature"
+ *   placement="right"
+ *   delay={500}
+ * >
+ *   <span>Help icon</span>
+ * </Tooltip>
+ * ```
+ *
+ * ## Keyboard Navigation
+ * - **Tab**: Moves focus to trigger element (shows tooltip)
+ * - **Escape**: Hides the tooltip
+ * - **Shift+Tab**: Moves focus away from trigger (hides tooltip)
+ *
+ * ## Accessibility Features
+ * - `role="tooltip"` for proper semantic meaning
+ * - `aria-describedby` links trigger to tooltip content
+ * - Shows on focus for keyboard users
+ * - Hides on Escape key press
+ * - Respects `prefers-reduced-motion` for animations
+ * - Portal rendering prevents z-index issues
+ * - Automatic collision detection keeps content visible
+ *
+ * ## Best Practices
+ * - Use for supplementary information only
+ * - Keep content concise and helpful
+ * - Don't put interactive elements in tooltips
+ * - Ensure trigger elements are focusable
  */
 const meta: Meta<typeof Tooltip> = {
-  title: 'Components/Tooltip',
+  title: 'Overlay/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',
