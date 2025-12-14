@@ -107,7 +107,9 @@ describe('Component Library Accessibility Tests', () => {
           <Input
             label="Email Address"
             value=""
-            onChange={() => {}}
+            onChange={() => {
+              // Intentionally empty - test mock
+            }}
             placeholder="Enter your email"
             helperText="We'll never share your email"
           />
@@ -115,7 +117,9 @@ describe('Component Library Accessibility Tests', () => {
             label="Password"
             type="password"
             value=""
-            onChange={() => {}}
+            onChange={() => {
+              // Intentionally empty - test mock
+            }}
             error="Password is required"
             required
           />

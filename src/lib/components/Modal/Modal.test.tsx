@@ -350,7 +350,7 @@ describe('Modal Component Property Tests', () => {
           const TestModalContent = () => {
             const titleId = useId();
             const descriptionId = useId();
-            
+
             return (
               <>
                 <h2 id={titleId}>Title</h2>
@@ -362,7 +362,7 @@ describe('Modal Component Property Tests', () => {
           const handleClose = jest.fn();
           const titleId = 'modal-title-test';
           const descriptionId = 'modal-description-test';
-          
+
           const { unmount } = renderComponent(
             <Modal
               isOpen={true}

@@ -58,7 +58,9 @@ export const isValidSize = (value: string): value is 'small' | 'medium' | 'large
 export const isValidButtonVariant = (
   value: string,
 ): value is 'primary' | 'secondary' | 'tertiary' | 'danger' | 'ghost' => {
-  return BUTTON_VARIANTS.includes(value as 'primary' | 'secondary' | 'tertiary' | 'danger' | 'ghost');
+  return BUTTON_VARIANTS.includes(
+    value as 'primary' | 'secondary' | 'tertiary' | 'danger' | 'ghost',
+  );
 };
 
 /**
