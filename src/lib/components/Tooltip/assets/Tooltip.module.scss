@@ -1,0 +1,89 @@
+// Tooltip Component Styles
+// Design system integration for tooltip positioning and appearance
+
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// Tooltip container styles
+.tooltip {
+  position: absolute;
+  z-index: map.get($z-index, tooltip);
+  max-width: 20rem;
+  padding: map.get($spacing, xs) map.get($spacing, sm);
+  font-size: map.get($font-sizes, sm);
+  font-weight: map.get($font-weights, regular);
+  line-height: map.get($font-heights, normal);
+  color: var(--tooltip-text-colour, map.get($neutral, white));
+  background-color: var(--tooltip-background-colour, map.get($grey, 600));
+  border: map.get($border, xs) solid var(--tooltip-border-colour, transparent);
+  @include border-radius(map.get($border, md));
+  box-shadow: 0 map.get($spacing, '3xs') map.get($spacing, xs) var(--shadow-colour-light);
+  pointer-events: none;
+  animation: tooltipFadeIn map.get($transition, fast) map.get($easing, smooth);
+
+  @include prefers-reduced-motion {
+    animation: none;
+  }
+
+  // Arrow styles using pseudo-element
+  &::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: map.get($spacing, '2xs') solid transparent;
+  }
+
+  // Placement variants
+  &--top {
+    &::before {
+      bottom: calc(-1 * map.get($spacing, '2xs') * 2);
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: var(--tooltip-background-colour, map.get($grey, 600));
+      border-bottom: none;
+    }
+  }
+
+  &--bottom {
+    &::before {
+      top: calc(-1 * map.get($spacing, '2xs'));
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-color: var(--tooltip-background-colour, map.get($grey, 600));
+      border-top: none;
+    }
+  }
+
+  &--left {
+    &::before {
+      right: calc(-1 * map.get($spacing, '2xs') * 2);
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: var(--tooltip-background-colour, map.get($grey, 600));
+      border-right: none;
+    }
+  }
+
+  &--right {
+    &::before {
+      left: calc(-1 * map.get($spacing, '2xs'));
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: var(--tooltip-background-colour, map.get($grey, 600));
+      border-left: none;
+    }
+  }
+}
+
+// Fade in animation
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

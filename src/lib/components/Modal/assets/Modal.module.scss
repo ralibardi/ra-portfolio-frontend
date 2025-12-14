@@ -1,0 +1,69 @@
+// Modal Component Styles
+// Design system integration for modal overlay and content
+
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// Overlay styles
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: map.get($z-index, overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-colour-overlay);
+  backdrop-filter: blur(map.get($spacing, '3xs'));
+  animation: fadeIn map.get($transition, fast) map.get($easing, smooth);
+
+  @include prefers-reduced-motion {
+    animation: none;
+  }
+}
+
+// Modal container styles
+.modal {
+  position: relative;
+  z-index: map.get($z-index, modal);
+  max-width: calc(100vw - #{map.get($spacing, '2xl')});
+  max-height: calc(100vh - #{map.get($spacing, '2xl')});
+  overflow: auto;
+  background-color: var(--surface-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+  @include border-radius(map.get($border, lg));
+  @include theme-aware-elevation(2);
+  animation: slideIn map.get($transition, fast) map.get($easing, smooth);
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+
+  @include prefers-reduced-motion {
+    animation: none;
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(map.get($spacing, md));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

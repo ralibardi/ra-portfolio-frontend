@@ -1,0 +1,89 @@
+// Popover Component Styles
+// Design system integration for popover positioning and appearance
+
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// Popover container styles
+.popover {
+  position: absolute;
+  z-index: map.get($z-index, popover);
+  min-width: 10rem;
+  max-width: 24rem;
+  padding: map.get($spacing, md);
+  font-size: map.get($font-sizes, md);
+  font-weight: map.get($font-weights, regular);
+  line-height: map.get($font-heights, normal);
+  color: var(--text-colour);
+  background-color: var(--surface-colour);
+  border: map.get($border, xs) solid var(--border-colour);
+  @include border-radius(map.get($border, lg));
+  @include theme-aware-elevation(2);
+  animation: popoverFadeIn map.get($transition, fast) map.get($easing, smooth);
+
+  @include prefers-reduced-motion {
+    animation: none;
+  }
+
+  // Arrow styles using pseudo-element
+  &::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: map.get($spacing, xs) solid transparent;
+  }
+
+  // Placement variants
+  &--top {
+    &::before {
+      bottom: calc(-1 * map.get($spacing, xs) * 2);
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: var(--surface-colour);
+      border-bottom: none;
+    }
+  }
+
+  &--bottom {
+    &::before {
+      top: calc(-1 * map.get($spacing, xs));
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-color: var(--surface-colour);
+      border-top: none;
+    }
+  }
+
+  &--left {
+    &::before {
+      right: calc(-1 * map.get($spacing, xs) * 2);
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: var(--surface-colour);
+      border-right: none;
+    }
+  }
+
+  &--right {
+    &::before {
+      left: calc(-1 * map.get($spacing, xs));
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: var(--surface-colour);
+      border-left: none;
+    }
+  }
+}
+
+// Fade in animation
+@keyframes popoverFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

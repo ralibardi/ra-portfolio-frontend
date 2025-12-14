@@ -1,0 +1,162 @@
+// Alert Component Styles
+// Design system integration for alert messages
+
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// Base alert styles
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: map.get($spacing, sm);
+  padding: map.get($spacing, md);
+  @include border-radius(map.get($border, md));
+  border: map.get($border, xs) solid;
+  @include typography(md, regular, normal);
+
+  @include prefers-reduced-motion {
+    animation: none;
+  }
+}
+
+// Icon container
+.iconContainer {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Icon styles
+.icon {
+  width: map.get($spacing, xl);
+  height: map.get($spacing, xl);
+}
+
+// Content container
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+// Title styles
+.title {
+  margin: 0 0 map.get($spacing, '2xs') 0;
+  @include typography(md, semi-bold, small);
+}
+
+// Message styles
+.message {
+  @include typography(sm, regular, normal);
+}
+
+// Close button
+.closeButton {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacing, '2xs');
+  margin: calc(-1 * map.get($spacing, '2xs'));
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  @include border-radius(map.get($border, sm));
+  @include transition(
+    (background-color map.get($transition, fast) map.get($easing, smooth)),
+    (opacity map.get($transition, fast) map.get($easing, smooth))
+  );
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+    opacity: 1;
+  }
+}
+
+// Close icon
+.closeIcon {
+  width: map.get($spacing, lg);
+  height: map.get($spacing, lg);
+}
+
+// Severity variants
+.info {
+  background-color: map.get($info, alpha-08);
+  border-color: var(--info-colour);
+  color: var(--text-colour);
+
+  .iconContainer,
+  .title {
+    color: var(--info-colour);
+  }
+
+  .closeButton {
+    color: var(--info-colour);
+
+    &:hover {
+      background-color: map.get($info, alpha-08);
+    }
+  }
+}
+
+.success {
+  background-color: map.get($success, alpha-08);
+  border-color: var(--success-colour);
+  color: var(--text-colour);
+
+  .iconContainer,
+  .title {
+    color: var(--success-colour);
+  }
+
+  .closeButton {
+    color: var(--success-colour);
+
+    &:hover {
+      background-color: map.get($success, alpha-08);
+    }
+  }
+}
+
+.warning {
+  background-color: map.get($warning, alpha-08);
+  border-color: var(--warning-colour);
+  color: var(--text-colour);
+
+  .iconContainer,
+  .title {
+    color: var(--warning-colour);
+  }
+
+  .closeButton {
+    color: var(--warning-colour);
+
+    &:hover {
+      background-color: map.get($warning, alpha-08);
+    }
+  }
+}
+
+.error {
+  background-color: map.get($error, alpha-08);
+  border-color: var(--error-colour);
+  color: var(--text-colour);
+
+  .iconContainer,
+  .title {
+    color: var(--error-colour);
+  }
+
+  .closeButton {
+    color: var(--error-colour);
+
+    &:hover {
+      background-color: map.get($error, alpha-08);
+    }
+  }
+}

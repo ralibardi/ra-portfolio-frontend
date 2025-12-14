@@ -1,0 +1,48 @@
+// NotificationContainer Component Styles
+// Design system integration for notification stack positioning
+
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// Base container styles
+.container {
+  position: fixed;
+  z-index: map.get($z-index, toast);
+  display: flex;
+  flex-direction: column;
+  gap: map.get($spacing, sm);
+  padding: map.get($spacing, md);
+  pointer-events: none;
+
+  // Allow pointer events on notifications
+  > * {
+    pointer-events: auto;
+  }
+}
+
+// Position variants
+.topright {
+  top: 0;
+  right: 0;
+  align-items: flex-end;
+}
+
+.topleft {
+  top: 0;
+  left: 0;
+  align-items: flex-start;
+}
+
+.bottomright {
+  bottom: 0;
+  right: 0;
+  align-items: flex-end;
+  flex-direction: column-reverse;
+}
+
+.bottomleft {
+  bottom: 0;
+  left: 0;
+  align-items: flex-start;
+  flex-direction: column-reverse;
+}

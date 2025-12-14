@@ -1,0 +1,220 @@
+// Notification Component Styles
+// Design system integration for toast-style notifications
+
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// Base notification styles
+.notification {
+  display: flex;
+  align-items: flex-start;
+  gap: map.get($spacing, sm);
+  padding: map.get($spacing, md);
+  min-width: 280px;
+  max-width: 400px;
+  @include border-radius(map.get($border, md));
+  border: map.get($border, xs) solid;
+  @include theme-aware-elevation(2);
+  @include typography(md, regular, normal);
+  animation: slideIn map.get($transition, normal) map.get($easing, smooth);
+
+  @include prefers-reduced-motion {
+    animation: fadeIn map.get($transition, fast) map.get($easing, smooth);
+  }
+
+  &.exiting {
+    animation: slideOut map.get($transition, normal) map.get($easing, smooth) forwards;
+
+    @include prefers-reduced-motion {
+      animation: fadeOut map.get($transition, fast) map.get($easing, smooth) forwards;
+    }
+  }
+}
+
+// Icon container
+.iconContainer {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Icon styles
+.icon {
+  width: map.get($spacing, xl);
+  height: map.get($spacing, xl);
+}
+
+// Content container
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+// Title styles
+.title {
+  margin: 0 0 map.get($spacing, '2xs') 0;
+  @include typography(sm, semi-bold, small);
+}
+
+// Message styles
+.message {
+  margin: 0;
+  @include typography(sm, regular, normal);
+}
+
+// Close button
+.closeButton {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacing, '2xs');
+  margin: calc(-1 * map.get($spacing, '2xs'));
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  @include border-radius(map.get($border, sm));
+  @include transition(
+    (background-color map.get($transition, fast) map.get($easing, smooth)),
+    (opacity map.get($transition, fast) map.get($easing, smooth))
+  );
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+    opacity: 1;
+  }
+}
+
+// Close icon
+.closeIcon {
+  width: map.get($spacing, lg);
+  height: map.get($spacing, lg);
+}
+
+// Severity variants
+.info {
+  background-color: var(--surface-colour);
+  border-color: var(--info-colour);
+  color: var(--text-colour);
+
+  .iconContainer,
+  .title {
+    color: var(--info-colour);
+  }
+
+  .closeButton {
+    color: var(--text-colour-muted);
+
+    &:hover {
+      background-color: map.get($info, alpha-08);
+      color: var(--info-colour);
+    }
+  }
+}
+
+.success {
+  background-color: var(--surface-colour);
+  border-color: var(--success-colour);
+  color: var(--text-colour);
+
+  .iconContainer,
+  .title {
+    color: var(--success-colour);
+  }
+
+  .closeButton {
+    color: var(--text-colour-muted);
+
+    &:hover {
+      background-color: map.get($success, alpha-08);
+      color: var(--success-colour);
+    }
+  }
+}
+
+.warning {
+  background-color: var(--surface-colour);
+  border-color: var(--warning-colour);
+  color: var(--text-colour);
+
+  .iconContainer,
+  .title {
+    color: var(--warning-colour);
+  }
+
+  .closeButton {
+    color: var(--text-colour-muted);
+
+    &:hover {
+      background-color: map.get($warning, alpha-08);
+      color: var(--warning-colour);
+    }
+  }
+}
+
+.error {
+  background-color: var(--surface-colour);
+  border-color: var(--error-colour);
+  color: var(--text-colour);
+
+  .iconContainer,
+  .title {
+    color: var(--error-colour);
+  }
+
+  .closeButton {
+    color: var(--text-colour-muted);
+
+    &:hover {
+      background-color: map.get($error, alpha-08);
+      color: var(--error-colour);
+    }
+  }
+}
+
+// Animations
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

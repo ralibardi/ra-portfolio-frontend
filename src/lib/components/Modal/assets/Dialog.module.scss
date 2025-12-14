@@ -1,0 +1,91 @@
+// Dialog Component Styles
+// Design system integration for structured dialog layout
+
+@use 'sass:map';
+@use '@assets/abstracts' as *;
+
+// Dialog container
+.dialog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--surface-colour);
+  @include border-radius(map.get($border, lg));
+}
+
+// Size variants
+.dialog--small {
+  max-width: map.get($max-width, sm);
+}
+
+.dialog--medium {
+  max-width: map.get($max-width, lg);
+}
+
+.dialog--large {
+  max-width: map.get($max-width, '3xl');
+}
+
+// Header section
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: map.get($spacing, lg) map.get($spacing, xl);
+  border-bottom: map.get($border, xs) solid var(--border-colour);
+}
+
+.title {
+  margin: 0;
+  @include typography(xl, semi-bold, normal, var(--text-colour));
+}
+
+// Close button
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: map.get($spacing, '2xl');
+  height: map.get($spacing, '2xl');
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  border-radius: map.get($border, md);
+  cursor: pointer;
+  color: var(--text-colour-muted);
+  @include transition(color, background-color);
+
+  &:hover {
+    color: var(--text-colour);
+    background-color: var(--surface-colour-hover);
+  }
+
+  &:focus-visible {
+    @include theme-aware-focus;
+  }
+}
+
+.closeIcon {
+  width: map.get($spacing, lg);
+  height: map.get($spacing, lg);
+}
+
+// Body section
+.body {
+  flex: 1;
+  padding: map.get($spacing, xl);
+  overflow-y: auto;
+  color: var(--text-colour);
+  @include typography(md, regular, normal);
+}
+
+// Footer section
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: map.get($spacing, sm);
+  padding: map.get($spacing, lg) map.get($spacing, xl);
+  border-top: map.get($border, xs) solid var(--border-colour);
+}
