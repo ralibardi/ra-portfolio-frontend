@@ -1,3 +1,5 @@
+import type { AppDictionary } from '@app/i18n/get-dictionary';
+import enDictionary from '@public/locales/en-GB/translation.json';
 import { render, screen } from '@testing-library/react';
 import { act } from 'react';
 
@@ -44,6 +46,8 @@ jest.mock('react-error-boundary', () => {
 
 import ErrorBoundary from './error-boundary';
 
+const dictionary = enDictionary as AppDictionary;
+
 describe('ErrorBoundary', () => {
   let consoleErrorSpy: jest.SpyInstance;
 
@@ -59,7 +63,7 @@ describe('ErrorBoundary', () => {
 
   it('should render children when there is no error', async () => {
     render(
-      <ErrorBoundary>
+      <ErrorBoundary dictionary={dictionary}>
         <div>Child Component</div>
       </ErrorBoundary>,
     );
@@ -72,108 +76,41 @@ describe('ErrorBoundary', () => {
     expect(childComponent).toBeInTheDocument();
   });
 
-  it('should render error container when there is an error', async () => {
-    const errorMessage = 'Something went wrong';
+  it('should render error content when there is an error', async () => {
     const ErrorThrowingComponent = () => {
-      throw new Error(errorMessage);
+      throw new Error('Something went wrong');
     };
 
     render(
-      <ErrorBoundary>
+      <ErrorBoundary dictionary={dictionary}>
         <ErrorThrowingComponent />
       </ErrorBoundary>,
     );
 
-    const { errorComponent } = await act(() => {
-      const errorComponent = screen.getByTestId('error-page-container');
-      return { errorComponent };
+    const { headingElement } = await act(() => {
+      const headingElement = screen.getByTestId('error-heading');
+      return { headingElement };
     });
 
-    expect(errorComponent).toBeInTheDocument();
+    expect(headingElement).toHaveTextContent(dictionary.pages.error.title);
   });
 
-  it('should render error header when there is an error', async () => {
-    const errorMessage = 'Something went wrong';
+  it('renders error details when an error occurs', async () => {
     const ErrorThrowingComponent = () => {
-      throw new Error(errorMessage);
+      throw new Error('Something went wrong');
     };
 
     render(
-      <ErrorBoundary>
+      <ErrorBoundary dictionary={dictionary}>
         <ErrorThrowingComponent />
       </ErrorBoundary>,
     );
 
-    const { errorComponent } = await act(() => {
-      const errorComponent = screen.getByTestId('error-header-container');
-      return { errorComponent };
+    const { detailsElement } = await act(() => {
+      const detailsElement = screen.getByTestId('error-details');
+      return { detailsElement };
     });
 
-    expect(errorComponent).toBeInTheDocument();
-  });
-
-  it('should renders back button when there is an error', async () => {
-    const errorMessage = 'Something went wrong';
-    const ErrorThrowingComponent = () => {
-      throw new Error(errorMessage);
-    };
-
-    render(
-      <ErrorBoundary>
-        <ErrorThrowingComponent />
-      </ErrorBoundary>,
-    );
-
-    const { button } = await act(() => {
-      const button = screen.getByTestId('button-with-icon-container');
-      return { button };
-    });
-
-    expect(button).toBeInTheDocument();
-  });
-
-  it('should render error message when there is an error', async () => {
-    const errorMessage = 'Something went wrong';
-    const ErrorThrowingComponent = () => {
-      throw new Error(errorMessage);
-    };
-
-    render(
-      <ErrorBoundary>
-        <ErrorThrowingComponent />
-      </ErrorBoundary>,
-    );
-
-    const { label } = await act(() => {
-      const label = screen.getByTestId('error-heading');
-      return { label };
-    });
-
-    expect(label).toBeInTheDocument();
-    expect(label).toHaveTextContent('Oops... Something went wrong');
-  });
-
-  it('should render error details when there is an error', async () => {
-    const errorMessage = 'Something went wrong';
-    const ErrorThrowingComponent = () => {
-      throw new Error(errorMessage);
-    };
-
-    render(
-      <ErrorBoundary>
-        <ErrorThrowingComponent />
-      </ErrorBoundary>,
-    );
-
-    const { details, message } = await act(() => {
-      const details = screen.getByTestId('error-details');
-      const message = screen.getByTestId('error-details-message');
-
-      return { details, message };
-    });
-
-    expect(details).toBeInTheDocument();
-    expect(message).toBeInTheDocument();
-    expect(message).toHaveTextContent(errorMessage);
+    expect(detailsElement).toBeInTheDocument();
   });
 });

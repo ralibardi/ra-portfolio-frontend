@@ -286,24 +286,32 @@ const Popover = memo(function Popover({
     [position.top, position.left],
   );
 
-  const childElement = children as ReactElement<Record<string, unknown>>;
+  type TriggerElementProps = {
+    onClick?: (e: React.SyntheticEvent) => void;
+    onMouseEnter?: (e: React.SyntheticEvent) => void;
+    onMouseLeave?: (e: React.SyntheticEvent) => void;
+    [key: string]: unknown;
+  };
+
+  // We support arbitrary React elements as children; runtime-guard handler calls.
+  const childElement = children as ReactElement<TriggerElementProps>;
 
   if (trigger === 'click') {
     triggerHandlers.onClick = (e: React.SyntheticEvent) => {
       togglePopover();
       const originalHandler = childElement.props?.onClick;
-      if (originalHandler) originalHandler(e);
+      if (typeof originalHandler === 'function') originalHandler(e);
     };
   } else if (trigger === 'hover') {
     triggerHandlers.onMouseEnter = (e: React.SyntheticEvent) => {
       showPopover();
       const originalHandler = childElement.props?.onMouseEnter;
-      if (originalHandler) originalHandler(e);
+      if (typeof originalHandler === 'function') originalHandler(e);
     };
     triggerHandlers.onMouseLeave = (e: React.SyntheticEvent) => {
       hidePopover();
       const originalHandler = childElement.props?.onMouseLeave;
-      if (originalHandler) originalHandler(e);
+      if (typeof originalHandler === 'function') originalHandler(e);
     };
   }
 

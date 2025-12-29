@@ -1,18 +1,13 @@
-import { COMPANY_NAME } from '@app/i18n/keys';
 import { customRender, screen } from '@utils/test-utilities';
 import CompanyInfo from './company-info';
-
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
-}));
 
 // Mock the logo import to prevent empty src attribute
 jest.mock('../assets/logo.jpg', () => 'test-logo.jpg');
 
 describe('CompanyInfo', () => {
-  const renderCompanyInfo = (props = {}) => customRender(<CompanyInfo {...props} />);
+  const defaultProps = { label: 'Ronny Alibardi' };
+  const renderCompanyInfo = (props = {}) =>
+    customRender(<CompanyInfo {...defaultProps} {...props} />);
 
   test('renders company info component', () => {
     renderCompanyInfo();
@@ -23,7 +18,7 @@ describe('CompanyInfo', () => {
     renderCompanyInfo();
     const logo = screen.getByTestId('company-info-logo');
     expect(logo).toBeInTheDocument();
-    expect(logo).toHaveAttribute('alt', 'Logo');
+    expect(logo).toHaveAttribute('alt', `${defaultProps.label} logo`);
     expect(logo).toHaveClass('imageSmall');
   });
 
@@ -31,7 +26,7 @@ describe('CompanyInfo', () => {
     renderCompanyInfo();
     const label = screen.getByTestId('company-info-label');
     expect(label).toBeInTheDocument();
-    expect(label).toHaveTextContent(COMPANY_NAME);
+    expect(label).toHaveTextContent(defaultProps.label);
   });
 
   test('hides label when isLabelHidden is true', () => {

@@ -1,3 +1,5 @@
+'use client';
+
 import { useToast } from '@contexts/toast-context';
 import React from 'react';
 import styles from '../assets/toast.module.scss';

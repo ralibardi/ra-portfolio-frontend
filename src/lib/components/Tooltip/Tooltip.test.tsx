@@ -23,6 +23,53 @@ describe('Tooltip Component Property Tests', () => {
     tooltips.forEach((tooltip) => {
       tooltip.remove();
     });
+    const popovers = document.body.querySelectorAll('[data-testid="popover"]');
+    popovers.forEach((popover) => {
+      popover.remove();
+    });
+  });
+
+  describe('Event handler passthrough', () => {
+    test('Tooltip should call the trigger element original onMouseEnter handler', async () => {
+      const onMouseEnter = jest.fn();
+
+      const { unmount } = renderComponent(
+        <Tooltip content="Test tooltip" delay={0}>
+          <button type="button" data-testid="trigger" onMouseEnter={onMouseEnter}>
+            Hover me
+          </button>
+        </Tooltip>,
+      );
+
+      const trigger = screen.getByTestId('trigger');
+      await act(async () => {
+        fireEvent.mouseEnter(trigger);
+      });
+
+      expect(onMouseEnter).toHaveBeenCalledTimes(1);
+      unmount();
+    });
+
+    test('Popover should call the trigger element original onClick handler', async () => {
+      const onClick = jest.fn();
+
+      const { unmount } = renderComponent(
+        <Popover content={<div>Content</div>} trigger="click">
+          <button type="button" data-testid="trigger" onClick={onClick}>
+            Click me
+          </button>
+        </Popover>,
+      );
+
+      const trigger = screen.getByTestId('trigger');
+      await act(async () => {
+        fireEvent.click(trigger);
+      });
+
+      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(await screen.findByTestId('popover')).toBeInTheDocument();
+      unmount();
+    });
   });
 
   // ============================================================================

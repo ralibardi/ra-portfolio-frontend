@@ -2,10 +2,12 @@
 @use '@assets/global' as *;
 
 .container {
+  position: relative;
   background-color: var(--background-colour);
   animation: fadeIn map.get($transition, medium) ease-in-out;
   @include flexbox(column, flex-start, center);
   @include size(map.get($percentage, 100), auto);
+  min-height: 100vh;
   @include transition(background-color map.get($transition, fast) ease);
   @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
 }
@@ -21,42 +23,47 @@
 
 .hero {
   @include flexbox(row, center, center);
-  @include size(map.get($percentage, 100), 70vh);
-  padding-inline: map.get($spacing, xl);
+  min-height: 70vh;
+  padding-block: map.get($spacing, '3xl');
   text-align: center;
+  position: relative;
+  z-index: map.get($z-index, base);
 }
 
 .constructionMessage {
   text-align: center;
-  margin: map.get($spacing, xl) auto;
-  padding: map.get($spacing, xl);
-  @include border-radius(map.get($border, sm));
   @include flexbox(column, center, center);
-  background-color: var(--light-grey);
+  gap: map.get($spacing, lg);
+  width: map.get($percentage, 100);
   max-width: map.get($max-width, '5xl');
 }
 
 .constructionMessageTitle {
-  margin-bottom: map.get($spacing, md);
-  color: var(--accent-colour);
-  @include font-style(map.get($font-sizes, lg), map.get($font-weights, bold));
+  @include typography('3xl', bold, normal, var(--accent-colour));
+
+  @include breakpoint('tablet') {
+    @include typography('4xl', bold, normal, var(--accent-colour));
+  }
 }
 
 .constructionMessageText {
-  color: var(--text-colour);
-  line-height: map.get($font-heights, normal);
-  @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
+  @include typography(lg, regular, relaxed, var(--text-colour));
+  max-width: map.get($max-width, '2xl');
 }
 
 .actions {
   @include flexbox(row, center, center);
+  flex-wrap: wrap;
   gap: map.get($spacing, md);
-  margin-top: map.get($spacing, xl);
+  margin-top: map.get($spacing, sm);
+
+  @include breakpoint('mobile') {
+    gap: map.get($spacing, lg);
+  }
 }
 
-.cards {
+.socialSection {
+  position: relative;
+  z-index: map.get($z-index, base);
   width: map.get($percentage, 100);
-  max-width: map.get($max-width, '7xl');
-  padding: map.get($spacing, xl);
-  margin: map.get($spacing, 0) auto map.get($spacing, '2xl');
 }

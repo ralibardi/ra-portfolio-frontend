@@ -141,7 +141,7 @@ describe('Component Library Accessibility Tests', () => {
         <Select
           label="Choose an option"
           value=""
-          onChange={() => {}}
+          onChange={() => undefined}
           options={options}
           helperText="Select one option"
         />,
@@ -154,11 +154,11 @@ describe('Component Library Accessibility Tests', () => {
     test('Checkbox should have no accessibility violations', async () => {
       const { container } = renderComponent(
         <div>
-          <Checkbox label="I agree to the terms" checked={false} onChange={() => {}} />
+          <Checkbox label="I agree to the terms" checked={false} onChange={() => undefined} />
           <Checkbox
             label="Subscribe to newsletter"
             checked={true}
-            onChange={() => {}}
+            onChange={() => undefined}
             indeterminate={true}
           />
         </div>,
@@ -180,7 +180,7 @@ describe('Component Library Accessibility Tests', () => {
           label="Size"
           name="size"
           value="medium"
-          onChange={() => {}}
+          onChange={() => undefined}
           options={options}
         />,
       );
@@ -192,8 +192,15 @@ describe('Component Library Accessibility Tests', () => {
     test('Form components should have proper label associations', () => {
       renderComponent(
         <div>
-          <Input id="email-input" label="Email" value="" onChange={() => {}} />
-          <Checkbox id="terms-checkbox" label="I agree" checked={false} onChange={() => {}} />
+          {/* biome-ignore lint/correctness/useUniqueElementIds: Test file - static IDs are acceptable for testing */}
+          <Input id="email-input" label="Email" value="" onChange={() => undefined} />
+          {/* biome-ignore lint/correctness/useUniqueElementIds: Test file - static IDs are acceptable for testing */}
+          <Checkbox
+            id="terms-checkbox"
+            label="I agree"
+            checked={false}
+            onChange={() => undefined}
+          />
         </div>,
       );
 
@@ -307,10 +314,11 @@ describe('Component Library Accessibility Tests', () => {
   describe('Modal Component', () => {
     test('should have no accessibility violations when open', async () => {
       const { container } = renderComponent(
-        <Modal isOpen={true} onClose={() => {}} aria-labelledby="modal-title">
+        <Modal isOpen={true} onClose={() => undefined} aria-labelledby="modal-title">
+          {/* biome-ignore lint/correctness/useUniqueElementIds: Test file - static IDs are acceptable for testing */}
           <h2 id="modal-title">Modal Title</h2>
           <p>Modal content goes here.</p>
-          <Button onClick={() => {}}>Close</Button>
+          <Button onClick={() => undefined}>Close</Button>
         </Modal>,
       );
 
@@ -320,7 +328,8 @@ describe('Component Library Accessibility Tests', () => {
 
     test('should have proper ARIA attributes', () => {
       renderComponent(
-        <Modal isOpen={true} onClose={() => {}} aria-labelledby="modal-title">
+        <Modal isOpen={true} onClose={() => undefined} aria-labelledby="modal-title">
+          {/* biome-ignore lint/correctness/useUniqueElementIds: Test file - static IDs are acceptable for testing */}
           <h2 id="modal-title">Modal Title</h2>
           <p>Modal content</p>
         </Modal>,
@@ -333,7 +342,7 @@ describe('Component Library Accessibility Tests', () => {
 
     test('should trap focus within modal', async () => {
       renderComponent(
-        <Modal isOpen={true} onClose={() => {}}>
+        <Modal isOpen={true} onClose={() => undefined}>
           <h2>Modal Title</h2>
           <Button>First Button</Button>
           <Button>Second Button</Button>
@@ -430,7 +439,7 @@ describe('Component Library Accessibility Tests', () => {
           <Alert severity="info" title="Information">
             This is an info alert.
           </Alert>
-          <Alert severity="success" onClose={() => {}}>
+          <Alert severity="success" onClose={() => undefined}>
             Success message.
           </Alert>
           <Alert severity="warning">Warning message.</Alert>
@@ -532,7 +541,7 @@ describe('Component Library Accessibility Tests', () => {
         <Pagination
           currentPage={3}
           totalPages={10}
-          onPageChange={() => {}}
+          onPageChange={() => undefined}
           aria-label="Pagination navigation"
         />,
       );
@@ -546,7 +555,7 @@ describe('Component Library Accessibility Tests', () => {
         <Pagination
           currentPage={3}
           totalPages={10}
-          onPageChange={() => {}}
+          onPageChange={() => undefined}
           aria-label="Pagination navigation"
         />,
       );
@@ -559,7 +568,9 @@ describe('Component Library Accessibility Tests', () => {
     });
 
     test('should support keyboard navigation', () => {
-      renderComponent(<Pagination currentPage={3} totalPages={10} onPageChange={() => {}} />);
+      renderComponent(
+        <Pagination currentPage={3} totalPages={10} onPageChange={() => undefined} />,
+      );
 
       const buttons = screen.getAllByRole('button');
 

@@ -11,7 +11,6 @@ import {
   waitFor,
 } from '@testing-library/react';
 import type { FunctionComponent, ReactElement, ReactNode } from 'react';
-import { MemoryRouter as Router } from 'react-router-dom';
 
 interface IAllProvidersProps {
   children: ReactNode;
@@ -23,11 +22,9 @@ const MockToastProvider: FunctionComponent<{ children: ReactNode }> = ({ childre
 };
 
 const AllProviders: FunctionComponent<IAllProvidersProps> = ({ children }) => (
-  <Router>
-    <ThemeProvider>
-      <MockToastProvider>{children}</MockToastProvider>
-    </ThemeProvider>
-  </Router>
+  <ThemeProvider>
+    <MockToastProvider>{children}</MockToastProvider>
+  </ThemeProvider>
 );
 
 const customRender = (ui: ReactElement, options?: RenderOptions): RenderResult =>

@@ -39,10 +39,15 @@ export interface RGBColor {
 export interface ContrastResult {
   ratio: number;
   passes: {
+    // biome-ignore lint/style/useNamingConvention: WCAG level naming convention
     AA_NORMAL: boolean;
+    // biome-ignore lint/style/useNamingConvention: WCAG level naming convention
     AA_LARGE: boolean;
+    // biome-ignore lint/style/useNamingConvention: WCAG level naming convention
     AA_UI: boolean;
+    // biome-ignore lint/style/useNamingConvention: WCAG level naming convention
     AAA_NORMAL: boolean;
+    // biome-ignore lint/style/useNamingConvention: WCAG level naming convention
     AAA_LARGE: boolean;
   };
   grade: 'AAA' | 'AA' | 'FAIL';
@@ -374,7 +379,9 @@ export function generateContrastReport(container: HTMLElement): Array<{
         textContent: textContent.substring(0, 50) + (textContent.length > 50 ? '...' : ''),
         result,
       });
-    } catch (_error) {}
+    } catch (_error) {
+      // Intentionally ignore elements that fail contrast parsing/testing.
+    }
   }
 
   return report;

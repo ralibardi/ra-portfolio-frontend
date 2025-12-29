@@ -237,29 +237,38 @@ const Tooltip = memo(function Tooltip({
   );
 
   // Clone child element and add event handlers
-  const childElement = children as ReactElement<Record<string, unknown>>;
+  type TriggerElementProps = {
+    onMouseEnter?: (e: React.MouseEvent) => void;
+    onMouseLeave?: (e: React.MouseEvent) => void;
+    onFocus?: (e: React.FocusEvent) => void;
+    onBlur?: (e: React.FocusEvent) => void;
+    [key: string]: unknown;
+  };
+
+  // We support arbitrary React elements as children; runtime-guard handler calls.
+  const childElement = children as ReactElement<TriggerElementProps>;
   const trigger = cloneElement(childElement, {
     ref: triggerRef,
     onMouseEnter: (e: React.MouseEvent) => {
       showTooltip();
       // Call original handler if exists
       const originalHandler = childElement.props?.onMouseEnter;
-      if (originalHandler) originalHandler(e);
+      if (typeof originalHandler === 'function') originalHandler(e);
     },
     onMouseLeave: (e: React.MouseEvent) => {
       hideTooltip();
       const originalHandler = childElement.props?.onMouseLeave;
-      if (originalHandler) originalHandler(e);
+      if (typeof originalHandler === 'function') originalHandler(e);
     },
     onFocus: (e: React.FocusEvent) => {
       showTooltip();
       const originalHandler = childElement.props?.onFocus;
-      if (originalHandler) originalHandler(e);
+      if (typeof originalHandler === 'function') originalHandler(e);
     },
     onBlur: (e: React.FocusEvent) => {
       hideTooltip();
       const originalHandler = childElement.props?.onBlur;
-      if (originalHandler) originalHandler(e);
+      if (typeof originalHandler === 'function') originalHandler(e);
     },
     'aria-describedby': isVisible ? tooltipId : undefined,
   });

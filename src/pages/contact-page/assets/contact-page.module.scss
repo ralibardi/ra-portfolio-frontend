@@ -4,22 +4,19 @@
 .container {
   @include flexbox(column, flex-start, center);
   @include size(map.get($percentage, 100), auto);
+  min-height: 100vh;
   background-color: var(--background-colour);
   @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
+  @include transition(background-color map.get($transition, fast) ease);
+  animation: fadeIn map.get($transition, medium) ease-in-out;
+}
 
-  @include transition((background-color, map.get($transition, medium), ease),
-    (color, map.get($transition, medium), ease));
-
-  padding: map.get($spacing, xl) map.get($spacing, xl) map.get($spacing, '2xl');
+.formCard {
+  width: map.get($percentage, 100);
 }
 
 .form {
   width: map.get($percentage, 100);
-  max-width: map.get($max-width, '3xl');
-  background: var(--background-colour);
-  @include border-radius(map.get($border, md));
-  @include box-shadow(map.get($spacing, 0), map.get($spacing, '3xs'), map.get($spacing, '2xs'), map.get($spacing, 0), map.get($neutral, black-alpha-06));
-  padding: map.get($spacing, xl);
 }
 
 .grid {
@@ -38,6 +35,7 @@
 
 .actions {
   @include flexbox(row, flex-end, center);
+  flex-wrap: wrap;
   gap: map.get($spacing, md);
   margin-top: map.get($spacing, xl);
 }

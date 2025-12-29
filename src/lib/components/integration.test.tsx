@@ -10,7 +10,6 @@ import { ThemeProvider } from '@contexts/theme-context';
 import { ToastProvider } from '@contexts/toast-context';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import {
   Accordion,
   Alert,
@@ -27,11 +26,9 @@ import {
 
 // Test wrapper that provides all necessary context providers
 const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <BrowserRouter>
-    <ThemeProvider>
-      <ToastProvider>{children}</ToastProvider>
-    </ThemeProvider>
-  </BrowserRouter>
+  <ThemeProvider>
+    <ToastProvider>{children}</ToastProvider>
+  </ThemeProvider>
 );
 
 describe('Component Library Integration Tests', () => {
@@ -63,7 +60,7 @@ describe('Component Library Integration Tests', () => {
     it('should apply theme-aware styles to Modal component', () => {
       render(
         <TestWrapper>
-          <Modal isOpen={true} onClose={() => {}}>
+          <Modal isOpen={true} onClose={() => undefined}>
             <div>Modal content</div>
           </Modal>
         </TestWrapper>,
@@ -330,7 +327,7 @@ describe('Component Library Integration Tests', () => {
     it('should render Modal in portal correctly', () => {
       render(
         <TestWrapper>
-          <Modal isOpen={true} onClose={() => {}}>
+          <Modal isOpen={true} onClose={() => undefined}>
             <div>Modal content</div>
           </Modal>
         </TestWrapper>,
@@ -346,7 +343,7 @@ describe('Component Library Integration Tests', () => {
       render(
         <TestWrapper>
           <Tooltip content="Tooltip content">
-            <button>Hover me</button>
+            <button type="button">Hover me</button>
           </Tooltip>
         </TestWrapper>,
       );
@@ -435,7 +432,7 @@ describe('Component Library Integration Tests', () => {
                   label: 'Form Tab',
                   content: (
                     <div>
-                      <Input label="Name" value="" onChange={() => {}} />
+                      <Input label="Name" value="" onChange={() => undefined} />
                       <Button type="submit">Submit</Button>
                     </div>
                   ),
@@ -478,7 +475,7 @@ describe('Component Library Integration Tests', () => {
             <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
               <div>
                 <h2>Modal Title</h2>
-                <Input label="Input in modal" value="" onChange={() => {}} />
+                <Input label="Input in modal" value="" onChange={() => undefined} />
                 <Button onClick={() => setModalOpen(false)}>Close</Button>
               </div>
             </Modal>
@@ -513,7 +510,7 @@ describe('Component Library Integration Tests', () => {
             <Button onClick={() => setShowComponents(!showComponents)}>Toggle Components</Button>
             {showComponents && (
               <div>
-                <Modal isOpen={false} onClose={() => {}}>
+                <Modal isOpen={false} onClose={() => undefined}>
                   <div>Modal content</div>
                 </Modal>
                 <Tooltip content="Tooltip">

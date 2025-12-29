@@ -1,7 +1,5 @@
 /**
  * Environment Configuration
- *
- * Simple environment variable configuration for different backends.
  */
 
 export interface IEnvironmentConfig {
@@ -12,17 +10,24 @@ export interface IEnvironmentConfig {
   isTest: boolean;
 }
 
+const getEnv = (key: string): string | undefined => {
+  return process.env[key];
+};
+
 /**
  * Get the current environment configuration
  */
 export const getEnvironmentConfig = (): IEnvironmentConfig => {
-  const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL as string) || 'http://localhost:5000/api';
-  const environment =
-    ((import.meta.env.VITE_APP_ENV || import.meta.env.MODE) as string) || 'development';
+  const apiBaseUrl =
+    getEnv('NEXT_PUBLIC_API_BASE_URL') ?? getEnv('API_BASE_URL') ?? 'http://localhost:5000/api';
+
+  const environment = (getEnv('NEXT_PUBLIC_APP_ENV') ??
+    process.env.NODE_ENV ??
+    'development') as IEnvironmentConfig['environment'];
 
   return {
     apiBaseUrl,
-    environment: environment as IEnvironmentConfig['environment'],
+    environment,
     isDevelopment: environment === 'development',
     isProduction: environment === 'production',
     isTest: environment === 'test',
@@ -38,20 +43,15 @@ export const env = getEnvironmentConfig();
  * Validate required environment variables
  */
 export const validateEnvironment = (): void => {
-  const requiredVars = ['VITE_API_BASE_URL'];
-  const missing = requiredVars.filter((varName) => !import.meta.env[varName]);
+  const requiredVars = ['NEXT_PUBLIC_API_BASE_URL'];
+  const missing = requiredVars.filter((varName) => !getEnv(varName));
 
-  if (missing.length > 0) {
-    // In development, warn about missing environment variables
-    if (process.env.NODE_ENV === 'development') {
-      // Development configuration monitoring
-      // biome-ignore lint/suspicious/noConsole: Development logging
-      console.warn('Missing environment variables:', missing);
-    }
+  if (missing.length > 0 && process.env.NODE_ENV === 'development') {
+    // biome-ignore lint/suspicious/noConsole: development diagnostics
+    console.warn('Missing environment variables:', missing);
   }
 };
 
-// Validate on module load
 if (typeof window !== 'undefined') {
   validateEnvironment();
 }

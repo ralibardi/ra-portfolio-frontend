@@ -1,26 +1,41 @@
-import { getAppRoutes } from '@utils/get-app-routes';
-import { type FunctionComponent, lazy, useMemo } from 'react';
-
-const Topbar = lazy(() => import('@components/topbar'));
-const CompanyInfo = lazy(() => import('@components/company-info'));
-const ThemeToggle = lazy(() => import('@components/theme-toggle'));
-
+import type { AppDictionary } from '@app/i18n/get-dictionary';
+import { translate } from '@app/i18n/translate';
+import CompanyInfo from '@components/company-info';
+import ThemeToggle from '@components/theme-toggle';
+import Topbar from '@components/topbar';
+import type IRoute from '@type/route';
+import { type FunctionComponent, useMemo } from 'react';
 import styles from '../assets/header.module.scss';
 
-const Header: FunctionComponent = () => {
-  const enabledRoutes = useMemo(() => getAppRoutes.filter((r) => r.enabled && !r.hidden), []);
+interface HeaderProps {
+  readonly routes: readonly IRoute[];
+  readonly dictionary: AppDictionary;
+}
+
+const Header: FunctionComponent<HeaderProps> = ({ routes, dictionary }) => {
+  const navigationRoutes = useMemo(
+    () =>
+      routes
+        .filter((route) => !route.hidden)
+        .map((route) => ({
+          path: route.path,
+          icon: route.icon,
+          label: translate(dictionary, route.labelKey),
+        })),
+    [routes, dictionary],
+  );
 
   return (
     <header className={styles.container}>
       <div className={styles.topbar}>
-        <Topbar routes={enabledRoutes} />
+        <Topbar routes={navigationRoutes} />
       </div>
       <div className={styles.subContainer}>
         <div className={styles.themeToggle}>
           <ThemeToggle />
         </div>
         <div className={styles.companyInfo}>
-          <CompanyInfo />
+          <CompanyInfo label={dictionary.company.name} />
         </div>
       </div>
     </header>

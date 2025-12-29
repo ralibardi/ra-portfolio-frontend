@@ -2,13 +2,17 @@
 @use '@assets/global' as *;
 
 .container {
-  @include flexbox(row, center, center);
-  @include size(map.get($viewport, full-width), map.get($viewport, full-height));
+  @include flexbox(column, center, center);
+  @include size(map.get($percentage, 100), auto);
+  min-height: 100vh;
   background-color: var(--background-colour);
   @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
-  @include transition(background-color map.get($transition, medium) ease);
+  @include transition(background-color map.get($transition, fast) ease);
+  animation: fadeIn map.get($transition, medium) ease-in-out;
+}
 
-  &:hover {
-    animation: pulse map.get($transition, slow) ease-in-out infinite;
-  }
+.contentCard {
+  @include flexbox(column, center, center);
+  min-height: map.get($spacing, '6xl');
+  width: map.get($percentage, 100);
 }

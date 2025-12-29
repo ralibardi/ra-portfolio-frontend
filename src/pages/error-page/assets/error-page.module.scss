@@ -3,51 +3,58 @@
 
 .container {
   @include flexbox(column, center, center);
-  @include size(map.get($percentage, 100), map.get($percentage, 100));
+  @include size(map.get($percentage, 100), auto);
+  min-height: 100vh;
   background-color: var(--background-colour);
   color: var(--text-colour);
-  padding: map.get($spacing, lg);
   @include transition(background-color map.get($transition, fast) ease);
   animation: fadeIn map.get($transition, medium) ease-in-out;
+}
+
+.errorCard {
+  width: map.get($percentage, 100);
+  text-align: center;
 }
 
 .header {
   @include flexbox(row, center, center);
   gap: map.get($spacing, md);
-  margin-bottom: map.get($spacing, md);
+  margin-bottom: map.get($spacing, lg);
 }
 
 .heading {
-  @include font-style(map.get($font-sizes, '2xl'), map.get($font-weights, bold));
-  color: var(--text-colour);
+  @include typography('3xl', bold, normal, var(--text-colour));
+
+  @include breakpoint('tablet') {
+    @include typography('4xl', bold, normal, var(--text-colour));
+  }
 }
 
 .description {
-  @include font-style(map.get($font-sizes, md), map.get($font-weights, regular));
-  text-align: center;
+  @include typography(md, regular, normal, var(--text-colour));
+  text-align: left;
   line-height: map.get($font-heights, normal);
-  max-width: map.get($max-width, '2xl');
   width: map.get($percentage, 100);
+  margin-top: map.get($spacing, lg);
 }
 
 .message {
-  @include font-style(map.get($font-sizes, md), map.get($font-weights, medium));
-  color: map.get($error, base);
+  @include typography(md, semi-bold, normal, map.get($error, base));
   cursor: pointer;
-  padding: map.get($spacing, sm);
+  padding: map.get($spacing, md);
   @include border-radius(map.get($border, sm));
   @include transition(background-color map.get($transition, fast) ease);
+  @include semantic-background('error', 'alpha-08');
 
   &:hover {
-    background-color: map.get($error, alpha-08);
+    @include semantic-background('error', 'alpha-12');
   }
 }
 
 .stack {
-  @include font-style(map.get($font-sizes, sm), map.get($font-weights, regular));
+  @include typography(sm, regular, normal, var(--text-colour-muted));
   font-family: monospace;
   background-color: var(--surface-colour);
-  color: var(--text-colour-muted);
   padding: map.get($spacing, md);
   @include border-radius(map.get($border, md));
   overflow-x: auto;

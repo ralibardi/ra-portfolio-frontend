@@ -4,7 +4,6 @@ import CVPage from './cv-page';
 describe('CVPage', () => {
   it('renders without crashing', async () => {
     render(<CVPage />);
-    const container = await screen.findByRole('generic');
-    expect(container).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /curriculum vitae/i })).toBeInTheDocument();
   });
 });

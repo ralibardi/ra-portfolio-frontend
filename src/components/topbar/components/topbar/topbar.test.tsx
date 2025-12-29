@@ -1,29 +1,23 @@
 import { faAccessibleIcon } from '@fortawesome/free-brands-svg-icons';
-import type IRoute from '@type/route';
 import { customRender, screen } from '@utils/test-utilities';
+import type { NavigationLink } from '../../types/topbar-props';
 import Topbar from './topbar';
 
-const TestableComponent = () => <div />;
+jest.mock('next/navigation', () => ({
+  usePathname: () => '/test',
+}));
 
 describe('Topbar', () => {
-  const mockRoutes: IRoute[] = [
+  const mockRoutes: NavigationLink[] = [
     {
-      path: 'test',
-      index: true,
-      component: TestableComponent,
-      labelKey: 'test',
+      path: '/test',
+      label: 'Test',
       icon: faAccessibleIcon,
-      enabled: true,
-      hidden: false,
     },
     {
-      path: 'test2',
-      index: true,
-      component: TestableComponent,
-      labelKey: 'test2',
+      path: '/test-2',
+      label: 'Test 2',
       icon: faAccessibleIcon,
-      enabled: true,
-      hidden: false,
     },
   ];
 
@@ -36,6 +30,6 @@ describe('Topbar', () => {
   it('renders the correct number of nav links', () => {
     customRender(<Topbar routes={mockRoutes} />);
     const navLinks = screen.getAllByTestId('nav-link-label');
-    expect(navLinks).toHaveLength(mockRoutes.filter((r) => r.enabled && !r.hidden).length);
+    expect(navLinks).toHaveLength(mockRoutes.length);
   });
 });

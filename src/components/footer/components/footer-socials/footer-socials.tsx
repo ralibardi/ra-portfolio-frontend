@@ -1,8 +1,7 @@
 import type { ISocialLink } from '@components/footer/utils/getSocialLinks';
+import IconLink from '@components/icon-link';
 import { ComponentArray } from '@utils/component-array';
-import { type FunctionComponent, lazy, useMemo } from 'react';
-
-const IconLink = lazy(() => import('@components/icon-link'));
+import { type FunctionComponent, useMemo } from 'react';
 
 import styles from '../../assets/footer-socials.module.scss';
 

@@ -1,3 +1,7 @@
+import type { AppDictionary } from '@app/i18n/get-dictionary';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import enDictionary from '@public/locales/en-GB/translation.json';
+import type IRoute from '@type/route';
 import { act, customRender, screen } from '@utils/test-utilities';
 import Header from './header';
 
@@ -10,17 +14,21 @@ jest.mock('@components/theme-toggle', () => () => (
   <div data-testid="theme-toggle">Mock ThemeToggle</div>
 ));
 
+const dictionary = enDictionary as AppDictionary;
+const routes: IRoute[] = [{ path: '/', labelKey: 'pages.home.name', icon: faHome, enabled: true }];
+
+const renderHeader = () => customRender(<Header dictionary={dictionary} routes={routes} />);
+
 describe('Header', () => {
   test('renders without crashing', async () => {
-    await act(() => customRender(<Header />));
+    await act(() => renderHeader());
   });
 
   test('renders the Topbar component', async () => {
-    customRender(<Header />);
+    renderHeader();
 
     const { topbarElement } = await act(() => {
       const topbarElement = screen.getByTestId('topbar');
-
       return { topbarElement };
     });
 
@@ -28,11 +36,10 @@ describe('Header', () => {
   });
 
   test('renders the CompanyInfo component', async () => {
-    customRender(<Header />);
+    renderHeader();
 
     const { companyInfoElement } = await act(() => {
       const companyInfoElement = screen.getByTestId('company-info');
-
       return { companyInfoElement };
     });
 
@@ -40,11 +47,10 @@ describe('Header', () => {
   });
 
   test('renders the ThemeToggle component', async () => {
-    customRender(<Header />);
+    renderHeader();
 
     const { themeToggleElement } = await act(() => {
       const themeToggleElement = screen.getByTestId('theme-toggle');
-
       return { themeToggleElement };
     });
 

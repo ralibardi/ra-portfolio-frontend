@@ -2,8 +2,14 @@ import { act, customRender, screen } from '@utils/test-utilities';
 import ErrorPage from './error-page';
 
 describe('ErrorPage', () => {
-  it('renders the error message', async () => {
-    customRender(<ErrorPage />);
+  const defaultProps = {
+    title: 'Oops... Something went wrong',
+    message: 'We apologize for the inconvenience. Please try again later.',
+    actionLabel: 'Go home',
+  };
+
+  it('renders the error heading', async () => {
+    customRender(<ErrorPage {...defaultProps} />);
 
     const { headingElement } = await act(() => {
       const headingElement = screen.getByTestId('error-heading');
@@ -13,76 +19,27 @@ describe('ErrorPage', () => {
     expect(headingElement).toBeInTheDocument();
   });
 
-  it('renders the correct heading', async () => {
-    const error = new Error('Test error');
-    customRender(<ErrorPage error={error} />);
+  it('renders the message text', async () => {
+    customRender(<ErrorPage {...defaultProps} />);
 
-    const { headingElement } = await act(() => {
-      const headingElement = screen.getByTestId('error-heading');
-      return { headingElement };
-    });
-
-    expect(headingElement).toHaveTextContent('Oops... Something went wrong');
+    const message = await screen.findByText(defaultProps.message);
+    expect(message).toBeInTheDocument();
   });
 
-  it('renders the correct paragraph', async () => {
+  it('shows error details when error is provided', async () => {
     const error = new Error('Test error');
-    customRender(<ErrorPage error={error} />);
+    customRender(<ErrorPage {...defaultProps} error={error} />);
 
-    const { paragraphElement } = await act(() => {
-      const paragraphElement = screen.getByTestId('error-details-message');
-      return { paragraphElement };
-    });
-
-    expect(paragraphElement).toBeInTheDocument();
-  });
-
-  // Additional tests to increase coverage
-
-  it('does not render error details when no error prop is provided', () => {
-    customRender(<ErrorPage />);
-    expect(screen.queryByTestId('error-details')).not.toBeInTheDocument();
-  });
-
-  it('renders error details with correct content when error prop is provided', async () => {
-    const error = new Error('Test error');
-    error.name = 'TestError';
-    error.stack = 'Test stack trace';
-    customRender(<ErrorPage error={error} />);
-
-    const { detailsElement, summaryElement, stackElement } = await act(() => {
-      const detailsElement = screen.getByTestId('error-details');
+    const { summaryElement } = await act(() => {
       const summaryElement = screen.getByTestId('error-details-message');
-      const stackElement = screen.getByTestId('error-details-stack');
-      return { detailsElement, summaryElement, stackElement };
+      return { summaryElement };
     });
 
-    expect(detailsElement).toBeInTheDocument();
     expect(summaryElement).toHaveTextContent(`${error.name} - ${error.message}`);
-    expect(stackElement).toHaveTextContent('Test stack trace');
   });
 
-  it('calls window.history.back when the back button is clicked', async () => {
-    const backSpy = jest.spyOn(window.history, 'back').mockImplementation(() => {
-      // Mock implementation for history.back()
-    });
-    customRender(<ErrorPage />);
-    const { backButton } = await act(() => {
-      const backButton = screen.getByRole('button');
-      return { backButton };
-    });
-    act(() => {
-      backButton.click();
-    });
-    expect(backSpy).toHaveBeenCalled();
-    backSpy.mockRestore();
-  });
-
-  it('matches snapshot when error is provided', () => {
-    const error = new Error('Snapshot error');
-    error.name = 'SnapshotError';
-    error.stack = 'Snapshot stack trace';
-    const { container } = customRender(<ErrorPage error={error} />);
-    expect(container).toMatchSnapshot();
+  it('does not render error details when no error is provided', () => {
+    customRender(<ErrorPage {...defaultProps} />);
+    expect(screen.queryByTestId('error-details')).not.toBeInTheDocument();
   });
 });

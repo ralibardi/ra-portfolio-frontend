@@ -272,6 +272,7 @@ describe('ContactPage', () => {
     });
 
     // Check that the divider with "Message" label is present
-    expect(screen.getAllByText(/message/i)).toHaveLength(2); // One in divider, one in textarea label
+    // Match the exact "Message" label text (avoid matching subtitle copy).
+    expect(screen.getAllByText(/^message$/i)).toHaveLength(2); // Divider + textarea label
   });
 });

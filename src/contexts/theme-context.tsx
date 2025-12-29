@@ -1,3 +1,5 @@
+'use client';
+
 import type { Theme } from '@type/theme';
 import type { IThemeContext } from '@type/theme-context';
 import {
@@ -20,8 +22,12 @@ import {
 const ThemeContext = createContext<IThemeContext | null>(null);
 
 const getPreferredTheme = (): Theme => {
+  if (typeof window === 'undefined') {
+    return 'system';
+  }
+
   // Check localStorage first
-  const storedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme;
+  const storedTheme = window.localStorage?.getItem(THEME_STORAGE_KEY) as Theme;
   if (storedTheme && ['light', 'dark', 'system'].includes(storedTheme)) {
     return storedTheme;
   }
@@ -33,7 +39,9 @@ const getPreferredTheme = (): Theme => {
 export const ThemeProvider: FunctionComponent<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(getPreferredTheme);
+  const [theme, setTheme] = useState<Theme>(() =>
+    typeof window === 'undefined' ? 'system' : getPreferredTheme(),
+  );
 
   // Initialize theme and enable transitions
   useEffect(() => {
@@ -54,8 +62,10 @@ export const ThemeProvider: FunctionComponent<{
 
   // Apply theme changes
   useEffect(() => {
-    localStorage.setItem(THEME_STORAGE_KEY, theme);
-    applyThemeToDocument(theme);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+      applyThemeToDocument(theme);
+    }
   }, [theme]);
 
   const toggleTheme = useCallback(() => {

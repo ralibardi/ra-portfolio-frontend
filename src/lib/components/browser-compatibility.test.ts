@@ -265,7 +265,7 @@ describe('Browser Compatibility Tests', () => {
       const hasTouch =
         'ontouchstart' in window ||
         navigator.maxTouchPoints > 0 ||
-        (navigator as { msMaxTouchPoints?: number }).msMaxTouchPoints > 0;
+        ((navigator as { msMaxTouchPoints?: number }).msMaxTouchPoints ?? 0) > 0;
 
       expect(typeof hasTouch).toBe('boolean');
     });

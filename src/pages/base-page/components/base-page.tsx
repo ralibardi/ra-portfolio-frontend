@@ -1,24 +1,22 @@
-import { type FunctionComponent, lazy, Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
-
-const Loading = lazy(() => import('@components/loading'));
-const Header = lazy(() => import('@components/header'));
-const Footer = lazy(() => import('@components/footer'));
-
+import type { AppDictionary } from '@app/i18n/get-dictionary';
+import Footer from '@components/footer';
+import Header from '@components/header';
+import type IRoute from '@type/route';
+import type { FunctionComponent, ReactNode } from 'react';
 import styles from '../assets/base-page.module.scss';
 
-const BasePage: FunctionComponent = () => {
+interface BasePageProps {
+  readonly children: ReactNode;
+  readonly dictionary: AppDictionary;
+  readonly routes: readonly IRoute[];
+}
+
+const BasePage: FunctionComponent<BasePageProps> = ({ children, dictionary, routes }) => {
   return (
     <main className={styles.container}>
-      <Suspense fallback={<Loading />}>
-        <Header />
-      </Suspense>
-      <div className={styles.content}>
-        <Outlet />
-      </div>
-      <Suspense fallback={<Loading />}>
-        <Footer />
-      </Suspense>
+      <Header routes={routes} dictionary={dictionary} />
+      <div className={styles.content}>{children}</div>
+      <Footer dictionary={dictionary} />
     </main>
   );
 };

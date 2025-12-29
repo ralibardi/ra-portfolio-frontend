@@ -1,26 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { apiClient } from '../api-client';
-import { getEndpoint } from '../endpoints';
+import { API_ENDPOINTS } from '../endpoints';
 import {
   authService,
   type ILoginRequest,
   type ILoginResponse,
   type IRefreshTokenRequest,
 } from './auth-service';
-
-// Mock the apiClient
-jest.mock('../api-client', () => ({
-  apiClient: {
-    post: jest.fn(),
-  },
-}));
-
-// Mock the getEndpoint function
-jest.mock('../endpoints', () => ({
-  getEndpoint: jest.fn(
-    (category: string, endpoint: string) => `/${category.toLowerCase()}/${endpoint.toLowerCase()}`,
-  ),
-}));
 
 describe('AuthService', () => {
   const mockLoginResponse: ILoginResponse = {
@@ -29,11 +15,14 @@ describe('AuthService', () => {
     expiresIn: 3600,
   };
 
+  let postSpy: jest.SpyInstance;
   beforeEach(() => {
+    postSpy = jest.spyOn(apiClient, 'post');
     jest.clearAllMocks();
   });
 
   afterEach(() => {
+    postSpy.mockRestore();
     jest.resetAllMocks();
   });
 
@@ -44,17 +33,13 @@ describe('AuthService', () => {
         email: 'test@example.com',
         password: 'password123',
       };
-      (apiClient.post as jest.MockedFunction<typeof apiClient.post>).mockResolvedValueOnce(
-        mockLoginResponse,
-      );
-      (getEndpoint as jest.MockedFunction<typeof getEndpoint>).mockReturnValueOnce('/auth/login');
+      postSpy.mockResolvedValueOnce(mockLoginResponse);
 
       // Act
       const result = await authService.login(credentials);
 
       // Assert
-      expect(getEndpoint).toHaveBeenCalledWith('AUTH', 'LOGIN');
-      expect(apiClient.post).toHaveBeenCalledWith('/auth/login', credentials);
+      expect(apiClient.post).toHaveBeenCalledWith(API_ENDPOINTS.AUTH.LOGIN, credentials);
       expect(result).toEqual(mockLoginResponse);
     });
 
@@ -65,7 +50,7 @@ describe('AuthService', () => {
         password: 'password123',
       };
       const error = new Error('Invalid credentials');
-      (apiClient.post as jest.MockedFunction<typeof apiClient.post>).mockRejectedValueOnce(error);
+      postSpy.mockRejectedValueOnce(error);
 
       // Act & Assert
       await expect(authService.login(credentials)).rejects.toThrow('Invalid credentials');
@@ -78,19 +63,13 @@ describe('AuthService', () => {
       const request: IRefreshTokenRequest = {
         refreshToken: 'test-refresh-token',
       };
-      (apiClient.post as jest.MockedFunction<typeof apiClient.post>).mockResolvedValueOnce(
-        mockLoginResponse,
-      );
-      (getEndpoint as jest.MockedFunction<typeof getEndpoint>).mockReturnValueOnce(
-        '/auth/refresh-token',
-      );
+      postSpy.mockResolvedValueOnce(mockLoginResponse);
 
       // Act
       const result = await authService.refreshToken(request);
 
       // Assert
-      expect(getEndpoint).toHaveBeenCalledWith('AUTH', 'REFRESH_TOKEN');
-      expect(apiClient.post).toHaveBeenCalledWith('/auth/refresh-token', request);
+      expect(apiClient.post).toHaveBeenCalledWith(API_ENDPOINTS.AUTH.REFRESH_TOKEN, request);
       expect(result).toEqual(mockLoginResponse);
     });
   });
@@ -98,17 +77,13 @@ describe('AuthService', () => {
   describe('logout', () => {
     it('should call apiClient.post with correct parameters', async () => {
       // Arrange
-      (apiClient.post as jest.MockedFunction<typeof apiClient.post>).mockResolvedValueOnce(
-        undefined,
-      );
-      (getEndpoint as jest.MockedFunction<typeof getEndpoint>).mockReturnValueOnce('/auth/logout');
+      postSpy.mockResolvedValueOnce(undefined);
 
       // Act
       await authService.logout();
 
       // Assert
-      expect(getEndpoint).toHaveBeenCalledWith('AUTH', 'LOGOUT');
-      expect(apiClient.post).toHaveBeenCalledWith('/auth/logout');
+      expect(apiClient.post).toHaveBeenCalledWith(API_ENDPOINTS.AUTH.LOGOUT);
     });
   });
 });

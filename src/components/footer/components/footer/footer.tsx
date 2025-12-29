@@ -1,13 +1,14 @@
-import { FOOTER } from '@app/i18n/keys';
-import { type FunctionComponent, lazy, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { AppDictionary } from '@app/i18n/get-dictionary';
+import { type FunctionComponent, useMemo } from 'react';
 import styles from '../../assets/footer.module.scss';
 import { GetSocialLinks } from '../../utils/getSocialLinks';
+import FooterSocials from '../footer-socials/footer-socials';
 
-const FooterSocials = lazy(() => import('../footer-socials/footer-socials'));
+interface FooterProps {
+  readonly dictionary: AppDictionary;
+}
 
-const Footer: FunctionComponent = () => {
-  const { t } = useTranslation();
+const Footer: FunctionComponent<FooterProps> = ({ dictionary }) => {
   const socialLinks = useMemo(() => GetSocialLinks(), []);
 
   return (
@@ -15,7 +16,7 @@ const Footer: FunctionComponent = () => {
       <div className={styles.content}>
         <FooterSocials socialLinks={socialLinks} />
         <span className={styles.copyright} data-testid="footer-copyright">
-          {t(FOOTER.COPYRIGHT)}
+          {dictionary.footer.copyright}
         </span>
       </div>
     </footer>

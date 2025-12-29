@@ -1,6 +1,6 @@
 import { faHome, faUser } from '@fortawesome/free-solid-svg-icons';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type IRoute from '@type/route';
+import type { NavigationLink } from '../../types/topbar-props';
 import NavLink from './nav-link';
 
 const meta: Meta<typeof NavLink> = {
@@ -9,7 +9,7 @@ const meta: Meta<typeof NavLink> = {
   argTypes: {
     route: {
       control: 'object',
-      description: 'Route object containing path, labelKey, icon, etc.',
+      description: 'Route object containing path, label, and icon.',
     },
     isActive: {
       control: 'boolean',
@@ -22,12 +22,10 @@ export default meta;
 
 type Story = StoryObj<typeof NavLink>;
 
-const baseRoute: IRoute = {
+const baseRoute: NavigationLink = {
   path: '/home',
-  labelKey: 'Home',
+  label: 'Home',
   icon: faHome,
-  index: false,
-  component: () => <></>,
 };
 
 const Template: Story = {
@@ -56,7 +54,7 @@ export const DifferentIcon: Story = {
     route: {
       ...baseRoute,
       path: '/profile',
-      labelKey: 'Profile',
+      label: 'Profile',
       icon: faUser,
     },
     isActive: false,
@@ -66,7 +64,7 @@ export const DifferentIcon: Story = {
 export const LongLabel: Story = {
   ...Template,
   args: {
-    route: { ...baseRoute, labelKey: 'Very Long Label Text' },
+    route: { ...baseRoute, label: 'Very Long Label Text' },
     isActive: false,
   },
 };

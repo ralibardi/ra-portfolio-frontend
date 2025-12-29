@@ -23,14 +23,12 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { FunctionComponent, ReactElement, ReactNode } from 'react';
-import { MemoryRouter as Router } from 'react-router-dom';
 
 /**
  * Props for the AllProviders wrapper component
  */
 interface AllProvidersProps {
   children: ReactNode;
-  initialRoute?: string;
 }
 
 /**
@@ -44,20 +42,16 @@ const MockToastProvider: FunctionComponent<{ children: ReactNode }> = ({ childre
  * Wrapper component that provides all necessary context providers for component testing.
  * Includes Router, ThemeProvider, and MockToastProvider.
  */
-const AllProviders: FunctionComponent<AllProvidersProps> = ({ children, initialRoute = '/' }) => (
-  <Router initialEntries={[initialRoute]}>
-    <ThemeProvider>
-      <MockToastProvider>{children}</MockToastProvider>
-    </ThemeProvider>
-  </Router>
+const AllProviders: FunctionComponent<AllProvidersProps> = ({ children }) => (
+  <ThemeProvider>
+    <MockToastProvider>{children}</MockToastProvider>
+  </ThemeProvider>
 );
 
 /**
  * Extended render options for component library testing
  */
 interface ComponentRenderOptions extends Omit<RenderOptions, 'wrapper'> {
-  /** Initial route for the router */
-  initialRoute?: string;
   /** Theme to use for testing (light or dark) */
   theme?: 'light' | 'dark';
 }
@@ -79,12 +73,12 @@ const renderComponent = (
   ui: ReactElement,
   options: ComponentRenderOptions = {},
 ): RenderResult & { user: ReturnType<typeof userEvent.setup> } => {
-  const { initialRoute, ...renderOptions } = options;
+  const { ...renderOptions } = options;
 
   const user = userEvent.setup();
 
   const result = render(ui, {
-    wrapper: ({ children }) => <AllProviders initialRoute={initialRoute}>{children}</AllProviders>,
+    wrapper: ({ children }) => <AllProviders>{children}</AllProviders>,
     ...renderOptions,
   });
 

@@ -32,14 +32,6 @@ describe('Render Utilities', () => {
 
       expect(handleClick).toHaveBeenCalledTimes(1);
     });
-
-    it('should support initial route option', () => {
-      const TestComponent = () => <div data-testid="test">Rendered</div>;
-
-      renderComponent(<TestComponent />, { initialRoute: '/test-route' });
-
-      expect(screen.getByTestId('test')).toBeInTheDocument();
-    });
   });
 
   describe('renderComponentHook', () => {

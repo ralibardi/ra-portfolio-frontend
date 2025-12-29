@@ -1,25 +1,28 @@
-import { COMPANY_NAME } from '@app/i18n/keys';
 import { homePagePath } from '@utils/route-paths';
+import Image from 'next/image';
+import Link from 'next/link';
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import styles from '../assets/company-info.module.scss';
 import logo from '../assets/logo.jpg';
 
 interface ICompanyInfoProps {
+  label: string;
   isLabelHidden?: boolean;
 }
 
-const CompanyInfo = memo(function CompanyInfo({ isLabelHidden = false }: ICompanyInfoProps) {
-  const { t } = useTranslation();
-
+const CompanyInfo = memo(function CompanyInfo({ isLabelHidden = false, label }: ICompanyInfoProps) {
   return (
     <div className={styles.container} data-testid="company-info">
-      <Link to={homePagePath} className={styles.wrapper} data-testid="company-info-link">
-        <img src={logo} alt="Logo" className={styles.imageSmall} data-testid="company-info-logo" />
+      <Link href={homePagePath} className={styles.wrapper} data-testid="company-info-link">
+        <Image
+          src={logo}
+          alt={`${label} logo`}
+          className={styles.imageSmall}
+          data-testid="company-info-logo"
+        />
         {!isLabelHidden && (
           <span className={styles.label} data-testid="company-info-label">
-            {t(COMPANY_NAME)}
+            {label}
           </span>
         )}
       </Link>

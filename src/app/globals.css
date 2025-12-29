@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --color-brand: 222 89% 53%;
+  --color-brand-contrast: 210 40% 98%;
+  --color-surface: 0 0% 100%;
+  --color-text: 222 47% 11%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family, 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  background-color: hsl(var(--color-surface, 0 0% 100%));
+  color: hsl(var(--color-text, 222 47% 11%));
+}

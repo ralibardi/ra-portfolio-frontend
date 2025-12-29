@@ -1,9 +1,7 @@
 import '@testing-library/jest-dom';
 import 'jest-axe/extend-expect';
 import { TextDecoder, TextEncoder } from 'node:util';
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import englishTranslation from './public/locales/en-GB/translation.json';
+import React from 'react';
 
 // Polyfill TextEncoder and TextDecoder for Jest environment
 global.TextEncoder = TextEncoder;
@@ -27,17 +25,9 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-i18n
-  .use(initReactI18next)
-  .init({
-    lng: 'en',
-    fallbackLng: 'en',
-    resources: {
-      en: {
-        translation: englishTranslation,
-      },
-    },
-  })
-  .catch((_error) => {
-    // Silently handle i18n initialization errors in tests
-  });
+// Mock Next.js Image component for Jest environment
+jest.mock('next/image', () => ({
+  // biome-ignore lint/style/useNamingConvention: __esModule is a standard Jest/TypeScript property for ES modules
+  __esModule: true,
+  default: (props: React.ComponentProps<'img'>) => React.createElement('img', props),
+}));

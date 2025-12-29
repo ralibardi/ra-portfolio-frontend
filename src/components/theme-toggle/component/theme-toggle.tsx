@@ -1,3 +1,5 @@
+'use client';
+
 import { ToggleSwitcher } from '@components/toggle';
 import { useTheme } from '@hooks/use-theme';
 import React from 'react';

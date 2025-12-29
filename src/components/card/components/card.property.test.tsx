@@ -273,6 +273,7 @@ describe('Property 6: Visual Regression Preservation', () => {
           customClass: fc.constantFrom('', 'custom-class', 'p-lg m-md'),
           as: fc.constantFrom('article', 'div', 'section'),
         }),
+        // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Test asserts many independent invariants
         ({ elevated, interactive, hasHeader, hasFooter, customClass, as }) => {
           const { container } = render(
             <Card
@@ -345,6 +346,7 @@ describe('Property 6: Visual Regression Preservation', () => {
           hasHeader: fc.boolean(),
           hasFooter: fc.boolean(),
         }),
+        // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Test asserts DOM order invariants
         ({ hasHeader, hasFooter }) => {
           const { container } = render(
             <Card

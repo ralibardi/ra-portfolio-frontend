@@ -1,43 +1,37 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import type { AxiosInstance, AxiosResponse } from 'axios';
-
-// Mock the entire axios module - variable names with 'mock' prefix are allowed in Jest
-jest.mock('axios', () => {
-  // Create a factory that returns a new mock each time
-  return {
-    create: jest.fn().mockReturnValue({
-      defaults: {
-        baseURL: 'mock-base-url',
-        headers: {},
-      },
-      interceptors: {
-        request: {
-          use: jest.fn(),
-        },
-        response: {
-          use: jest.fn(),
-        },
-      },
-      get: jest
-        .fn<() => Promise<AxiosResponse<unknown>>>()
-        .mockResolvedValue({ data: {} } as AxiosResponse<unknown>),
-      post: jest
-        .fn<() => Promise<AxiosResponse<unknown>>>()
-        .mockResolvedValue({ data: {} } as AxiosResponse<unknown>),
-      put: jest
-        .fn<() => Promise<AxiosResponse<unknown>>>()
-        .mockResolvedValue({ data: {} } as AxiosResponse<unknown>),
-      delete: jest
-        .fn<() => Promise<AxiosResponse<unknown>>>()
-        .mockResolvedValue({ data: {} } as AxiosResponse<unknown>),
-    }),
-  };
-});
-
-// Import axios after mocking to get the mocked version
-import axios from 'axios';
 // Import the API client
 import { apiClient } from './api-client';
+
+const mockAxiosInstance = {
+  defaults: {
+    baseURL: 'mock-base-url',
+    headers: {},
+  },
+  interceptors: {
+    request: {
+      use: jest.fn(),
+    },
+    response: {
+      use: jest.fn(),
+    },
+  },
+  get: jest
+    .fn<() => Promise<AxiosResponse<unknown>>>()
+    .mockResolvedValue({ data: {} } as AxiosResponse<unknown>),
+  post: jest
+    .fn<() => Promise<AxiosResponse<unknown>>>()
+    .mockResolvedValue({ data: {} } as AxiosResponse<unknown>),
+  put: jest
+    .fn<() => Promise<AxiosResponse<unknown>>>()
+    .mockResolvedValue({ data: {} } as AxiosResponse<unknown>),
+  delete: jest
+    .fn<() => Promise<AxiosResponse<unknown>>>()
+    .mockResolvedValue({ data: {} } as AxiosResponse<unknown>),
+  request: jest.fn(),
+} as unknown as AxiosInstance;
+
+(apiClient as unknown as { axiosInstance: AxiosInstance }).axiosInstance = mockAxiosInstance;
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -58,9 +52,6 @@ const localStorageMock = (() => {
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
 describe('ApiClient', () => {
-  // Get the axios instance created by apiClient
-  const mockAxiosInstance = (axios.create as jest.Mock).mock.results[0].value as AxiosInstance;
-
   beforeEach(() => {
     jest.clearAllMocks();
     localStorageMock.clear();
